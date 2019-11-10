@@ -9,37 +9,76 @@ public:
     Number(string str)
     {
         input = str;
-        int length = int(str.length());
         znak = '+';
+        zn_por = '+';
         if (str[0] == '+' || str[0] == '-')
             znak = str[0];
+        string mant = "";
+        string poryd = "";
+        int tochka = 0;
         int flag = 0;
-        cout << str.length() << '\n';
-        for (int i = 0; i <= length; i++)
+        for (int i = 0; i <= str.length(); i++)
         {
             int j = 0;
-            int tochka = 0;
             if (flag == 0)
             {
-                if (str[1] == '+' || str[1] == '-')
-                {
-                    znak = str[1];
-                    flag++;
-                }
+                if (str[i] >= '0' && str[i] <= '9')
+                    mant += str[i];
+                else if (str[i] == '.')
+                    flag = 1;
+                else if (str[i] == 'e' || str[i] == 'E')
+                    flag = 2;
             }
             else if (flag == 1)
             {
-                if ((str[1] >= '0' && str[1] <= '9') || str[1] == '.')
+                if (str[i] >= '0' && str[i] <= '9')
                 {
-                    if (str[1] == '.')
-                        tochka++;
-                    if (tochka <= 1)
-                        mantisa[j] = str[1];
-                    else
-                        input_error = true;
+                    mant += str[i];
+                    tochka++;
                 }
+                else
+                    input_error = true;
+            }
+            else if (flag == 2)
+            {
+                if (str[i] == '+' || str[i] == '-')
+                    zn_por = str[i];
+                else if (str[i] >= '0' && str[i] <= '9')
+                    poryd += str[i];
+                flag = 3;
+            }
+            else if (flag == 3)
+            {
+                if (str[i] >= '0' && str[i] <= '9')
+                    poryd += str[i];
             }
         }
+        if (flag == 1)
+        {
+            zn_por = '-';
+            while (tochka > 0)
+            {
+                poryd += 48+(tochka % 10);
+                tochka /= 10;
+            }
+            for (int i = 0; i <= poryd.length() / 2; i++)
+            {
+                swap(poryd[i], poryd[poryd.length() - i - 1]);
+            }
+        }
+        int j = 29;
+        for (int i = mant.length(); i >= 0; i--)
+        {
+            mantisa[j] = mant[i];
+            j--;
+        }
+        j = 4;
+        for (int i = 0; i <= poryd.length(); i++)
+        {
+            porydok[j] = poryd[i];
+            j--;
+        }
+        cout << znak << mant << zn_por << poryd << endl;
     }
     string input;
     bool input_error;
