@@ -9,28 +9,32 @@ public:
     Number(string str)
     {
         input = str;
+        int length = int(str.length());
+        znak = '+';
+        if (str[0] == '+' || str[0] == '-')
+            znak = str[0];
         int flag = 0;
         cout << str.length() << '\n';
-        for (int i = 0; i <= str.length(); i++)
+        for (int i = 0; i <= length; i++)
         {
             int j = 0;
             int tochka = 0;
             if (flag == 0)
             {
-                if (str[i] == '+' || str[i] == '-')
+                if (str[1] == '+' || str[1] == '-')
                 {
-                    znak = str[i];
+                    znak = str[1];
                     flag++;
                 }
             }
             else if (flag == 1)
             {
-                if (str[i] >= '0' && str[i] <= '9' || str[i] == '.')
+                if ((str[1] >= '0' && str[1] <= '9') || str[1] == '.')
                 {
-                    if (str[i] == '.')
+                    if (str[1] == '.')
                         tochka++;
                     if (tochka <= 1)
-                        mantisa[j] = str[i];
+                        mantisa[j] = str[1];
                     else
                         input_error = true;
                 }
