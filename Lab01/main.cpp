@@ -1,6 +1,10 @@
 #include <iostream>
 #include <string>
 
+#define bolshe 1
+#define ravno 0
+#define menshe -1
+
 using namespace std;
 
 class Number
@@ -278,7 +282,6 @@ void prirovnyat (int rez[30], int input[30])
 
 Number delenie(Number n1, Number n2)
 {
-	//string ch1 = n1.mant, ch2 = n2.mant;
 	int zero_n1 = 0, zero_n2 = 0;
 
 	if (n1.zn_por == '-')
@@ -290,13 +293,6 @@ Number delenie(Number n1, Number n2)
 		zero_n1 += n2.por;
 	else
 		zero_n2 += n2.por;
-
-	/*if (zero_n1 > zero_n2)
-		for (int i = 0; i < zero_n1 - zero_n2; i++)
-			ch1 += '0';
-	else
-		for (int i = 0; i < zero_n2 - zero_n1; i++)
-			ch2 += '0';*/
 
 	string rez = "";
 
@@ -343,14 +339,20 @@ Number delenie(Number n1, Number n2)
 	{
 		cout << smth[i];
 	}
-	cout << endl;*/
+    cout << endl;
+
+    for (int i = 0; i < 30; i++)
+        {
+            cout << delimoe_mantisa[i];
+        }
+        cout << endl;*/
 
 	int j = 0;
-	if (sravnenie(delimoe_mantisa, delitel_mantisa) == -1)
+    if (sravnenie(delimoe_mantisa, delitel_mantisa) == menshe)
 	{
 		rez += "0.";
 	}
-	else if (sravnenie(delimoe_mantisa, delitel_mantisa) == 0)
+    else if (sravnenie(delimoe_mantisa, delitel_mantisa) == ravno)
 	{
 		rez += "1";
 		j = 30;
@@ -362,7 +364,16 @@ Number delenie(Number n1, Number n2)
 	prirovnyat(tmp2_mantisa, delitel_mantisa);
 	int tmp3_mantisa[30];
 
-	/*for (int i = 0; i < 30; i++)
+    int raznica_por = n1.mantisa_len - n2.mantisa_len;
+
+    if (sravnenie(tmp1_mantisa, tmp2_mantisa) == menshe)
+    {
+        //cout << delimoe_mantisa[30 - n1.mantisa_len + n2.mantisa_len] << endl;
+        plus_razryad(tmp1_mantisa, delimoe_mantisa[30 - n1.mantisa_len + n2.mantisa_len]);
+        raznica_por--;
+    }
+
+    for (int i = 0; i < 30; i++)
 		{
 			cout << tmp1_mantisa[i];
 		}
@@ -372,19 +383,19 @@ Number delenie(Number n1, Number n2)
 		{
 			cout << tmp2_mantisa[i];
 		}
-			cout << endl;*/
+            cout << endl;
 
 	int k = 0;
 	int stepen = 0;
 	while (j < 30)
 	{
 		prirovnyat(tmp2_mantisa, delitel_mantisa);
-		while (sravnenie(tmp1_mantisa, tmp2_mantisa) == 1)
+        while (sravnenie(tmp1_mantisa, tmp2_mantisa) == bolshe)
 		{
 			summa(tmp3_mantisa, tmp2_mantisa, delitel_mantisa);
 			prirovnyat(tmp2_mantisa, tmp3_mantisa);
 			k++;
-			cout << j << ":" << endl;
+            cout << j << ":" << endl;
 			for (int i = 0; i < 30; i++)
 				{
 					cout << tmp1_mantisa[i] << " ";
@@ -393,8 +404,8 @@ Number delenie(Number n1, Number n2)
 			for (int i = 0; i < 30; i++)
 					{
 						cout << tmp2_mantisa[i] << " ";
-					}
-						cout << endl;
+                    }
+                        cout << endl;
 			/*if (sravnenie(tmp1_mantisa, tmp2_mantisa) != 1)
 			{
 				raznost(tmp3_mantisa, tmp2_mantisa, delitel_mantisa);
@@ -407,17 +418,20 @@ Number delenie(Number n1, Number n2)
 		prirovnyat(tmp2_mantisa, tmp3_mantisa);
 		k--;
 		rez += 49 + k;
-		//cout << rez << endl;
+        cout << rez << endl;
 		k = 0;
 
-		if (sravnenie(tmp1_mantisa, tmp2_mantisa) == 0)
+        if (sravnenie(tmp1_mantisa, tmp2_mantisa) == ravno)
 				break;
 		raznost(tmp3_mantisa, tmp1_mantisa, tmp2_mantisa);
 		prirovnyat(tmp1_mantisa, tmp3_mantisa);
-		if (30 - n1.mantisa_len + n2.mantisa_len + j < 30)
+
+        j++;
+
+        if (29 - raznica_por + j < 30)
 		{
 			stepen++;
-			plus_razryad(tmp1_mantisa, delimoe_mantisa[29 - n2.mantisa_len + n2.mantisa_len + j]);
+            plus_razryad(tmp1_mantisa, delimoe_mantisa[29 - raznica_por + j]);
 		}
 		else
 		{
@@ -425,12 +439,14 @@ Number delenie(Number n1, Number n2)
 				rez += '.';*/
 			plus_razryad(tmp1_mantisa, 0);
 		}
-
-		j++;
 	}
 	rez += "E";
 	string poryd = "";
-	int por = zero_n1 - zero_n2 + 1 - 30;
+    cout << zero_n1 << " " << zero_n2 << endl;
+    int por = n1.por - n2.por - 29; //zero_n1 - zero_n2 + 1 - 30;
+    if (raznica_por != n1.mantisa_len - n2.mantisa_len)
+        por--;
+    cout << por << endl;
 
 	if (por < 0)
 		rez += '-';
