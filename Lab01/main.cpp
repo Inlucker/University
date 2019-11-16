@@ -357,7 +357,15 @@ Number delenie(Number n1, Number n2)
     if (sravnenie(tmp1_mantisa, tmp2_mantisa) == menshe)
     {
         //cout << delimoe_mantisa[30 - n1.mantisa_len + n2.mantisa_len] << endl;
-        plus_razryad(tmp1_mantisa, delimoe_mantisa[30 - n1.mantisa_len + n2.mantisa_len]);
+        if (30 - n1.mantisa_len + n2.mantisa_len < 30)
+        {
+            plus_razryad(tmp1_mantisa, delimoe_mantisa[30 - n1.mantisa_len + n2.mantisa_len]);
+        }
+        else
+        {
+            plus_razryad(tmp1_mantisa, 0);
+        }
+
         raznica_por--;
     }
 
@@ -383,7 +391,7 @@ Number delenie(Number n1, Number n2)
 			summa(tmp3_mantisa, tmp2_mantisa, delitel_mantisa);
 			prirovnyat(tmp2_mantisa, tmp3_mantisa);
 			k++;
-            cout << j << ":" << endl;
+            /*cout << j << ":" << endl;
 			for (int i = 0; i < 30; i++)
 				{
 					cout << tmp1_mantisa[i] << " ";
@@ -393,7 +401,7 @@ Number delenie(Number n1, Number n2)
 					{
 						cout << tmp2_mantisa[i] << " ";
                     }
-                        cout << endl;
+                        cout << endl;*/
 			/*if (sravnenie(tmp1_mantisa, tmp2_mantisa) != 1)
 			{
 				raznost(tmp3_mantisa, tmp2_mantisa, delitel_mantisa);
@@ -426,14 +434,14 @@ Number delenie(Number n1, Number n2)
 			stepen++;
             plus_razryad(tmp1_mantisa, delimoe_mantisa[29 - raznica_por + j]);
 		}
-		else
-		{
-			/*if (rez.find(".") == -1)
-				rez += '.';*/
-			plus_razryad(tmp1_mantisa, 0);
-		}
+        else
+        {
+            /*if (rez.find(".") == -1)
+                rez += '.';*/
+            plus_razryad(tmp1_mantisa, 0);
+        }
 	}
-    if (j == 29)
+    if (j == 29 && rez.find(".") == -1)
     {
         rez += "E";
         string poryd = "";
@@ -461,7 +469,7 @@ Number delenie(Number n1, Number n2)
         rez += poryd;
     }
 
-	//cout << rez << endl;
+    //cout << rez << endl;
 	Number chastnoe(rez);
 	return chastnoe;
 }
