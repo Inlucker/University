@@ -369,7 +369,7 @@ Number delenie(Number n1, Number n2)
         raznica_por--;
     }
 
-    for (int i = 0; i < 30; i++)
+    /*for (int i = 0; i < 30; i++)
 		{
 			cout << tmp1_mantisa[i];
 		}
@@ -379,7 +379,7 @@ Number delenie(Number n1, Number n2)
 		{
 			cout << tmp2_mantisa[i];
 		}
-            cout << endl;
+            cout << endl;*/
 
 	int k = 0;
 	int stepen = 0;
@@ -413,7 +413,7 @@ Number delenie(Number n1, Number n2)
 
         k--;
         rez += 49 + k;
-        cout << rez << endl;
+        //cout << rez << endl;
         k = 0;
 
 		raznost(tmp3_mantisa, tmp2_mantisa, delitel_mantisa);
