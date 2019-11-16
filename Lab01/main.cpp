@@ -94,7 +94,7 @@ public:
 
 		if (flag == 1 || flag == 3)
 		{
-			if (do_tochki - posle_tochki < 0 || flag == 1)
+            if (do_tochki - posle_tochki < 0) //|| flag == 1)
 				zn_por = '-';
 			else
 				zn_por = '+';
@@ -282,18 +282,6 @@ void prirovnyat (int rez[30], int input[30])
 
 Number delenie(Number n1, Number n2)
 {
-	int zero_n1 = 0, zero_n2 = 0;
-
-	if (n1.zn_por == '-')
-		zero_n2 += n1.por;
-	else
-		zero_n1 += n1.por;
-
-	if (n2.zn_por == '-')
-		zero_n1 += n2.por;
-	else
-		zero_n2 += n2.por;
-
 	string rez = "";
 
 	int delimoe_mantisa[30];
@@ -390,7 +378,7 @@ Number delenie(Number n1, Number n2)
 	while (j < 30)
 	{
 		prirovnyat(tmp2_mantisa, delitel_mantisa);
-        while (sravnenie(tmp1_mantisa, tmp2_mantisa) == bolshe)
+        while (sravnenie(tmp1_mantisa, tmp2_mantisa) != menshe)
 		{
 			summa(tmp3_mantisa, tmp2_mantisa, delitel_mantisa);
 			prirovnyat(tmp2_mantisa, tmp3_mantisa);
@@ -413,19 +401,24 @@ Number delenie(Number n1, Number n2)
 				k--;
 				break;
 			}*/
-		}
+        }
+
+        k--;
+        rez += 49 + k;
+        cout << rez << endl;
+        k = 0;
+
 		raznost(tmp3_mantisa, tmp2_mantisa, delitel_mantisa);
 		prirovnyat(tmp2_mantisa, tmp3_mantisa);
-		k--;
-		rez += 49 + k;
-        cout << rez << endl;
-		k = 0;
 
-        if (sravnenie(tmp1_mantisa, tmp2_mantisa) == ravno)
-				break;
-		raznost(tmp3_mantisa, tmp1_mantisa, tmp2_mantisa);
-		prirovnyat(tmp1_mantisa, tmp3_mantisa);
+        /*if (sravnenie(tmp1_mantisa, tmp2_mantisa) == ravno)
+            break;*/
 
+        raznost(tmp3_mantisa, tmp1_mantisa, tmp2_mantisa);
+        prirovnyat(tmp1_mantisa, tmp3_mantisa);
+
+        if (j == 29)
+            break;
         j++;
 
         if (29 - raznica_por + j < 30)
@@ -440,31 +433,33 @@ Number delenie(Number n1, Number n2)
 			plus_razryad(tmp1_mantisa, 0);
 		}
 	}
-	rez += "E";
-	string poryd = "";
-    cout << zero_n1 << " " << zero_n2 << endl;
-    int por = n1.por - n2.por - 29; //zero_n1 - zero_n2 + 1 - 30;
-    if (raznica_por != n1.mantisa_len - n2.mantisa_len)
-        por--;
-    cout << por << endl;
+    if (j == 29)
+    {
+        rez += "E";
+        string poryd = "";
+        int por = n1.por - n2.por - j;
+        if (raznica_por != n1.mantisa_len - n2.mantisa_len)
+            por--;
+        cout << por << endl;
 
-	if (por < 0)
-		rez += '-';
-	else
-		rez += '+';
-	int tmp_por = abs(por);
+        if (por < 0)
+            rez += '-';
+        else
+            rez += '+';
+        int tmp_por = abs(por);
 
-	while (tmp_por > 0)
-	{
-		poryd += 48+(tmp_por % 10);
-		tmp_por /= 10;
-	}
-	for (int i = 0; i < poryd.length() / 2; i++)
-	{
-		swap(poryd[i], poryd[poryd.length() - i - 1]);
-	}
+        while (tmp_por > 0)
+        {
+            poryd += 48+(tmp_por % 10);
+            tmp_por /= 10;
+        }
+        for (int i = 0; i < poryd.length() / 2; i++)
+        {
+            swap(poryd[i], poryd[poryd.length() - i - 1]);
+        }
 
-	rez += poryd;
+        rez += poryd;
+    }
 
 	//cout << rez << endl;
 	Number chastnoe(rez);
