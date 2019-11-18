@@ -7,6 +7,7 @@
 
 using namespace std;
 
+//Класс хранящий всю необходимую информацию о числе
 class Number
 {
 public:
@@ -76,6 +77,10 @@ public:
 				{
 					mant += str[i];
 				}
+                else if (str[i] == 'e' || str[i] == 'E')
+                {
+                    flag = 4;
+                }
 				else
                     input_error = true;
 				break;
@@ -203,6 +208,7 @@ public:
 	int por;
 };
 
+//Функция сложения двух чисел по разрядам
 void summa (int rez[30], int n1[30], int n2[30])
 {
 	int tmp = 0;
@@ -225,6 +231,7 @@ void summa (int rez[30], int n1[30], int n2[30])
 	return;
 }
 
+//Функция разночти двух чисел по разрядам
 void raznost (int rez[30], int n1[30], int n2[30])
 {
 	int tmp = 0;
@@ -247,6 +254,7 @@ void raznost (int rez[30], int n1[30], int n2[30])
 	return;
 }
 
+//Функция сравнения двух чисел хранящихся в массивах по разрядам
 int sravnenie (int n1[30], int n2[30])
 {
 	int rez = 0;
@@ -266,6 +274,7 @@ int sravnenie (int n1[30], int n2[30])
 	return rez;
 }
 
+//Функция получения определённой части числа хранящегося в массиве по разрядам
 void get (int rez[30], int input[30], int n)
 {
 	int j = 0;
@@ -285,6 +294,7 @@ void get (int rez[30], int input[30], int n)
 	}
 }
 
+//Функция добавления в конец числа новой цифры
 void plus_razryad (int rez[30], int n)
 {
 	for (int i = 0; i < 29; i++)
@@ -294,6 +304,7 @@ void plus_razryad (int rez[30], int n)
 	rez[29] = n;
 }
 
+//Функция присваивания для чисел хранящихся в массивах по разрядам
 void prirovnyat (int rez[30], int input[30])
 {
 	for (int i = 0; i < 30; i++)
@@ -302,6 +313,7 @@ void prirovnyat (int rez[30], int input[30])
 	}
 }
 
+//Функция деления вещественных чисел
 Number delenie(Number n1, Number n2)
 {
 	string rez = "";
@@ -311,13 +323,35 @@ Number delenie(Number n1, Number n2)
     else
         rez += "+";
 
+    bool is_zero = true;
 	int delimoe_mantisa[30];
 	for (int i = 0; i < 30; i++)
-		delimoe_mantisa[i] = n1.mantisa[i] - 48;
+    {
+        delimoe_mantisa[i] = n1.mantisa[i] - 48;
+        if (n1.mantisa[i] != '0')
+            is_zero = false;
+    }
+    if (is_zero)
+    {
+        rez += "0";
+        Number chastnoe(rez);
+        return chastnoe;
+    }
 
+    is_zero = true;
 	int delitel_mantisa[30];
 	for (int i = 0; i < 30; i++)
-		delitel_mantisa[i] = n2.mantisa[i] - 48;
+    {
+        delitel_mantisa[i] = n2.mantisa[i] - 48;
+        if (n2.mantisa[i] != '0')
+            is_zero = false;
+    }
+    if (is_zero)
+    {
+        rez = "error";
+        Number chastnoe(rez);
+        return chastnoe;
+    }
 
 	/*for (int i = 0; i < 30; i++)
 	{
@@ -362,12 +396,8 @@ Number delenie(Number n1, Number n2)
         }
         cout << endl;*/
 
-	int j = 0;
-    /*if (sravnenie(delimoe_mantisa, delitel_mantisa) == menshe)
-	{
-		rez += "0.";
-	}
-    else*/ if (sravnenie(delimoe_mantisa, delitel_mantisa) == ravno)
+    int j = 0;
+    if (sravnenie(delimoe_mantisa, delitel_mantisa) == ravno)
 	{
         rez += "100000000000000000000000000000";
         j = 30;
@@ -508,31 +538,32 @@ Number delenie(Number n1, Number n2)
 	return chastnoe;
 }
 
-void input()
+int main()
 {
-	cout << "Enter first number: ";
-	string input;
-	cin >> input;
-	Number n1(input);
+    cout << "Enter first number: ";
+    string input;
+    cin >> input;
+    Number n1(input);
     n1.print();
 
-	cout << "Enter second number: ";
-	cin >> input;
-	Number n2(input);
+    cout << "Enter second number: ";
+    cin >> input;
+    Number n2(input);
     n2.print();
 
     Number rez = delenie(n1, n2);
-    if ((!n1.input_error && !n2.input_error && !rez.input_error) || true)
+    if (!n1.input_error && !n2.input_error && !rez.input_error)
     {
         cout << "Result: ";
         rez.print();
     }
-
-	return;
-}
-
-int main()
-{
-	input();
+    else if (rez.input_error)
+    {
+        cout << "Result is not valid" << endl;
+    }
+    else
+    {
+        cout << "Input Error" << endl;
+    }
 	return 0;
 }
