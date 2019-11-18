@@ -15,8 +15,12 @@ public:
 		input = str;
 		znak = '+';
 		zn_por = '+';
+        int tmp_i = 0;
 		if (str[0] == '+' || str[0] == '-')
-			znak = str[0];
+        {
+            znak = str[0];
+            tmp_i++;
+        }
 		for (int i = 0; i < 30; i++)
 			mantisa[i] = '0';
 		mant = "";
@@ -24,7 +28,7 @@ public:
 		int do_tochki = 0;
 		int posle_tochki = 0;
 		int flag = 0;
-		for (int i = 0; i <= str.length(); i++)
+        for (int i = 0 + tmp_i; i < str.length(); i++)
 		{
 			int j = 0;
 
@@ -34,8 +38,11 @@ public:
 					flag = 1;
 				else if (str[i] == '.')
 					flag = 2;
-				else if(str[i] == 'e' || str[i] == 'E')
-					flag = 4;
+                else if (str[i] != '0')
+                {
+                    input_error = true;
+                    break;
+                }
 			}
 
 			switch (flag)
@@ -50,15 +57,19 @@ public:
 					flag = 3;
 				else if (str[i] == 'e' || str[i] == 'E')
 					flag = 4;
+                else
+                    input_error = true;
 				break;
 			case 2:
 				if (str[i] == '0')
 					posle_tochki++;
-				if (str[i] >= '1' && str[i] <= '9')
+                else if (str[i] >= '1' && str[i] <= '9')
 				{
 					mant += str[i];
 					flag = 3;
 				}
+                else if (str[i] != '.')
+                    input_error = true;
 				break;
 			case 3:
 				if (str[i] >= '0' && str[i] <= '9')
@@ -66,20 +77,26 @@ public:
 					mant += str[i];
 				}
 				else
-					input_error = true;
+                    input_error = true;
 				break;
 			case 4:
 				if (str[i] == '+' || str[i] == '-')
 					zn_por = str[i];
 				else if (str[i] >= '0' && str[i] <= '9')
 					poryd += str[i];
+                else
+                    input_error = true;
 				flag = 5;
 				break;
 			case 5:
 				if (str[i] >= '0' && str[i] <= '9')
 					poryd += str[i];
+                else
+                    input_error = true;
 				break;
 			}
+            if (do_tochki > 30)
+                input_error = true;
 		}
 
 		mantisa_len = mant.length();
@@ -146,6 +163,9 @@ public:
 			}
 		}
 
+        if  (por > 99999 || por < -99999)
+            input_error = true;
+
 		if (poryd == "")
 			poryd = "0";
 
@@ -166,10 +186,13 @@ public:
     }
 	void print()
 	{
-		cout << znak << "0." << mant << "E" << zn_por << poryd << '.' << endl;
+        if (!input_error)
+            cout << znak << "0." << mant << "E" << zn_por << poryd << '.' << endl;
+        else
+            cout << "This number is not correct" << endl;
 	}
 	string input;
-	bool input_error;
+    bool input_error = false;
 	char znak;
 	char mantisa[30];
 	string mant;
@@ -252,14 +275,13 @@ void get (int rez[30], int input[30], int n)
 	}
 	for (int i = 0; i < 30; i++)
 	{
-		if (i < 30 - n)
+        if (i < 30 - n || j >= 30)
 			rez[i] = 0;
 		else
 		{
 			rez[i] = input[j];
 			j++;
 		}
-
 	}
 }
 
@@ -283,6 +305,11 @@ void prirovnyat (int rez[30], int input[30])
 Number delenie(Number n1, Number n2)
 {
 	string rez = "";
+
+    if ((n1.znak == '-') != (n2.znak == '-'))
+        rez += "-";
+    else
+        rez += "+";
 
 	int delimoe_mantisa[30];
 	for (int i = 0; i < 30; i++)
@@ -336,14 +363,14 @@ Number delenie(Number n1, Number n2)
         cout << endl;*/
 
 	int j = 0;
-    if (sravnenie(delimoe_mantisa, delitel_mantisa) == menshe)
+    /*if (sravnenie(delimoe_mantisa, delitel_mantisa) == menshe)
 	{
 		rez += "0.";
 	}
-    else if (sravnenie(delimoe_mantisa, delitel_mantisa) == ravno)
+    else*/ if (sravnenie(delimoe_mantisa, delitel_mantisa) == ravno)
 	{
-		rez += "1";
-		j = 30;
+        rez += "100000000000000000000000000000";
+        j = 30;
 	}
 
 	int tmp1_mantisa[30];
@@ -357,6 +384,11 @@ Number delenie(Number n1, Number n2)
     if (sravnenie(tmp1_mantisa, tmp2_mantisa) == menshe)
     {
         //cout << delimoe_mantisa[30 - n1.mantisa_len + n2.mantisa_len] << endl;
+        if (tmp1_mantisa[0] != 0)
+        {
+            Number chastnoe("error");
+            return chastnoe;
+        }
         if (30 - n1.mantisa_len + n2.mantisa_len < 30)
         {
             plus_razryad(tmp1_mantisa, delimoe_mantisa[30 - n1.mantisa_len + n2.mantisa_len]);
@@ -383,7 +415,7 @@ Number delenie(Number n1, Number n2)
 
 	int k = 0;
 	int stepen = 0;
-	while (j < 30)
+    while (j < 30)
 	{
 		prirovnyat(tmp2_mantisa, delitel_mantisa);
         while (sravnenie(tmp1_mantisa, tmp2_mantisa) != menshe)
@@ -411,9 +443,9 @@ Number delenie(Number n1, Number n2)
 			}*/
         }
 
-        k--;
-        rez += 49 + k;
-        //cout << rez << endl;
+        //k--;
+        rez += 48 + k;
+       // cout << rez << endl;
         k = 0;
 
 		raznost(tmp3_mantisa, tmp2_mantisa, delitel_mantisa);
@@ -441,14 +473,16 @@ Number delenie(Number n1, Number n2)
             plus_razryad(tmp1_mantisa, 0);
         }
 	}
-    if (j == 29 && rez.find(".") == -1)
+    if (j == 30)
+        j--;
+    if (rez.find(".") == -1)
     {
         rez += "E";
         string poryd = "";
         int por = n1.por - n2.por - j;
         if (raznica_por != n1.mantisa_len - n2.mantisa_len)
             por--;
-        cout << por << endl;
+        //cout << por << endl;
 
         if (por < 0)
             rez += '-';
@@ -480,13 +514,19 @@ void input()
 	string input;
 	cin >> input;
 	Number n1(input);
+    n1.print();
 
 	cout << "Enter second number: ";
 	cin >> input;
 	Number n2(input);
+    n2.print();
 
-	Number rez = delenie(n1, n2);
-	rez.print();
+    Number rez = delenie(n1, n2);
+    if ((!n1.input_error && !n2.input_error && !rez.input_error) || true)
+    {
+        cout << "Result: ";
+        rez.print();
+    }
 
 	return;
 }
