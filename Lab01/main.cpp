@@ -148,7 +148,7 @@ public:
 				tmp_por += do_tochki;
 			else
 				tmp_por = do_tochki - tmp_por;
-			por = tmp_por;
+            por = tmp_por - posle_tochki;
 			//cout << tmp_por << endl;
 			poryd = "";
 			if (tmp_por < 0)
@@ -168,7 +168,7 @@ public:
 			}
 		}
 
-        if  (por > 99999 || por < -99999)
+        if  (poryd.length() > 5 || por - posle_tochki < -99999 || por + do_tochki > 99999)
             input_error = true;
 
 		if (poryd == "")
@@ -191,10 +191,10 @@ public:
     }
 	void print()
 	{
-        if (!input_error)
-            cout << znak << "0." << mant << "E" << zn_por << poryd << '.' << endl;
-        else
-            cout << "This number is not correct" << endl;
+        //if (!input_error)
+        cout << znak << "0." << mant << "E" << zn_por << poryd << '.' << endl;
+        /*else
+            cout << "This number is not correct" << endl;*/
 	}
 	string input;
     bool input_error = false;
@@ -323,78 +323,35 @@ Number delenie(Number n1, Number n2)
     else
         rez += "+";
 
-    bool is_zero = true;
+    bool is_zero1 = true;
 	int delimoe_mantisa[30];
 	for (int i = 0; i < 30; i++)
     {
         delimoe_mantisa[i] = n1.mantisa[i] - 48;
         if (n1.mantisa[i] != '0')
-            is_zero = false;
-    }
-    if (is_zero)
-    {
-        rez += "0";
-        Number chastnoe(rez);
-        return chastnoe;
+            is_zero1 = false;
     }
 
-    is_zero = true;
+    bool is_zero2 = true;
 	int delitel_mantisa[30];
 	for (int i = 0; i < 30; i++)
     {
         delitel_mantisa[i] = n2.mantisa[i] - 48;
         if (n2.mantisa[i] != '0')
-            is_zero = false;
+            is_zero2 = false;
     }
-    if (is_zero)
+    if (is_zero2)
     {
         rez = "error";
         Number chastnoe(rez);
         return chastnoe;
     }
-
-	/*for (int i = 0; i < 30; i++)
-	{
-		cout << tmp_mantisa[i];
-	}
-	cout << endl;
-
-	for (int i = 0; i < 30; i++)
-	{
-		cout << delitel_mantisa[i];
-	}
-	cout << endl;
-
-	int smth[30];
-	summa(smth, tmp_mantisa, delitel_mantisa);
-	for (int i = 0; i < 30; i++)
-	{
-		cout << smth[i];
-	}
-	cout << endl;
-
-	raznost(smth, tmp_mantisa, delitel_mantisa);
-	for (int i = 0; i < 30; i++)
-	{
-		cout << smth[i];
-	}
-	cout << endl;
-
-	int boolean = sravnenie(tmp_mantisa, delitel_mantisa);
-	cout << boolean << endl;
-
-	get(smth, tmp_mantisa, 5);
-	for (int i = 0; i < 30; i++)
-	{
-		cout << smth[i];
-	}
-    cout << endl;
-
-    for (int i = 0; i < 30; i++)
-        {
-            cout << delimoe_mantisa[i];
-        }
-        cout << endl;*/
+    else if (is_zero1)
+    {
+        rez += "0";
+        Number chastnoe(rez);
+        return chastnoe;
+    }
 
     int j = 0;
     if (sravnenie(delimoe_mantisa, delitel_mantisa) == ravno)
@@ -431,22 +388,10 @@ Number delenie(Number n1, Number n2)
         raznica_por--;
     }
 
-    /*for (int i = 0; i < 30; i++)
-		{
-			cout << tmp1_mantisa[i];
-		}
-		cout << endl;
-
-	for (int i = 0; i < 30; i++)
-		{
-			cout << tmp2_mantisa[i];
-		}
-            cout << endl;*/
-
 	int k = 0;
 	int stepen = 0;
     while (j < 30)
-	{
+    {
 		prirovnyat(tmp2_mantisa, delitel_mantisa);
         while (sravnenie(tmp1_mantisa, tmp2_mantisa) != menshe)
 		{
@@ -464,47 +409,67 @@ Number delenie(Number n1, Number n2)
 						cout << tmp2_mantisa[i] << " ";
                     }
                         cout << endl;*/
-			/*if (sravnenie(tmp1_mantisa, tmp2_mantisa) != 1)
-			{
-				raznost(tmp3_mantisa, tmp2_mantisa, delitel_mantisa);
-				prirovnyat(tmp2_mantisa, tmp3_mantisa);
-				k--;
-				break;
-			}*/
         }
 
         //k--;
         rez += 48 + k;
-       // cout << rez << endl;
+        //cout << rez << endl;
         k = 0;
 
-		raznost(tmp3_mantisa, tmp2_mantisa, delitel_mantisa);
-		prirovnyat(tmp2_mantisa, tmp3_mantisa);
-
-        /*if (sravnenie(tmp1_mantisa, tmp2_mantisa) == ravno)
-            break;*/
+        raznost(tmp3_mantisa, tmp2_mantisa, delitel_mantisa);
+        prirovnyat(tmp2_mantisa, tmp3_mantisa);
 
         raznost(tmp3_mantisa, tmp1_mantisa, tmp2_mantisa);
         prirovnyat(tmp1_mantisa, tmp3_mantisa);
 
-        if (j == 29)
-            break;
         j++;
 
         if (29 - raznica_por + j < 30)
-		{
-			stepen++;
+        {
+            stepen++;
             plus_razryad(tmp1_mantisa, delimoe_mantisa[29 - raznica_por + j]);
-		}
+        }
         else
         {
-            /*if (rez.find(".") == -1)
-                rez += '.';*/
             plus_razryad(tmp1_mantisa, 0);
         }
-	}
-    if (j == 30)
-        j--;
+
+        if (j == 30)
+        {
+            j--;
+            break;
+        }
+    }
+    if (j == 29)
+    {
+        prirovnyat(tmp2_mantisa, delitel_mantisa);
+        while (sravnenie(tmp1_mantisa, tmp2_mantisa) != menshe)
+        {
+            summa(tmp3_mantisa, tmp2_mantisa, delitel_mantisa);
+            prirovnyat(tmp2_mantisa, tmp3_mantisa);
+            k++;
+        }
+        if (k >= 5)
+        {
+            for (int i = rez.length(); i > 0; i--)
+            {
+                if (rez[i] >= '0' && rez[i] <= '9')
+                {
+                    rez[i] += 1;
+                    if (rez[i - 1] >= '0' && rez[i - 1] <= '9' && rez[i] > '9')
+                    {
+                        rez[i] -= 10;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    if (j > 29)
+        j = 29;
     if (rez.find(".") == -1)
     {
         rez += "E";
@@ -544,26 +509,26 @@ int main()
     string input;
     cin >> input;
     Number n1(input);
-    n1.print();
+    //n1.print();
 
     cout << "Enter second number: ";
     cin >> input;
     Number n2(input);
-    n2.print();
+    //n2.print();
 
     Number rez = delenie(n1, n2);
-    if (!n1.input_error && !n2.input_error && !rez.input_error)
+    if (!rez.input_error)
     {
         cout << "Result: ";
         rez.print();
     }
-    else if (rez.input_error)
+    else
     {
         cout << "Result is not valid" << endl;
     }
-    else
+    /*if (!n1.input_error && !n2.input_error)
     {
         cout << "Input Error" << endl;
-    }
+    }*/
 	return 0;
 }
