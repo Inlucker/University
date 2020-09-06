@@ -1,0 +1,10 @@
+qwertyuiopqwertyuiopqwert 3.402823466E+38 42
+ThingD 1.175494351E–38 42
+ThingH 4.0 42
+ThingE 7 42
+ThingC 9 42
+ThingF 6 42
+ThingG 5 42
+ThingI 3 42
+ThingJ 2 42
+ThingB 10 42

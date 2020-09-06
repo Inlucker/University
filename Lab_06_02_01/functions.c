@@ -54,6 +54,11 @@ int read_file(char *file_name, struct thing list[], int *n)
 	{
         int i = 0;
         int input = fscanf(f, "%s%f%f\n", list[i].name, &list[i].m, &list[i].v);
+        if (fabsf(list[i].m) - 1.7976931348623157e+308 > 0 || list[i].m + 1.7976931348623157e+308 < 0)
+        {
+            printf("Input value out of float range\n");
+            return FILE_READ_ERROR;
+        }
         if (input == 0)
         {
             {
@@ -80,6 +85,11 @@ int read_file(char *file_name, struct thing list[], int *n)
         while(feof(f) == 0)
 		{
             input = fscanf(f, "%s%f%f\n", list[i].name, &list[i].m, &list[i].v);
+            if (fabsf(list[i].m) - 1.7976931348623157e+308 > 0 || list[i].m + 1.7976931348623157e+308 < 0)
+            {
+                printf("Input value out of float range\n");
+                return FILE_READ_ERROR;
+            }
             if (input == 0)
             {
                 {
@@ -134,5 +144,5 @@ void output(char *prefix, struct thing list[], int n)
 
 void print(struct thing *list)
 {
-        printf("%s %.3f %.3f\n", list->name, list->m, list->v);
+        printf("%s %.6f %.6f\n", list->name, list->m, list->v);
 }

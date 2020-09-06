@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 
 #define N 25
 #define M 100

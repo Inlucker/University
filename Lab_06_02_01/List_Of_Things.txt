@@ -1,3 +1,5 @@
+qwertyuiopqwertyuiopqwert 340282346600000000000000000000000000000 42
+poiuytrewqpoiuytrewqpoiuy -340282346600000000000000000000000000000 42
 ThingA 11.3 42
 ThingD 8 42
 ThingH 4.0 42
@@ -6,5 +8,5 @@ ThingC 9 42
 ThingF 6 42
 ThingG 5 42
 ThingI 3 42
-ThingJ 2 42
-ThingB 10 42
+ThingJ 0.0000001 42
+ThingB 42 42
