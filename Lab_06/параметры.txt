@@ -1,3 +1,0 @@
-gcc -std=c99 -Wall -c functions.c main.c -g3
-gcc -o main.exe main.o functions.o
-rm *.o *.exe
