@@ -74,7 +74,7 @@ int read_file(char *file_name, struct thing list[], int *n)
                 printf("Input value out of float range\n");
                 return FILE_READ_ERROR;
             }
-            if (input == 0)
+            if (input == -1)
             {
                 {
                     printf("File is empty\n");
