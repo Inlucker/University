@@ -4,7 +4,7 @@ int main(int argc, char** argv)
 {
     char file_name[M] = "";
     char prefix[M] = "";
-    struct thing list[M];
+    struct thing list[L];
 	int n = 0;
 
 	if (read_args(argc, argv, prefix, file_name) != 0)

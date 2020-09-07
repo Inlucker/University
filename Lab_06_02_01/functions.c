@@ -34,10 +34,16 @@ int read_args(int argc, char** argv, char* prefix, char* file_name)
 		break;
 	case 3:
 		strcpy(prefix, argv[2]);
-		strcpy(file_name, argv[1]);
+        if (strlen(argv[1]) > M)
+        {
+
+            printf("Too long file name\n");
+            return CONSOLE_ARGS_ERROR;
+        }
+        strcpy(file_name, argv[1]);
 		break;
 	default:
-		printf("console args error\n");
+        printf("Console args error\n");
 		return CONSOLE_ARGS_ERROR;
 		break;
 
@@ -53,39 +59,17 @@ int read_file(char *file_name, struct thing list[], int *n)
 	if (f != NULL)
 	{
         int i = 0;
-        int input = fscanf(f, "%s%f%f\n", list[i].name, &list[i].m, &list[i].v);
-        if (fabsf(list[i].m) - 1.7976931348623157e+308 > 0 || list[i].m + 1.7976931348623157e+308 < 0)
-        {
-            printf("Input value out of float range\n");
-            return FILE_READ_ERROR;
-        }
-        if (input == 0)
-        {
-            {
-                printf("File is empty\n");
-                return FILE_READ_ERROR;
-            }
-        }
-        else if (input != 3)
-        {
-            printf("Wrong data in File\n");
-            return FILE_READ_ERROR;
-        }
-            else
-            {
-                if (strlen(list[i].name) > 25)
-                {
-                    printf("Thing name is too long\n");
-                    return FILE_READ_ERROR;
-                }
-                list[i].p = list[i].m/list[i].v;
-                i++;
-            }
+        int input = 0;
 
         while(feof(f) == 0)
 		{
             input = fscanf(f, "%s%f%f\n", list[i].name, &list[i].m, &list[i].v);
-            if (fabsf(list[i].m) - 1.7976931348623157e+308 > 0 || list[i].m + 1.7976931348623157e+308 < 0)
+            if (list[i].m < 0 || list[i].v <= 0)
+            {
+                printf("Negative value or volume == 0\n");
+                return FILE_READ_ERROR;
+            }
+            if (list[i].m - 1.7976931348623157e+308 > 0 || list[i].v - 1.7976931348623157e+308 > 0)
             {
                 printf("Input value out of float range\n");
                 return FILE_READ_ERROR;
@@ -104,7 +88,7 @@ int read_file(char *file_name, struct thing list[], int *n)
             }
                 else
                 {
-                    if (strlen(list[i].name) > 25)
+                    if (strlen(list[i].name) > N)
                     {
                         printf("Thing name is too long\n");
                         return FILE_READ_ERROR;
@@ -113,6 +97,11 @@ int read_file(char *file_name, struct thing list[], int *n)
                     i++;
                 }
 		}
+        if (i > L)
+        {
+            printf("Too much information in File\n");
+            return FILE_READ_ERROR;
+        }
 		*n = i;
 	}
 	else
