@@ -1,9 +1,6 @@
 #include <iostream>
 #include <string>
 
-#define INPUT_ERROR -2
-#define REZ_ERROR -3
-
 #define bolshe 1
 #define ravno 0
 #define menshe -1
@@ -158,7 +155,7 @@ void make_number(Number *num, string str)
             tmp_por += do_tochki;
         else
             tmp_por = do_tochki - tmp_por;
-        num->por = tmp_por - posle_tochki;
+        num->por = tmp_por;
         //cout << tmp_por << endl;
         num->poryd = "";
         if (tmp_por < 0)
@@ -178,7 +175,7 @@ void make_number(Number *num, string str)
         }
     }
 
-    if  (num->poryd.length() > 5 || num->por - posle_tochki < -99999 || num->por + do_tochki > 99999)
+    if  (num->poryd.length() > 5)
         num->input_error = true;
 
     if (num->poryd == "")
@@ -512,20 +509,19 @@ int main()
     Number n1;
     make_number(&n1, input);
     if (n1.input_error)
-    {
-        cout << "Input_error" << endl;
-        return INPUT_ERROR;
-    }
+        cout << "This number is not correct" << endl;
+    else
+        print(n1);
 
     cout << "Enter first number: ";
     cin >> input;
     Number n2;
     make_number(&n2, input);
     if (n2.input_error)
-    {
-        cout << "Input_error" << endl;
-        return INPUT_ERROR;
-    }
+        cout << "This number is not correct" << endl;
+    else
+        print(n2);
+
 
     Number rez = delenie(n1, n2);
     if (!rez.input_error)
@@ -534,9 +530,7 @@ int main()
         print(rez);
     }
     else
-    {
         cout << "Result is not valid" << endl;
-    }
 
     return 0;
 }

@@ -148,7 +148,7 @@ public:
 				tmp_por += do_tochki;
 			else
 				tmp_por = do_tochki - tmp_por;
-            por = tmp_por - posle_tochki;
+			por = tmp_por;
 			//cout << tmp_por << endl;
 			poryd = "";
 			if (tmp_por < 0)
@@ -168,7 +168,7 @@ public:
 			}
 		}
 
-        if  (poryd.length() > 5 || por - posle_tochki < -99999 || por + do_tochki > 99999)
+        if  (poryd.length() > 5)
             input_error = true;
 
 		if (poryd == "")
