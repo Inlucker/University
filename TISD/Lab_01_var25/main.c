@@ -1,4 +1,4 @@
-#include <stdio.h>
+/*#include <stdio.h>
 #include <string.h>
 
 #define bolshe 1
@@ -10,3 +10,4 @@ int main()
 
     return 0;
 }
+*/
