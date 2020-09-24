@@ -9,7 +9,7 @@ using namespace std;
 
 struct Number
 {
-    bool input_error = false;
+    //bool input_error = false;
     char znak;
     char mantisa[30];
     string mant;
@@ -19,8 +19,9 @@ struct Number
     int por;
 };
 
-void make_number(Number *num, string str)
+int make_number(Number *num, string str)
 {
+    bool input_error;
     num->znak = '+';
     num->zn_por = '+';
     int tmp_i = 0;
@@ -48,8 +49,8 @@ void make_number(Number *num, string str)
                 flag = 2;
             else if (str[i] != '0')
             {
-                num->input_error = true;
-                break;
+                //input_error = true;
+                return -1;
             }
         }
 
@@ -66,7 +67,7 @@ void make_number(Number *num, string str)
             else if (str[i] == 'e' || str[i] == 'E')
                 flag = 4;
             else
-                num->input_error = true;
+                input_error = true;
             break;
         case 2:
             if (str[i] == '0')
@@ -77,7 +78,7 @@ void make_number(Number *num, string str)
                 flag = 3;
             }
             else if (str[i] != '.')
-                num->input_error = true;
+                input_error = true;
             break;
         case 3:
             if (str[i] >= '0' && str[i] <= '9')
@@ -89,7 +90,7 @@ void make_number(Number *num, string str)
                 flag = 4;
             }
             else
-                num->input_error = true;
+                input_error = true;
             break;
         case 4:
             if (str[i] == '+' || str[i] == '-')
@@ -97,19 +98,22 @@ void make_number(Number *num, string str)
             else if (str[i] >= '0' && str[i] <= '9')
                 num->poryd += str[i];
             else
-                num->input_error = true;
+                input_error = true;
             flag = 5;
             break;
         case 5:
             if (str[i] >= '0' && str[i] <= '9')
                 num->poryd += str[i];
             else
-                num->input_error = true;
+                input_error = true;
             break;
         }
         if (do_tochki > 30)
-            num->input_error = true;
+            input_error = true;
     }
+
+    if (input_error == true)
+        return -1;
 
     num->mantisa_len = num->mant.length();
     int j = 29;
@@ -176,7 +180,10 @@ void make_number(Number *num, string str)
     }
 
     if  (num->poryd.length() > 5)
-        num->input_error = true;
+    {
+        //num->input_error = true;
+        return 1;
+    }
 
     if (num->poryd == "")
         num->poryd = "0";
@@ -195,6 +202,7 @@ void make_number(Number *num, string str)
     cout << endl;*/
     //cout << znak << "0." << mant << "E" << zn_por << poryd << '.' << endl;
     //print();
+    return 0;
 }
 
 void print(Number number)
@@ -307,7 +315,7 @@ void prirovnyat (int rez[30], int input[30])
 }
 
 
-Number delenie (Number n1,  Number n2)
+Number delenie (Number n1,  Number n2, int *make_rez)
 {
     string rez = "";
 
@@ -337,14 +345,14 @@ Number delenie (Number n1,  Number n2)
     {
         rez = "error";
         Number chastnoe;
-        make_number(&chastnoe, rez);
+        *make_rez = make_number(&chastnoe, rez);
         return chastnoe;
     }
     else if (is_zero1)
     {
         rez += "0";
         Number chastnoe;
-        make_number(&chastnoe, rez);
+        *make_rez = make_number(&chastnoe, rez);
         return chastnoe;
     }
 
@@ -369,7 +377,7 @@ Number delenie (Number n1,  Number n2)
         if (tmp1_mantisa[0] != 0)
         {
             Number chastnoe;
-            make_number(&chastnoe, rez);
+            *make_rez = make_number(&chastnoe, rez);
             return chastnoe;
         }
         if (30 - n1.mantisa_len + n2.mantisa_len < 30)
@@ -515,7 +523,7 @@ Number delenie (Number n1,  Number n2)
 
     //cout << rez << endl;
     Number chastnoe;
-    make_number(&chastnoe, rez);
+    *make_rez = make_number(&chastnoe, rez);
     return chastnoe;
 }
 
@@ -526,8 +534,10 @@ int main()
     string input;
     cin >> input;
     Number n1;
-    make_number(&n1, input);
-    if (n1.input_error)
+
+    int make_rez = 0;
+    make_rez = make_number(&n1, input);
+    if (make_rez == -1)
         cout << "This number is not correct" << endl;
     else
         print(n1);
@@ -536,15 +546,16 @@ int main()
     cout << "Enter second number: ";
     cin >> input;
     Number n2;
-    make_number(&n2, input);
-    if (n2.input_error)
+    make_rez = make_number(&n2, input);
+    if (make_rez == -1)
         cout << "This number is not correct" << endl;
     else
         print(n2);
 
 
-    Number rez = delenie(n1, n2);
-    if (!rez.input_error && !n1.input_error && !n2.input_error) //Костыль
+    Number rez = delenie(n1, n2, &make_rez);
+    //if (!rez.input_error && !n1.input_error && !n2.input_error) //Костыль
+    if  (make_rez == 0)
     {
         cout << "Result: ";
         print(rez);
