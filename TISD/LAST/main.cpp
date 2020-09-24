@@ -9,14 +9,13 @@ using namespace std;
 
 struct Number
 {
-    //bool input_error = false;
-    char znak;
-    char mantisa[30];
-    string mant;
-    char zn_por;
-    string poryd;
-    int mantisa_len;
-    int por;
+    char znak; //Знак числа
+    char mantisa[30]; // мантисса
+    string mant; // мантисса в строковом виде
+    char zn_por; // знак порядка
+    string poryd; // порядок в строковом виде
+    int mantisa_len; // длина мантиссы
+    int por; // порядок
 };
 
 int make_number(Number *num, string str)
