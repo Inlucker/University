@@ -111,6 +111,8 @@ int make_number(Number *num, string str)
             input_error = true;
     }
 
+    //cout << do_tochki << endl;
+
     if (input_error == true)
         return -1;
 
@@ -183,7 +185,7 @@ int make_number(Number *num, string str)
         return -1;*/
 
     if (num->por - do_tochki > 99999 || num->por - do_tochki < -99999)
-        return -1;
+        return -2;
 
     if  (num->poryd.length() > 5)
     {
@@ -546,7 +548,7 @@ int main()
 
     int make_rez = 0;
     make_rez = make_number(&n1, input);
-    if (make_rez == -1)
+    if (make_rez < 0)
     {
         flag = true;
         cout << "This number is not correct" << endl;
@@ -563,7 +565,7 @@ int main()
     cin >> input;
     Number n2;
     make_rez = make_number(&n2, input);
-    if (make_rez == -1)
+    if (make_rez < 0)
     {
         flag = true;
         cout << "This number is not correct" << endl;
@@ -579,7 +581,7 @@ int main()
 
     Number rez = delenie(n1, n2, &make_rez);
     //if (!rez.input_error && !n1.input_error && !n2.input_error) //Костыль
-    if  (make_rez == 0 && !flag)
+    if  ((make_rez == 0 || make_rez == -2) && !flag)
     {
         cout << "Result: ";
         print(rez);
