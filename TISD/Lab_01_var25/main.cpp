@@ -178,6 +178,13 @@ int make_number(Number *num, string str)
         }
     }
 
+    //cout << bool(num->por - num->mantisa_len < 99999) << " " << bool(num->por - num->mantisa_len < -99999) << " " << num->por << " " << num->mantisa_len << " " << num->por - num->mantisa_len << endl;
+    /*if  ((num->por - num->mantisa_len > 99999) || (num->por - num->mantisa_len < -99999))
+        return -1;*/
+
+    if (num->por - do_tochki > 99999 || num->por - do_tochki < -99999)
+        return -1;
+
     if  (num->poryd.length() > 5)
     {
         //num->input_error = true;
@@ -359,6 +366,7 @@ Number delenie (Number n1,  Number n2, int *make_rez)
     if (sravnenie(delimoe_mantisa, delitel_mantisa) == ravno)
     {
         rez += "100000000000000000000000000000";
+        //      123456789012345678901234567890
         j = 30;
     }
 
@@ -489,9 +497,9 @@ Number delenie (Number n1,  Number n2, int *make_rez)
             }
         }
     }
-    //FOR WHAT???
-    /*if (j > 29)
-        j = 29;*/
+    //FOR WHAT??? 2/2
+    if (j > 29)
+        j = 29;
     if (rez.find(".") == -1)
     {
         rez += "E";
