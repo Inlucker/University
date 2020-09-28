@@ -552,6 +552,7 @@ int main()
     {
         flag = true;
         cout << "This number is not correct" << endl;
+        return -1;
     }
     else
         print(n1);
@@ -569,6 +570,7 @@ int main()
     {
         flag = true;
         cout << "This number is not correct" << endl;
+        return -1;
     }
     else
         print(n2);
@@ -587,7 +589,10 @@ int main()
         print(rez);
     }
     else
+    {
         cout << "Result is not valid" << endl;
+        return -1;
+    }
 
     return 0;
 }
