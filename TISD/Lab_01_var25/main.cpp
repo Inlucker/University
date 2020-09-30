@@ -4,13 +4,14 @@
 #define bolshe 1
 #define ravno 0
 #define menshe -1
+#define mant_len 31
 
 using namespace std;
 
 struct Number
 {
     char znak; //Знак числа
-    char mantisa[30]; // мантисса
+    char mantisa[mant_len]; // мантисса
     string mant; // мантисса в строковом виде
     char zn_por; // знак порядка
     string poryd; // порядок в строковом виде
@@ -29,7 +30,7 @@ int make_number(Number *num, string str)
         num->znak = str[0];
         tmp_i++;
     }
-    for (int i = 0; i < 30; i++)
+    for (int i = 0; i < mant_len; i++)
         num->mantisa[i] = '0';
     num->mant = "";
     num->poryd = "";
@@ -107,7 +108,7 @@ int make_number(Number *num, string str)
                 input_error = true;
             break;
         }
-        if (do_tochki > 30)
+        if (do_tochki > mant_len - 1)
             input_error = true;
     }
 
@@ -120,7 +121,7 @@ int make_number(Number *num, string str)
     int j = 29;
     for (int i = num->mantisa_len - 1; i >= 0; i--)
     {
-        num->mantisa[j] = num->mant[i];
+        num->mantisa[j + 1] = num->mant[i];
         j--;
     }
     if (num->mant == "")
@@ -180,12 +181,12 @@ int make_number(Number *num, string str)
         }
     }
 
-    //cout << bool(num->por - num->mantisa_len < 99999) << " " << bool(num->por - num->mantisa_len < -99999) << " " << num->por << " " << num->mantisa_len << " " << num->por - num->mantisa_len << endl;
+    //cout << bool(num->por - do_tochki > 99999) << " " << bool(num->por - do_tochki < -99999) << " " << num->por << " " << do_tochki << " " << num->por - do_tochki << endl;
     /*if  ((num->por - num->mantisa_len > 99999) || (num->por - num->mantisa_len < -99999))
         return -1;*/
 
-    if (num->por - do_tochki > 99999 || num->por - do_tochki < -99999)
-        return -2;
+    /*if (num->por - do_tochki > 99999 || num->por - do_tochki < -99999)
+        return -2;*/
 
     if  (num->poryd.length() > 5)
     {
@@ -205,7 +206,7 @@ int make_number(Number *num, string str)
     //cout << por << endl;
 
     //cout << mantisa_len << endl;
-    /*for (int i = 0; i < 30; i++)
+    /*for (int i = 0; i < mant_len; i++)
         cout << mantisa[i];
     cout << endl;*/
     //cout << znak << "0." << mant << "E" << zn_por << poryd << '.' << endl;
@@ -218,14 +219,14 @@ void print(Number number)
     cout << number.znak << "0." << number.mant << "E" << number.zn_por << number.poryd << '.' << endl;
 }
 
-int summa (int rez[30], int n1[30], int n2[30])
+int summa (int rez[mant_len], int n1[mant_len], int n2[mant_len])
 {
     int tmp = 0;
 
-    for (int i = 29; i >= 0; i--)
+    for (int i = mant_len - 1; i >= 0; i--)
         rez[i] = 0;
 
-    for (int i = 29; i >= 0; i--)
+    for (int i = mant_len - 1; i >= 0; i--)
     {
         rez[i] = n1[i] + n2[i] + tmp;
         tmp = 0;
@@ -241,14 +242,14 @@ int summa (int rez[30], int n1[30], int n2[30])
 }
 
 //Функция разночти двух чисел по разрядам
-void raznost (int rez[30], int n1[30], int n2[30])
+void raznost (int rez[mant_len], int n1[mant_len], int n2[mant_len])
 {
     int tmp = 0;
 
-    for (int i = 29; i >= 0; i--)
+    for (int i = mant_len - 1; i >= 0; i--)
         rez[i] = 0;
 
-    for (int i = 29; i >= 0; i--)
+    for (int i = mant_len - 1; i >= 0; i--)
     {
         rez[i] = n1[i] - n2[i] - tmp;
         tmp = 0;
@@ -264,10 +265,10 @@ void raznost (int rez[30], int n1[30], int n2[30])
 }
 
 //Функция сравнения двух чисел хранящихся в массивах по разрядам
-int sravnenie (int n1[30], int n2[30])
+int sravnenie (int n1[mant_len], int n2[mant_len])
 {
     int rez = 0;
-    for (int i = 0; i < 30; i++)
+    for (int i = 0; i < mant_len; i++)
     {
         if (n1[i] < n2[i])
         {
@@ -284,16 +285,16 @@ int sravnenie (int n1[30], int n2[30])
 }
 
 //Функция получения определённой части числа хранящегося в массиве по разрядам
-void get (int rez[30], int input[30], int n)
+void get (int rez[mant_len], int input[mant_len], int n)
 {
     int j = 0;
     while (input[j] == 0)
     {
         j++;
     }
-    for (int i = 0; i < 30; i++)
+    for (int i = 0; i < mant_len; i++)
     {
-        if (i < 30 - n || j >= 30)
+        if (i < mant_len - n || j >= mant_len)
             rez[i] = 0;
         else
         {
@@ -304,19 +305,19 @@ void get (int rez[30], int input[30], int n)
 }
 
 //Функция добавления в конец числа новой цифры
-void plus_razryad (int rez[30], int n)
+void plus_razryad (int rez[mant_len], int n)
 {
-    for (int i = 0; i < 29; i++)
+    for (int i = 0; i < mant_len - 1; i++)
     {
         rez[i] = rez[i + 1];
     }
-    rez[29] = n;
+    rez[mant_len - 1] = n;
 }
 
 //Функция присваивания для чисел хранящихся в массивах по разрядам
-void prirovnyat (int rez[30], int input[30])
+void prirovnyat (int rez[mant_len], int input[mant_len])
 {
-    for (int i = 0; i < 30; i++)
+    for (int i = 0; i < mant_len; i++)
     {
         rez[i] = input[i];
     }
@@ -333,8 +334,8 @@ Number delenie (Number n1,  Number n2, int *make_rez)
         rez += "+";
 
     bool is_zero1 = true;
-    int delimoe_mantisa[30];
-    for (int i = 0; i < 30; i++)
+    int delimoe_mantisa[mant_len];
+    for (int i = 0; i < mant_len; i++)
     {
         delimoe_mantisa[i] = n1.mantisa[i] - 48;
         if (n1.mantisa[i] != '0')
@@ -342,8 +343,8 @@ Number delenie (Number n1,  Number n2, int *make_rez)
     }
 
     bool is_zero2 = true;
-    int delitel_mantisa[30];
-    for (int i = 0; i < 30; i++)
+    int delitel_mantisa[mant_len];
+    for (int i = 0; i < mant_len; i++)
     {
         delitel_mantisa[i] = n2.mantisa[i] - 48;
         if (n2.mantisa[i] != '0')
@@ -372,11 +373,11 @@ Number delenie (Number n1,  Number n2, int *make_rez)
         j = 30;
     }
 
-    int tmp1_mantisa[30];
+    int tmp1_mantisa[mant_len];
     get(tmp1_mantisa, delimoe_mantisa, n2.mantisa_len);
-    int tmp2_mantisa[30];
+    int tmp2_mantisa[mant_len];
     prirovnyat(tmp2_mantisa, delitel_mantisa);
-    int tmp3_mantisa[30];
+    int tmp3_mantisa[mant_len];
 
     int raznica_por = n1.mantisa_len - n2.mantisa_len;
 
@@ -403,6 +404,7 @@ Number delenie (Number n1,  Number n2, int *make_rez)
 
 
     int k = 0;
+
     int stepen = 0;
     while (j < 30)
     {
@@ -458,7 +460,7 @@ Number delenie (Number n1,  Number n2, int *make_rez)
         if (29 - raznica_por + j < 30)
         {
             stepen++;
-            plus_razryad(tmp1_mantisa, delimoe_mantisa[29 - raznica_por + j]);
+            plus_razryad(tmp1_mantisa, delimoe_mantisa[mant_len - 1 - raznica_por + j]);
         }
         else
         {
@@ -583,7 +585,8 @@ int main()
 
     Number rez = delenie(n1, n2, &make_rez);
     //if (!rez.input_error && !n1.input_error && !n2.input_error) //Костыль
-    if  ((make_rez == 0 || make_rez == -2) && !flag)
+    //if  ((make_rez == 0 || make_rez == -2) && !flag)
+    if  (make_rez == 0 && !flag)
     {
         cout << "Result: ";
         print(rez);
