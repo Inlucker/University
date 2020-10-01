@@ -31,7 +31,7 @@
 
 /*double ** allocate_matrix_2(int n, int m)
 {
-    double**data= malloc(n * sizeof(double*) + n * m * sizeof(double));
+    double**data = malloc(n * sizeof(double*) + n * m * sizeof(double));
 
     if (!data)
         return NULL;
@@ -120,8 +120,44 @@ int mysort(void *mas, size_t size_of_mas, size_t size_of_type, int ( * comparato
     return 0;
 }
 
-int filtr(const int *pb_src, const int *pe_src, int **pb_dst, int **pe_dst)
+int key(const int *pb_src, const int *pe_src, int **pb_dst, int **pe_dst)
 {
+    int *mas_f = NULL;
+    float sr = 0;
+    int n = 0;
+    int m = 0;
+
+    int *pa = pb_src;
+    for (pa = pb_src; pa < pe_src; pa++)
+    {
+        sr += *pa;
+        n++;
+    }
+    sr /= n;
+
+    for (pa = pb_src; pa < pe_src; pa++)
+    {
+        if (*pa > sr)
+            m++;
+    }
+
+    mas_f = calloc(m, sizeof (int));
+    if (!mas_f)
+        return MEMORY_ERROR;
+
+    int j = 0;
+    for (pa = pb_src; pa < pe_src; pa++)
+    {
+        if (*pa > sr)
+        {
+            mas_f[j] = *pa;
+            j++;
+        }
+    }
+
+    *pb_dst = mas_f;
+    *pe_dst = &mas_f[m];
+
     return 0;
 }
 

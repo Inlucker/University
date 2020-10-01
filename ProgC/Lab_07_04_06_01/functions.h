@@ -12,6 +12,7 @@
 #define FILE_READ_ERROR -2
 #define MEMORY_ERROR -3
 #define FILE_OUTPUT_ERROR -4
+#define FILTR_ERROR -5
 
 /*
 #define SWAP(a, b, size)                                                      \
@@ -46,7 +47,7 @@ int comp_string(const char *i, const char *j);
 
 int mysort(void *mas, size_t size_of_mas, size_t size_of_type, int ( * comparator ) ( const void *, const void * ));
 
-int filtr(const int *pb_src, const int *pe_src, int **pb_dst, int **pe_dst);
+int key(const int *pb_src, const int *pe_src, int **pb_dst, int **pe_dst);
 
 int read_file_n(char *file_name, int *n);
 
