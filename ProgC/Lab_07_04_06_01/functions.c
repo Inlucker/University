@@ -1,0 +1,154 @@
+/*!
+  \file
+  \brief Исходный файл содержащий в себе реализации всех используемых функций
+  */
+#include "functions.h"
+
+/*void swap_int(int *a, int *b)
+{
+    *a = *a + *b;
+    *b = *a - *b;
+    *a = *a - *b;
+}*/
+
+/*int puz_sort(int *mas, int n)
+{
+    for (int i = 0; i < n; i++)
+        if (i % 2 == 0)
+        {
+            for (int j = n - 1; j > 0; j--)
+                if (mas[j - 1] > mas [j])
+                    swap_int(&mas[j - 1], &mas[j]);
+        }
+        else
+        {
+            for (int j = 0; j < n - 1; j++)
+                if (mas[j + 1] < mas [j])
+                    swap_int(&mas[j + 1], &mas[j]);
+        }
+    return 0;
+}*/
+
+/*double ** allocate_matrix_2(int n, int m)
+{
+    double**data= malloc(n * sizeof(double*) + n * m * sizeof(double));
+
+    if (!data)
+        return NULL;
+
+    for(int i = 0; i < n; i++)
+        data[i] = (double*)((char*)data + n * sizeof(double*) + i * m * sizeof(double));
+
+    return data;
+}*/
+
+void swap(void *a, void *b, size_t size_of_type)
+{
+    char *tmp_a = a;
+    char *tmp_b = b;
+    size_t tmp_size = size_of_type;
+    do
+    {
+        char tmp = *tmp_a;
+        *tmp_a++ = *tmp_b;
+        *tmp_b++ = tmp;
+    } while (--tmp_size > 0);
+}
+
+int comp_int(const int *i, const int *j)
+{
+    return *i - *j;
+}
+
+int comp_float(const float *i, const float *j)
+{
+    float rez = *i - *j;
+    if (rez > 0)
+        return 1;
+    else if (rez < 0)
+        return -1;
+    else
+        return 0;
+}
+
+int comp_char(const char *i, const char *j)
+{
+    char tmp1 = *i;
+    char tmp2 = *j;
+
+    if (tmp1 < 97)
+        tmp1 += 32;
+
+    if (tmp2 < 97)
+        tmp2 += 32;
+
+    if(tmp1 < tmp2)
+        return -1;
+    else if (tmp1 > tmp2)
+        return 1;
+    else
+        return 0;
+}
+
+int comp_string(const char *i, const char *j)
+{
+    while (comp_char(i, j) == 0 && *i != '\0' && *j != '\0')
+    {
+        *i++;
+        *j++;
+    }
+    return comp_char(i, j);
+}
+
+int mysort(void *mas, size_t size_of_mas, size_t size_of_type, int ( * comparator ) ( const void *, const void * ))
+{
+    for (int i = 0; i < size_of_mas; i++)
+        if (i % 2 == 0)
+        {
+            for (int j = size_of_mas - 1; j > 0; j--)
+                if (comparator(&mas[j * size_of_type - size_of_type], &mas[j * size_of_type]) > 0)
+                    swap(&mas[j * size_of_type - size_of_type], &mas[j * size_of_type], size_of_type);
+                    //SWAP(&mas[j * size_of_type - size_of_type], &mas[j * size_of_type], size_of_type);
+        }
+        else
+        {
+            for (int j = 0; j < size_of_mas - 1; j++)
+                if (comparator(&mas[j * size_of_type + size_of_type], &mas[j * size_of_type]) < 0)
+                    swap(&mas[j * size_of_type + size_of_type], &mas[j * size_of_type], size_of_type);
+                    //SWAP(&mas[j * size_of_type + size_of_type], &mas[j * size_of_type], size_of_type);
+        }
+    return 0;
+}
+
+int read_file(char *file_name, void *mas, int *n)
+{
+    FILE *f = NULL;
+    f = fopen(file_name, "r");
+
+    if (f != NULL)
+    {
+        int i = 0;
+        int input_rez = 0;
+
+        char input[L];
+        input_rez = fscanf(f, "%s\n", input);
+
+        if (input_rez == -1)
+            return FILE_READ_ERROR;
+
+        while (feof(f) == 0)
+        {
+            input_rez = fscanf(f, "%s\n", input);
+
+            if (input_rez == -1)
+                return FILE_READ_ERROR;
+            i++;
+        }
+        *n = i;
+    }
+    else
+        return FILE_READ_ERROR;
+    fclose(f);
+
+    return 0;
+}
