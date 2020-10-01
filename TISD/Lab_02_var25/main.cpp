@@ -183,6 +183,54 @@ int add_record (car **car_list, int size_of_list, car car_record)
     return size_of_list + 1;
 }
 
+void car_record_copy (car *car_list1, car *car_list2, int i)
+{
+    car_list1[i] = car_list2[i+1];
+}
+
+int delete_record (car **car_list, int size_of_list, int id)
+{
+    if (id > size_of_list && id <= 0)
+        return -1;
+    car *cars_list_new = new car [size_of_list - 1];
+    car_list_copy(cars_list_new, *car_list, id - 1);
+    for (int i = id - 1; i < size_of_list - 1; i++)
+        car_record_copy(cars_list_new, *car_list, i);
+    //cout << car_list[0]->brand << endl;
+    //print_car_list(cars_list_new, size_of_list - 1);
+
+    delete[] *car_list;
+    *car_list = new car[size_of_list - 1];
+    car_list_copy(*car_list, cars_list_new, size_of_list - 1);
+    /*cout << "*car_list:" << endl;
+    print_car_list(*car_list, size_of_list - 1);*/
+
+    delete [] cars_list_new;
+
+    return size_of_list - 1;
+}
+
+//This function doesn't work :(!!!!!!!
+int delete_car_record_by_pole(int pole, string znach, car **car_list, int *size_of_list)
+{
+    int tmp_size = *size_of_list;
+    switch(pole)
+    {
+    case 0:
+        for (int i = 0; i < tmp_size; i ++) //error when i = 1 (tmp_size - 1)
+        {
+            cout << car_list[i]->brand << " " << znach << endl;
+            if (car_list[i]->brand == znach)
+                tmp_size = delete_record(car_list, tmp_size, i + 1);
+        }
+        break;
+    default:
+        return ERROR;
+        break;
+    }
+    *size_of_list = tmp_size;
+}
+
 /*void print_new_car_list(new_car *new_cars_list, int size_of_list)
 {
     for (int i = 0; i < size_of_list; i++)
@@ -232,6 +280,14 @@ int main()
     print_car_list(cars_list, size_of_list);
 
     cout << size_of_list << endl;
+
+    //size_of_list = delete_record(&cars_list, size_of_list, 1);
+    if (delete_car_record_by_pole(0, "Valve", &cars_list, &size_of_list) != -1) //Error when "Steam"
+        cout << size_of_list << endl;
+    if (size_of_list != -1)
+    {
+        print_car_list(cars_list, size_of_list);
+    }
 
     delete [] cars_list;
     cout << "OK" << endl;
