@@ -168,11 +168,11 @@ int read_record (string input, car *car_record_rez)
 
 void print_car_record(car car_record)
 {
-    cout << car_record.brand << "; " << car_record.manufacturer_country << "; " << car_record.price << "; " << car_record.color << "; " << car_record.is_new << "; ";
+    cout << car_record.brand << "; " << car_record.manufacturer_country << "; " << car_record.price << "; " << car_record.color << "; ";// << car_record.is_new << "; ";
     if (car_record.is_new)
-        cout << car_record.condition.new_car_params.guarantee << ";" << endl;
+        cout << "new; " << car_record.condition.new_car_params.guarantee << ";" << endl;
     else
-        cout << car_record.condition.old_car_params.year_of_release << "; " << car_record.condition.old_car_params.probeg << "; "
+        cout << "old; " << car_record.condition.old_car_params.year_of_release << "; " << car_record.condition.old_car_params.probeg << "; "
              << car_record.condition.old_car_params.repair_count << "; " << car_record.condition.old_car_params.owners_count << ";" << endl;
 }
 
@@ -180,7 +180,7 @@ void print_car_list(car *cars_list, int size_of_list)
 {
     for (int i = 0; i < size_of_list; i++)
     {
-        cout << i << " ";
+        //cout << i << " ";
         /*cout << cars_list[i].brand << "; " << cars_list[i].manufacturer_country << "; " << cars_list[i].price << "; " << cars_list[i].color << "; " << cars_list[i].is_new << "; ";
         if (cars_list[i].is_new)
             cout << cars_list[i].condition.new_car_params.guarantee << ";" << endl;
@@ -246,7 +246,6 @@ int delete_record (car **car_list, int size_of_list, int id)
     return size_of_list - 1;
 }
 
-//This function doesn't work :(!!!!!!!
 int delete_car_record_by_pole(int pole, string znach, car **car_list, int *size_of_list)
 {
     int tmp_size = *size_of_list;
@@ -505,6 +504,121 @@ int print_car_record_by_pole(int pole, string znach, car **car_list, int size_of
     return 0;
 }
 
+int print_car_record_by_poles(int pole[10], string znach[10], car **car_list, int size_of_list)
+{
+    for (int i = 0; i < size_of_list; i++)
+    {
+        bool flag = true;
+
+        for (int j = 0; j < 10; j++)
+        {
+            if (pole[j])
+                switch(j)
+                {
+                case BRAND:
+                    if (((*car_list)+i)->brand != znach[j])
+                        flag = false;
+                    break;
+                case MANUFACURER_COUNTRY:
+                    if (((*car_list)+i)->manufacturer_country != znach[j])
+                        flag = false;
+                    break;
+                case PRICE:
+                {
+                    int tmp_znach = 0;
+                    if (string_to_int(znach[j], &tmp_znach) != 0)
+                        return ERROR;
+                    if (((*car_list)+i)->price != tmp_znach)
+                        flag = false;
+                }
+                    break;
+                case COLOR:
+                    if (((*car_list)+i)->color != znach[j])
+                        flag = false;
+                    break;
+                case IS_NEW:
+                {
+                    string tmp_znach = "";
+                    if (((*car_list)+i)->is_new)
+                        tmp_znach = "new";
+                    else
+                        tmp_znach = "old";
+                    if (tmp_znach != znach[j])
+                        flag = false;
+                }
+                    break;
+                case GUARANTEE:
+                {
+                    if (((*car_list)+i)->is_new)
+                    {
+                        int tmp_znach = 0;
+                        if (string_to_int(znach[j], &tmp_znach) != 0)
+                            return ERROR;
+                        if (((*car_list)+i)->condition.new_car_params.guarantee != tmp_znach)
+                            flag = false;
+                    }
+                }
+                    break;
+                case YEAR_OF_RELEASE:
+                {
+                    if (!((*car_list)+i)->is_new)
+                    {
+                        int tmp_znach = 0;
+                        if (string_to_int(znach[j], &tmp_znach) != 0)
+                            return ERROR;
+                        if (((*car_list)+i)->condition.old_car_params.year_of_release != tmp_znach)
+                            flag = false;
+                    }
+                }
+                    break;
+                case PROBEG:
+                {
+                    if (!((*car_list)+i)->is_new)
+                    {
+                        int tmp_znach = 0;
+                        if (string_to_int(znach[j], &tmp_znach) != 0)
+                            return ERROR;
+                        if (((*car_list)+i)->condition.old_car_params.probeg != tmp_znach)
+                            flag = false;
+                    }
+                }
+                    break;
+                case REPAIR_COUNT:
+                {
+                    if (!((*car_list)+i)->is_new)
+                    {
+                        int tmp_znach = 0;
+                        if (string_to_int(znach[j], &tmp_znach) != 0)
+                            return ERROR;
+                        if (((*car_list)+i)->condition.old_car_params.repair_count != tmp_znach)
+                            flag = false;
+                    }
+                }
+                    break;
+                case OWNERS_COUNT:
+                {
+                    if (!((*car_list)+i)->is_new)
+                    {
+                        int tmp_znach = 0;
+                        if (string_to_int(znach[j], &tmp_znach) != 0)
+                            return ERROR;
+                        if (((*car_list)+i)->condition.old_car_params.owners_count != tmp_znach)
+                            flag = false;
+                    }
+                }
+                    break;
+                default:
+                    return ERROR;
+                    break;
+                }
+        }
+
+        if (flag)
+            print_car_record(*((*car_list)+i));
+    }
+    return 0;
+}
+
 /*void print_new_car_list(new_car *new_cars_list, int size_of_list)
 {
     for (int i = 0; i < size_of_list; i++)
@@ -536,6 +650,7 @@ int main()
     cout << "Hi" << endl;
 
     int size_of_list = 1;
+    //int *key_list = new int[size_of_list];
     car *cars_list = new car [size_of_list];
 
     string inp = "";
@@ -548,7 +663,7 @@ int main()
     read_record(inp, &cars_list[2]);
     print_car_list(cars_list, size_of_list);*/
 
-    inp = "Steam; America; 2 000 000; white; old; 2022; 44000; 44; 22;";
+    inp = "Steam; America; 2 000 000; white; old; 2024; 44000; 44; 22;";
     cout << read_record(inp, &car_record) << endl;
 
     print_car_list(cars_list, size_of_list);
@@ -566,6 +681,13 @@ int main()
     {
         print_car_list(cars_list, size_of_list);
     }
+
+    int test1[10] = {1, 2, 3, 4, 5, 0, 7, 8, 9, 10};
+    string test2[10] = {"Steam", "America", "2000000", "white", "old", "2022", "2024", "44000", "44", "22"};
+
+    print_car_record_by_poles(test1, test2, &cars_list, size_of_list);
+
+    //print_car_list(cars_list, size_of_list);
 
     delete [] cars_list;
     cout << "OK" << endl;
