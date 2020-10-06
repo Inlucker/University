@@ -55,7 +55,7 @@ int comp_car_color(const car *i, const car *j)
 
 int comp_car_is_new(const car *i, const car *j)
 {
-    return i->is_new - j->is_new;
+    return -i->is_new + j->is_new;
 }
 
 int comp_car_guarantee(const car *i, const car *j)

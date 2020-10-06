@@ -43,6 +43,12 @@ int main()
     for (int i = 0; i < size_of_list; i++)
         key_list[i] = i;
 
+    price_keys *price_key_list = new price_keys [size_of_list];
+    for (int i = 0; i < size_of_list; i++)
+    {
+        price_key_list[i].id = i;
+        price_key_list[i].price = cars_list[i].price;
+    }
     int input = -1;
 
     while (input != 0)
@@ -55,13 +61,15 @@ int main()
         cout << "5 - Print car_list by field's values" << endl;
         cout << "6 - Print key_list" << endl;
         cout << "7 - Print car_list using key_list" << endl;
-        cout << "8 - Sort car_list by filed value" << endl;
-        cout << "9 - Sort key_list by filed value" << endl;
+        cout << "8 - BubbleSort car_list by field" << endl;
+        cout << "9 - BubbleSort price_key_list" << endl;
+        cout << "10 - QuickSort price_key_list" << endl;
+        cout << "11 - QuickSort car_list by field" << endl;
         cout << "0 - Exit from programm" << endl;
         cout << endl;
 
+        _flushall();
         cout << "Enter the number of command to be done: ";
-
         cin >> input;
 
         switch (input)
@@ -159,12 +167,12 @@ int main()
         }
         case 6:
         {
-            print_key_list(key_list, size_of_list);
+            print_price_key_list(price_key_list, size_of_list);
             break;
         }
         case 7:
         {
-            print_car_list_by_keys(cars_list, size_of_list, key_list);
+            print_car_list_by_price_keys(cars_list, size_of_list, price_key_list);
             break;
         }
         case 8:
@@ -212,7 +220,7 @@ int main()
         }
         case 9:
         {
-            cout << "Enter field number (BRAND = 0, MANUFACURER_COUNTRY = 1, PRICE = 2, COLOR = 3, IS_NEW = 4, GUARANTEE = 5, YEAR_OF_RELEASE = 6, PROBEG = 7, REPAIR_COUNT = 8, OWNERS_COUNT = 9): ";
+            /*cout << "Enter field number (BRAND = 0, MANUFACURER_COUNTRY = 1, PRICE = 2, COLOR = 3, IS_NEW = 4, GUARANTEE = 5, YEAR_OF_RELEASE = 6, PROBEG = 7, REPAIR_COUNT = 8, OWNERS_COUNT = 9): ";
             int field_number = -1;
             cin >> field_number;
             switch (field_number)
@@ -246,6 +254,55 @@ int main()
                 break;
             case OWNERS_COUNT:
                 car_sort_puz_by_keys(&cars_list, size_of_list, (int(*)(const car*, const car*))comp_car_owners_count, &key_list);
+                break;
+            default:
+                cout << "Invalid input" << endl;
+                break;
+            }*/
+            price_keys_sort_puz(&price_key_list, size_of_list);
+            break;
+        }
+        case 10:
+        {
+            price_keys_sort_qsort(price_key_list, 0, size_of_list - 1);
+            break;
+        }
+        case 11:
+        {
+            cout << "Enter field number (BRAND = 0, MANUFACURER_COUNTRY = 1, PRICE = 2, COLOR = 3, IS_NEW = 4, GUARANTEE = 5, YEAR_OF_RELEASE = 6, PROBEG = 7, REPAIR_COUNT = 8, OWNERS_COUNT = 9): ";
+            int field_number = -1;
+            cin >> field_number;
+            switch (field_number)
+            {
+            case BRAND:
+                car_sort_qsort(cars_list, 0, size_of_list - 1, (int(*)(const car*, const car*))comp_car_brand);
+                break;
+            case MANUFACURER_COUNTRY:
+                car_sort_qsort(cars_list, 0, size_of_list - 1, (int(*)(const car*, const car*))comp_car_manufacturer_country);
+                break;
+            case PRICE:
+                car_sort_qsort(cars_list, 0, size_of_list - 1, (int(*)(const car*, const car*))comp_car_price);
+                break;
+            case COLOR:
+                car_sort_qsort(cars_list, 0, size_of_list - 1, (int(*)(const car*, const car*))comp_car_color);
+                break;
+            case IS_NEW:
+                car_sort_qsort(cars_list, 0, size_of_list - 1, (int(*)(const car*, const car*))comp_car_is_new);
+                break;
+            case GUARANTEE:
+                car_sort_qsort(cars_list, 0, size_of_list - 1, (int(*)(const car*, const car*))comp_car_guarantee);
+                break;
+            case YEAR_OF_RELEASE:
+                car_sort_qsort(cars_list, 0, size_of_list - 1, (int(*)(const car*, const car*))comp_car_year_of_release);
+                break;
+            case PROBEG:
+                car_sort_qsort(cars_list, 0, size_of_list - 1, (int(*)(const car*, const car*))comp_car_probeg);
+                break;
+            case REPAIR_COUNT:
+                car_sort_qsort(cars_list, 0, size_of_list - 1, (int(*)(const car*, const car*))comp_car_repair_count);
+                break;
+            case OWNERS_COUNT:
+                car_sort_qsort(cars_list, 0, size_of_list - 1, (int(*)(const car*, const car*))comp_car_owners_count);
                 break;
             default:
                 cout << "Invalid input" << endl;

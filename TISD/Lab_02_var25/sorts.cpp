@@ -7,9 +7,17 @@ void swap_car_records(car *car_list1, car *car_list2)
     *car_list2 = tmp_car;
 }
 
+//no need
 void swap_keys(int *key1, int *key2)
 {
     int tmp_key = *key1;
+    *key1 = *key2;
+    *key2 = tmp_key;
+}
+
+void swap_price_keys(price_keys *key1, price_keys *key2)
+{
+    price_keys tmp_key = *key1;
     *key1 = *key2;
     *key2 = tmp_key;
 }
@@ -31,6 +39,7 @@ void car_sort_puz(car **mas, int size_of_mas, int (*comparator)(const car*, cons
         }
 }
 
+//no need
 void car_sort_puz_by_keys(car **mas, int size_of_mas, int (*comparator)(const car*, const car*), int **keys)
 {
     for (int i = 0; i < size_of_mas; i++)
@@ -48,62 +57,61 @@ void car_sort_puz_by_keys(car **mas, int size_of_mas, int (*comparator)(const ca
         }
 }
 
-//not done
-void car_sort_qsort(car **mas, int size_of_mas, int (*comparator)(const car*, const car*))
+void price_keys_sort_puz(price_keys **mas, int size_of_mas)
 {
-    car *base_ptr = *mas;
-
-    if (size_of_mas == 0)
-        return;
-
-    car *l = base_ptr;
-    car *r = (*mas + size_of_mas - 1);
-
-    car *i = l;
-    car *j = r;
-    car *m = ((*mas) + (size_of_mas/2));
-    do
-    {
-        for (; comparator(i, m) < 0; i++);
-        for (; comparator(j, m) > 0; j--);
-        if (i <= j)
+    for (int i = 0; i < size_of_mas; i++)
+        if (i % 2 == 0)
         {
-            swap_car_records(i, j);
-            i++;
-            j--;
+            for (int j = size_of_mas - 1; j > 0; j--)
+                if (((*mas) + j - 1)->price > ((*mas) + j)->price)
+                    swap_price_keys(((*mas) + j - 1), ((*mas) + j));
         }
-    }while (i <= j);
-    if (l < j)
-        car_sort_qsort(mas, size_of_mas, (int(*)(const car*, const car*))comparator);
-    if (i < r)
-        car_sort_qsort(mas, size_of_mas, (int(*)(const car*, const car*))comparator);
+        else
+        {
+            for (int j = 0; j < size_of_mas - 1; j++)
+                if (((*mas) + j + 1)->price < ((*mas) + j)->price)
+                    swap_price_keys(((*mas) + j + 1), ((*mas) + j));
+        }
 }
 
-//not done
-void car_sort_qsort_by_keys(car **mas, int size_of_mas, int (*comparator)(const car*, const car*), int **keys)
-{
-
-}
-
-void quick_sort(struct thing *a, int l, int r)
+void price_keys_sort_qsort(price_keys *a, int l, int r)
 {
     int i = l, j = r;
-    float m = a[(l + r) / 2].p;
+    float m = a[(l + r) / 2].price;
     do
     {
-        for (; a[i].p < m; i++);
-        for (; a[j].p > m; j--);
+        for (; a[i].price < m; i++);
+        for (; a[j].price > m; j--);
         if (i <= j)
         {
-            struct thing tmp = a[i];
-            a[i] = a[j];
-            a[j] = tmp;
+            swap_price_keys(&a[i], &a[j]);
             i++;
             j--;
         }
     }while (i <= j);
     if (l < j)
-        quick_sort(a, l, j);
+        price_keys_sort_qsort(a, l, j);
     if (i < r)
-        quick_sort(a, i, r);
-};
+        price_keys_sort_qsort(a, i, r);
+}
+
+void car_sort_qsort(car *a, int l, int r, int (*comparator)(const car*, const car*))
+{
+    int i = l, j = r;
+    car m = a[(l + r) / 2];
+    do
+    {
+        for (; comparator(&a[i], &m) < 0; i++);
+        for (; comparator(&a[j], &m) > 0; j--);
+        if (i <= j)
+        {
+            swap_car_records(&a[i], &a[j]);
+            i++;
+            j--;
+        }
+    }while (i <= j);
+    if (l < j)
+        car_sort_qsort(a, l, j, comparator);
+    if (i < r)
+        car_sort_qsort(a, i, r, comparator);
+}

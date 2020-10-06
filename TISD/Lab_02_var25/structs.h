@@ -53,6 +53,12 @@ struct car
     state condition;
 };
 
+struct price_keys
+{
+    int id;
+    int price;
+};
+
 int string_to_int(string input, int *rez);
 
 int read_record (string input, car *car_record_rez);

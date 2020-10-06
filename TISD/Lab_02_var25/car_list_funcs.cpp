@@ -1,11 +1,22 @@
 #include "car_list_funcs.h"
 
+//no need
 void print_key_list(int *key_list, int size_of_list)
 {
     for (int i = 0; i < size_of_list; i++)
     {
         cout << i + 1 << ": ";
         cout << key_list[i] << endl;
+    }
+    cout << endl;
+}
+
+void print_price_key_list(price_keys *key_list, int size_of_list)
+{
+    for (int i = 0; i < size_of_list; i++)
+    {
+        //cout << i + 1 << ": ";
+        cout << key_list[i].id << "; " << key_list[i].price << "; " << endl;
     }
     cout << endl;
 }
@@ -26,6 +37,16 @@ void print_car_list_by_keys(car *cars_list, int size_of_list, int *key_list)
     {
         //cout << i + 1 << ": ";
         print_car_record(cars_list[key_list[i]]);
+    }
+    cout << endl;
+}
+
+void print_car_list_by_price_keys(car *cars_list, int size_of_list, price_keys *key_list)
+{
+    for (int i = 0; i < size_of_list; i++)
+    {
+        //cout << i + 1 << ": ";
+        print_car_record(cars_list[key_list[i].id]);
     }
     cout << endl;
 }

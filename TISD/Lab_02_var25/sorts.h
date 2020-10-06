@@ -5,24 +5,16 @@
 
 void swap_car_records(car *car_list1, car *car_list2);
 
-void swap_keys(int *key1, int *key2);
+void swap_keys(int *key1, int *key2);//no need
 
 void car_sort_puz(car **mas, int size_of_mas, int (*comparator)(const car*, const car*));
 
-void car_sort_puz_by_keys(car **mas, int size_of_mas, int (*comparator)(const car*, const car*), int **keys);
+void car_sort_puz_by_keys(car **mas, int size_of_mas, int (*comparator)(const car*, const car*), int **keys); //no need
 
-void car_sort_qsort(car **mas, int size_of_mas, int (*comparator)(const car*, const car*));
+void price_keys_sort_puz(price_keys **mas, int size_of_mas);
 
-void car_sort_qsort_by_keys(car **mas, int size_of_mas, int (*comparator)(const car*, const car*), int **keys);
+void price_keys_sort_qsort(price_keys *a, int l, int r);
 
-struct thing
-{
-    char name[25];
-    float m;
-    float v;
-    float p;
-};
-
-void quick_sort(struct thing *a, int l, int r);
+void car_sort_qsort(car *a, int l, int r, int (*comparator)(const car*, const car*));
 
 #endif // SORTS_H
