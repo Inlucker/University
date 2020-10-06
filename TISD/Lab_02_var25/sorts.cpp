@@ -115,3 +115,51 @@ void car_sort_qsort(car *a, int l, int r, int (*comparator)(const car*, const ca
     if (i < r)
         car_sort_qsort(a, i, r, comparator);
 }
+
+void car_sort_puz_test(car **mas, int size_of_mas, int (*comparator)(const car*, const car*), int mn)
+{
+    clock_t start = clock();
+    for (int i = 0; i < mn; i++)
+    {
+        car_sort_puz(mas, size_of_mas, comparator);
+    }
+    clock_t end = clock();
+    double seconds = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("Bubble sort by table test time: %.3f seconds\n", seconds);
+}
+
+void price_keys_sort_puz_test(price_keys **mas, int size_of_mas, int mn)
+{
+    clock_t start = clock();
+    for (int i = 0; i < mn; i++)
+    {
+        price_keys_sort_puz(mas, size_of_mas);
+    }
+    clock_t end = clock();
+    double seconds = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("Bubble sort by keys test time: %.3f seconds\n", seconds);
+}
+
+void price_keys_sort_qsort_test(price_keys *a, int l, int r, int mn)
+{
+    clock_t start = clock();
+    for (int i = 0; i < mn; i++)
+    {
+        price_keys_sort_qsort(a, l, r);
+    }
+    clock_t end = clock();
+    double seconds = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("Quick sort by keys test time: %.3f seconds\n", seconds);
+}
+
+void car_sort_qsort_test(car *a, int l, int r, int (*comparator)(const car*, const car*), int mn)
+{
+    clock_t start = clock();
+    for (int i = 0; i < mn; i++)
+    {
+        car_sort_qsort(a, l, r, comparator);
+    }
+    clock_t end = clock();
+    double seconds = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("Quick sort by table test time: %.3f seconds\n", seconds);
+}

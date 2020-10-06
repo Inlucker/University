@@ -39,9 +39,9 @@ int main()
     if (read_file(input_file_name, &cars_list, &size_of_list) != 0)
         return ERROR;
 
-    int *key_list = new int [size_of_list];
+    /*int *key_list = new int [size_of_list];
     for (int i = 0; i < size_of_list; i++)
-        key_list[i] = i;
+        key_list[i] = i;*/
 
     price_keys *price_key_list = new price_keys [size_of_list];
     for (int i = 0; i < size_of_list; i++)
@@ -65,6 +65,7 @@ int main()
         cout << "9 - BubbleSort price_key_list" << endl;
         cout << "10 - QuickSort price_key_list" << endl;
         cout << "11 - QuickSort car_list by field" << endl;
+        cout << "12 - Time Tests" << endl;
         cout << "0 - Exit from programm" << endl;
         cout << endl;
 
@@ -82,7 +83,7 @@ int main()
         case 2:
         {
             _flushall();
-            cout << "Enter record in format():" << endl;
+            cout << "Enter record in format:\nBrand; Country; price; color; new/old; guarantee/year_of_release; probeg; repair_count; owners_count;" << endl;
             string input_str = "";
             getline(cin, input_str);
             cout << input_str << endl;
@@ -93,8 +94,16 @@ int main()
                 if (size_of_list == -1)
                 {
                     cout << "Adding error, exiting from programm..." << endl;
+                    delete [] price_key_list;
                     delete [] cars_list;
                     return ERROR;
+                }
+                delete [] price_key_list;
+                price_key_list = new price_keys [size_of_list];
+                for (int i = 0; i < size_of_list; i++)
+                {
+                    price_key_list[i].id = i;
+                    price_key_list[i].price = cars_list[i].price;
                 }
             }
             else
@@ -310,6 +319,33 @@ int main()
             }
             break;
         }
+        case 12:
+        {
+            _flushall();
+            cout << "Enter mnojitel of iterations: ";
+            int mn = 0;
+            cin >> mn;
+            int tmp_size_of_list = 0;
+            car *tmp_cars_list = new car [tmp_size_of_list];
+
+            string input_file_name = "car_list.txt";
+            if (read_file(input_file_name, &tmp_cars_list, &tmp_size_of_list) != 0)
+                return ERROR;
+
+            price_keys *tmp_price_key_list = new price_keys [tmp_size_of_list];
+            for (int i = 0; i < tmp_size_of_list; i++)
+            {
+                price_key_list[i].id = i;
+                price_key_list[i].price = cars_list[i].price;
+            }
+            car_sort_puz_test(&tmp_cars_list, tmp_size_of_list, comp_car_price, mn);
+            price_keys_sort_puz_test(&tmp_price_key_list, tmp_size_of_list, mn);
+            car_sort_qsort_test(tmp_cars_list, 0, tmp_size_of_list - 1, comp_car_price, mn);
+            price_keys_sort_qsort_test(tmp_price_key_list, 0, tmp_size_of_list - 1, mn);
+            delete [] tmp_cars_list;
+            delete [] tmp_price_key_list;
+            break;
+        }
         case 0:
         {
             cout << "Good buy!" << endl;
@@ -335,6 +371,8 @@ int main()
     print_car_list(cars_list, size_of_list);*/
 
     delete [] cars_list;
+    //delete [] key_list;
+    delete [] price_key_list;
     //cout << "OK" << endl;
 
     return 0;
