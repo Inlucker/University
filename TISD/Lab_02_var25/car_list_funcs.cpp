@@ -3,7 +3,10 @@
 void print_car_list(car *cars_list, int size_of_list)
 {
     for (int i = 0; i < size_of_list; i++)
+    {
+        cout << i + 1 << ": ";
         print_car_record(cars_list[i]);
+    }
     cout << endl;
 }
 
