@@ -65,7 +65,7 @@ int main()
         cout << "9 - BubbleSort price_key_list" << endl;
         cout << "10 - QuickSort price_key_list" << endl;
         cout << "11 - QuickSort car_list by field" << endl;
-        cout << "12 - Time Tests" << endl;
+        cout << "12 - Time Tests for sorts" << endl;
         cout << "0 - Exit from programm" << endl;
         cout << endl;
 
