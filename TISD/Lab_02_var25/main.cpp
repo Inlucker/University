@@ -77,7 +77,7 @@ int main()
 
     print_car_record_by_poles(test1, test2, &cars_list, size_of_list);*/
 
-    car_sort_puz(&cars_list, size_of_list, (int(*)(const car*, const car*))comp_car_brand);
+    car_sort_puz(&cars_list, size_of_list, (int(*)(const car*, const car*))comp_car_price);
 
     print_car_list(cars_list, size_of_list);
 

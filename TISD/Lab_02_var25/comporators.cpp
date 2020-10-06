@@ -57,3 +57,104 @@ int comp_car_is_new(const car *i, const car *j)
 {
     return i->is_new - j->is_new;
 }
+
+int comp_car_guarantee(const car *i, const car *j)
+{
+    if (i->is_new && j->is_new)
+    {
+        return i->condition.new_car_params.guarantee - j->condition.new_car_params.guarantee;
+    }
+    else if (i->is_new && !j->is_new)
+    {
+        return -1;
+    }
+    else if (!i->is_new && j->is_new)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+
+}
+
+int comp_car_year_of_release(const car *i, const car *j)
+{
+    if (!i->is_new && !j->is_new)
+    {
+        return i->condition.old_car_params.year_of_release - j->condition.old_car_params.year_of_release;
+    }
+    else if (i->is_new && !j->is_new)
+    {
+        return 1;
+    }
+    else if (!i->is_new && j->is_new)
+    {
+        return -1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+int comp_car_probeg(const car *i, const car *j)
+{
+    if (!i->is_new && !j->is_new)
+    {
+        return i->condition.old_car_params.probeg - j->condition.old_car_params.probeg;
+    }
+    else if (i->is_new && !j->is_new)
+    {
+        return 1;
+    }
+    else if (!i->is_new && j->is_new)
+    {
+        return -1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+int comp_car_repair_count(const car *i, const car *j)
+{
+    if (!i->is_new && !j->is_new)
+    {
+        return i->condition.old_car_params.repair_count - j->condition.old_car_params.repair_count;
+    }
+    else if (i->is_new && !j->is_new)
+    {
+        return 1;
+    }
+    else if (!i->is_new && j->is_new)
+    {
+        return -1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+int comp_car_owners_count(const car *i, const car *j)
+{
+    if (!i->is_new && !j->is_new)
+    {
+        return i->condition.old_car_params.owners_count - j->condition.old_car_params.owners_count;
+    }
+    else if (i->is_new && !j->is_new)
+    {
+        return 1;
+    }
+    else if (!i->is_new && j->is_new)
+    {
+        return -1;
+    }
+    else
+    {
+        return 0;
+    }
+}

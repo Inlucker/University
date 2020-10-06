@@ -17,4 +17,14 @@ int comp_car_color(const car *i, const car *j);
 
 int comp_car_is_new(const car *i, const car *j);
 
+int comp_car_guarantee(const car *i, const car *j);
+
+int comp_car_year_of_release(const car *i, const car *j);
+
+int comp_car_probeg(const car *i, const car *j);
+
+int comp_car_repair_count(const car *i, const car *j);
+
+int comp_car_owners_count(const car *i, const car *j);
+
 #endif // COMPORATORS_H
