@@ -39,6 +39,10 @@ int main()
     string input_file_name = "car_list.txt";
     if (read_file(input_file_name, &cars_list, &size_of_list) != 0)
         return ERROR;
+    int *key_list = new int [size_of_list];
+
+    for (int i = 0; i < size_of_list; i++)
+        key_list[i] = i;
 
     cout << size_of_list << endl;
 
@@ -77,7 +81,18 @@ int main()
 
     print_car_record_by_poles(test1, test2, &cars_list, size_of_list);*/
 
-    car_sort_puz(&cars_list, size_of_list, (int(*)(const car*, const car*))comp_car_price);
+    //car_sort_puz(&cars_list, size_of_list, (int(*)(const car*, const car*))comp_car_price);
+    //car_sort_qsort(&cars_list, size_of_list, (int(*)(const car*, const car*))comp_car_price);
+    car_sort_puz_by_keys(&cars_list, size_of_list, (int(*)(const car*, const car*))comp_car_brand, &key_list);
+
+    for (int i = 0; i < size_of_list; i++)
+    {
+        cout << key_list[i] + 1 << ": ";
+        print_car_record(cars_list[key_list[i]]);
+    }
+    cout << endl;
+
+    car_sort_puz(&cars_list, size_of_list, (int(*)(const car*, const car*))comp_car_brand);
 
     print_car_list(cars_list, size_of_list);
 
