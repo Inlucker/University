@@ -1,0 +1,2 @@
+bValve; Russia; 3 000 000; black; new; 2022;
+aSteam; America; 2 000 000; white; old; 2024; 44000; 44; 22;
