@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cstring>
+//#include <string>
 #include <fstream>
 
 #define ERROR -1;

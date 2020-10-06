@@ -14,7 +14,7 @@ void print_car_list(car *cars_list, int size_of_list)
 {
     for (int i = 0; i < size_of_list; i++)
     {
-        cout << i + 1 << ": ";
+        //cout << i + 1 << ": ";
         print_car_record(cars_list[i]);
     }
     cout << endl;
@@ -24,7 +24,7 @@ void print_car_list_by_keys(car *cars_list, int size_of_list, int *key_list)
 {
     for (int i = 0; i < size_of_list; i++)
     {
-        cout << i + 1 << ": ";
+        //cout << i + 1 << ": ";
         print_car_record(cars_list[key_list[i]]);
     }
     cout << endl;
@@ -64,12 +64,12 @@ int read_file(string file_name, car **car_list, int *size_of_list)
     return 0;
 }
 
-void car_record_copy (car *car_list1, car *car_list2, int i)
+void car_record_copy(car *car_list1, car *car_list2, int i)
 {
     car_list1[i] = car_list2[i+1];
 }
 
-int delete_record (car **car_list, int size_of_list, int id)
+int delete_record(car **car_list, int size_of_list, int id)
 {
     if (id > size_of_list && id <= 0)
         return -1;
