@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstring>
+#include <cstdlib>
 //#include "structs.h"
 
 #define ERROR -1;
@@ -501,6 +502,7 @@ int print_car_record_by_pole(int pole, string znach, car **car_list, int size_of
         return ERROR;
         break;
     }
+    cout << endl;
     return 0;
 }
 
@@ -616,6 +618,7 @@ int print_car_record_by_poles(int pole[10], string znach[10], car **car_list, in
         if (flag)
             print_car_record(*((*car_list)+i));
     }
+    cout << endl;
     return 0;
 }
 
@@ -645,6 +648,94 @@ int add_record_to_new_car(int size_of_list, new_car **new_cars_list, new_car new
     return size_of_list + 1;
 }*/
 
+void swap_car_records(car *car_list1, car *car_list2)
+{
+    car tmp_car = *car_list1;
+    *car_list1 = *car_list2;
+    *car_list2 = tmp_car;
+}
+
+void car_sort_puz(car **mas, int size_of_mas, int (*comparator)(const car*, const car*))
+{
+    for (int i = 0; i < size_of_mas; i++)
+        if (i % 2 == 0)
+        {
+            for (int j = size_of_mas - 1; j > 0; j--)
+                if (comparator(((*mas) + j - 1), (*mas) + j) > 0)
+                {
+                    swap_car_records(((*mas) + j - 1), (((*mas) + j)));
+                }
+        }
+        else
+        {
+            for (int j = 0; j < size_of_mas - 1; j++)
+                if (comparator(((*mas) + j + 1), (*mas) + j) < 0)
+                {
+                    swap_car_records(((*mas) + j + 1), (((*mas) + j)));
+                }
+        }
+}
+
+int comp_int(const int *i, const int *j)
+{
+    return *i - *j;
+}
+
+int comp_string(const string *str1, const string *str2)
+{
+    size_t min_size = str1->length();
+    string tmp1 = *str1;
+    string tmp2 = *str2;
+    int rez = 0;
+    if (str2->length() < min_size)
+        min_size = str2->length();
+    for (size_t i = 0; i < min_size; i++)
+    {
+        cout << tmp1[i] << " " << tmp2[i] << endl;
+        if (tmp1[i] < 'a')
+            tmp1[i] += 'a' - 'A';
+
+        if (tmp2[i] < 'a')
+            tmp2[i] += 'a' - 'A';
+
+        if(tmp1[i] < tmp2[i])
+            rez = -1;
+        else if (tmp1 > tmp2)
+            rez = 1;
+        else
+            rez = 0;
+        if (rez != 0)
+            break;
+    }
+    cout << rez << endl;
+    return rez;
+}
+
+int comp_car_brand(const car *i, const car *j)
+{
+    return comp_string(&i->brand, &j->brand);
+}
+
+int comp_car_manufacturer_country(const car *i, const car *j)
+{
+    return comp_string(&i->manufacturer_country, &j->manufacturer_country);
+}
+
+int comp_car_price(const car *i, const car *j)
+{
+    return i->price - j->price;
+}
+
+int comp_car_color(const car *i, const car *j)
+{
+    return comp_string(&i->color, &j->color);
+}
+
+int comp_car_is_new(const car *i, const car *j)
+{
+    return i->is_new - j->is_new;
+}
+
 int main()
 {
     cout << "Hi" << endl;
@@ -655,7 +746,7 @@ int main()
 
     string inp = "";
     car car_record;
-    inp = "Valve; Russia; 1 000 000; black; new; 2022;";
+    inp = "bValve; Russia; 3 000 000; black; new; 2022;";
     read_record(inp, &cars_list[0]);
     /*inp = "Steam; America; 2 000 000; white; old; 2022; 44000; 44; 22;";
     read_record(inp, &cars_list[1]);
@@ -663,10 +754,10 @@ int main()
     read_record(inp, &cars_list[2]);
     print_car_list(cars_list, size_of_list);*/
 
-    inp = "Steam; America; 2 000 000; white; old; 2024; 44000; 44; 22;";
-    cout << read_record(inp, &car_record) << endl;
+    inp = "aSteam; America; 2 000 000; white; old; 2024; 44000; 44; 22;";
+    read_record(inp, &car_record);
 
-    print_car_list(cars_list, size_of_list);
+    //print_car_list(cars_list, size_of_list);
 
     size_of_list = add_record(&cars_list, size_of_list, car_record);
 
@@ -675,7 +766,7 @@ int main()
     cout << size_of_list << endl;
 
     //size_of_list = delete_record(&cars_list, size_of_list, 1);
-    if (print_car_record_by_pole(OWNERS_COUNT, "22", &cars_list, size_of_list) != -1) //Error when "Steam"
+    /*if (print_car_record_by_pole(OWNERS_COUNT, "22", &cars_list, size_of_list) != -1) //Error when "Steam"
         cout << size_of_list << endl;
     if (size_of_list != -1)
     {
@@ -685,9 +776,11 @@ int main()
     int test1[10] = {1, 2, 3, 4, 5, 0, 7, 8, 9, 10};
     string test2[10] = {"Steam", "America", "2000000", "white", "old", "2022", "2024", "44000", "44", "22"};
 
-    print_car_record_by_poles(test1, test2, &cars_list, size_of_list);
+    print_car_record_by_poles(test1, test2, &cars_list, size_of_list);*/
 
-    //print_car_list(cars_list, size_of_list);
+    car_sort_puz(&cars_list, size_of_list, (int(*)(const car*, const car*))comp_car_brand);
+
+    print_car_list(cars_list, size_of_list);
 
     delete [] cars_list;
     cout << "OK" << endl;
