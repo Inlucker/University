@@ -114,17 +114,27 @@ int main()
         }
         case 3:
         {
+            _flushall();
             cout << "Enter ID of record to delete: ";
             int id = -1;
             cin >> id;
-            size_of_list = delete_record(&cars_list, size_of_list, id);
+            if (id > 0 && id <= size_of_list)
+                size_of_list = delete_record(&cars_list, size_of_list, id);
+            else
+                cout << "Invalid input" << endl;
             break;
         }
         case 4:
         {
+            _flushall();
             cout << "Enter field number (BRAND = 0, MANUFACURER_COUNTRY = 1, PRICE = 2, COLOR = 3, IS_NEW = 4, GUARANTEE = 5, YEAR_OF_RELEASE = 6, PROBEG = 7, REPAIR_COUNT = 8, OWNERS_COUNT = 9): ";
             int field_number = -1;
             cin >> field_number;
+            if (field_number < 0 || field_number > 9)
+            {
+                cout << "Invalid input" << endl;
+                break;
+            }
             _flushall();
             cout << "Enter field value:" << endl;
             string input_str = "";
@@ -186,6 +196,7 @@ int main()
         }
         case 8:
         {
+            _flushall();
             cout << "Enter field number (BRAND = 0, MANUFACURER_COUNTRY = 1, PRICE = 2, COLOR = 3, IS_NEW = 4, GUARANTEE = 5, YEAR_OF_RELEASE = 6, PROBEG = 7, REPAIR_COUNT = 8, OWNERS_COUNT = 9): ";
             int field_number = -1;
             cin >> field_number;
@@ -229,7 +240,8 @@ int main()
         }
         case 9:
         {
-            /*cout << "Enter field number (BRAND = 0, MANUFACURER_COUNTRY = 1, PRICE = 2, COLOR = 3, IS_NEW = 4, GUARANTEE = 5, YEAR_OF_RELEASE = 6, PROBEG = 7, REPAIR_COUNT = 8, OWNERS_COUNT = 9): ";
+            /*_flushall();
+            cout << "Enter field number (BRAND = 0, MANUFACURER_COUNTRY = 1, PRICE = 2, COLOR = 3, IS_NEW = 4, GUARANTEE = 5, YEAR_OF_RELEASE = 6, PROBEG = 7, REPAIR_COUNT = 8, OWNERS_COUNT = 9): ";
             int field_number = -1;
             cin >> field_number;
             switch (field_number)
@@ -278,6 +290,7 @@ int main()
         }
         case 11:
         {
+            _flushall();
             cout << "Enter field number (BRAND = 0, MANUFACURER_COUNTRY = 1, PRICE = 2, COLOR = 3, IS_NEW = 4, GUARANTEE = 5, YEAR_OF_RELEASE = 6, PROBEG = 7, REPAIR_COUNT = 8, OWNERS_COUNT = 9): ";
             int field_number = -1;
             cin >> field_number;
