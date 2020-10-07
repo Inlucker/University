@@ -63,6 +63,8 @@ int read_record (string input, car *car_record_rez)
                 car_record.is_new = true;
             else if (tmp == "old")
                 car_record.is_new = false;
+            else
+                 return ERROR;
             break;
         case 5:
             if (car_record.is_new)
