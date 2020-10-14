@@ -71,7 +71,13 @@ int main()
 
         _flushall();
         cout << "Enter the number of command to be done: ";
-        cin >> input;
+        while (!(cin >> input))
+        {
+            cout << "Wrong input" << endl;
+            cin.clear();
+            _flushall();
+            cout << "Enter the number of command to be done: ";
+        }
 
         switch (input)
         {
@@ -86,7 +92,7 @@ int main()
             cout << "Enter record in format:\nBrand; Country; price; color; new/old; guarantee/year_of_release; probeg; repair_count; owners_count;" << endl;
             string input_str = "";
             getline(cin, input_str);
-            cout << input_str << endl;
+            //cout << input_str << endl;
             car car_record;
             if (read_record(input_str, &car_record) == 0)
             {
@@ -129,7 +135,12 @@ int main()
             _flushall();
             cout << "Enter field number (BRAND = 0, MANUFACURER_COUNTRY = 1, PRICE = 2, COLOR = 3, IS_NEW = 4, GUARANTEE = 5, YEAR_OF_RELEASE = 6, PROBEG = 7, REPAIR_COUNT = 8, OWNERS_COUNT = 9): ";
             int field_number = -1;
-            cin >> field_number;
+            if (!(cin >> field_number))
+            {
+                cout << "Invalid input" << endl;
+                cin.clear();
+                break;
+            }
             if (field_number < 0 || field_number > 9)
             {
                 cout << "Invalid input" << endl;
@@ -199,7 +210,12 @@ int main()
             _flushall();
             cout << "Enter field number (BRAND = 0, MANUFACURER_COUNTRY = 1, PRICE = 2, COLOR = 3, IS_NEW = 4, GUARANTEE = 5, YEAR_OF_RELEASE = 6, PROBEG = 7, REPAIR_COUNT = 8, OWNERS_COUNT = 9): ";
             int field_number = -1;
-            cin >> field_number;
+            if (!(cin >> field_number))
+            {
+                cout << "Invalid input" << endl;
+                cin.clear();
+                break;
+            }
             switch (field_number)
             {
             case BRAND:
@@ -293,7 +309,12 @@ int main()
             _flushall();
             cout << "Enter field number (BRAND = 0, MANUFACURER_COUNTRY = 1, PRICE = 2, COLOR = 3, IS_NEW = 4, GUARANTEE = 5, YEAR_OF_RELEASE = 6, PROBEG = 7, REPAIR_COUNT = 8, OWNERS_COUNT = 9): ";
             int field_number = -1;
-            cin >> field_number;
+            if (!(cin >> field_number))
+            {
+                cout << "Invalid input" << endl;
+                cin.clear();
+                break;
+            }
             switch (field_number)
             {
             case BRAND:

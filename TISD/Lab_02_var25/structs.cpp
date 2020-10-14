@@ -1,5 +1,6 @@
 #include <structs.h>
 
+//Функция перевода строки в число
 int string_to_int(string input, int *rez)
 {
     int tmp = 0;
@@ -21,8 +22,10 @@ int string_to_int(string input, int *rez)
     return 0;
 }
 
+//Функция считывания записи о машине из строки
 int read_record (string input, car *car_record_rez)
 {
+    bool is_valid = false;
     if (input.length() <= 0)
         return ERROR;
     int i = 0;
@@ -71,6 +74,7 @@ int read_record (string input, car *car_record_rez)
             {
                 if (string_to_int(tmp, &car_record.condition.new_car_params.guarantee))
                     return ERROR;
+                is_valid = true;
             }
             else
                 if (string_to_int(tmp, &car_record.condition.old_car_params.year_of_release))
@@ -100,8 +104,11 @@ int read_record (string input, car *car_record_rez)
                 return ERROR;
             }
             else
+            {
                 if (string_to_int(tmp, &car_record.condition.old_car_params.owners_count))
                     return ERROR;
+                is_valid = true;
+            }
             break;
         default:
             return ERROR;
@@ -109,10 +116,14 @@ int read_record (string input, car *car_record_rez)
 
         i++;
     }
-    *car_record_rez = car_record;
+    if (is_valid)
+        *car_record_rez = car_record;
+    else
+        return ERROR;
     return 0;
 }
 
+//Функция вывода отдельной записи о машине
 void print_car_record(car car_record)
 {
     cout << car_record.brand << "; " << car_record.manufacturer_country << "; " << car_record.price << "; " << car_record.color << "; ";// << car_record.is_new << "; ";

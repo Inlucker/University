@@ -11,6 +11,7 @@ void print_key_list(int *key_list, int size_of_list)
     cout << endl;
 }
 
+//Функция вывода таблицы ключей
 void print_price_key_list(price_keys *key_list, int size_of_list)
 {
     for (int i = 0; i < size_of_list; i++)
@@ -21,6 +22,7 @@ void print_price_key_list(price_keys *key_list, int size_of_list)
     cout << endl;
 }
 
+//Функция вывода текущего списка машин
 void print_car_list(car *cars_list, int size_of_list)
 {
     for (int i = 0; i < size_of_list; i++)
@@ -41,6 +43,7 @@ void print_car_list_by_keys(car *cars_list, int size_of_list, int *key_list)
     cout << endl;
 }
 
+//Функция вывода списка машин с использованием таблицы ключей
 void print_car_list_by_price_keys(car *cars_list, int size_of_list, price_keys *key_list)
 {
     for (int i = 0; i < size_of_list; i++)
@@ -51,12 +54,14 @@ void print_car_list_by_price_keys(car *cars_list, int size_of_list, price_keys *
     cout << endl;
 }
 
+//Функция копирования списка машин
 void car_list_copy (car *car_list1, car *car_list2, int size_of_list)
 {
     for (int i = 0; i < size_of_list; i++)
         car_list1[i] = car_list2[i];
 }
 
+//Функция добавления одной записи в конец списка машин
 int add_record (car **car_list, int size_of_list, car car_record)
 {
     car *cars_list_new = new car [size_of_list + 1];
@@ -72,6 +77,7 @@ int add_record (car **car_list, int size_of_list, car car_record)
     return size_of_list + 1;
 }
 
+//Функция считывания списка машин из файла
 int read_file(string file_name, car **car_list, int *size_of_list)
 {
     ifstream f(file_name);
@@ -85,11 +91,13 @@ int read_file(string file_name, car **car_list, int *size_of_list)
     return 0;
 }
 
+//Функция копирования следующего элемента списка в предыдущий
 void car_record_copy(car *car_list1, car *car_list2, int i)
 {
     car_list1[i] = car_list2[i+1];
 }
 
+//Функция удаления записи из списка машин по номеру
 int delete_record(car **car_list, int size_of_list, int id)
 {
     if (id > size_of_list && id <= 0)
@@ -108,6 +116,7 @@ int delete_record(car **car_list, int size_of_list, int id)
     return size_of_list - 1;
 }
 
+//Функция удаления записи из списка машин по значению конкретного поля
 int delete_car_record_by_pole(int pole, string znach, car **car_list, int *size_of_list)
 {
     int tmp_size = *size_of_list;
@@ -249,7 +258,10 @@ int delete_car_record_by_pole(int pole, string znach, car **car_list, int *size_
         return ERROR;
         break;
     }
-    *size_of_list = tmp_size;
+    if (tmp_size == *size_of_list)
+        cout << "Nothing to delete" << endl;
+    else
+        *size_of_list = tmp_size;
     return 0;
 }
 
@@ -367,8 +379,10 @@ int print_car_record_by_pole(int pole, string znach, car **car_list, int size_of
     return 0;
 }
 
+//Функция вывода списка машин по значениям одного или нескольких полей
 int print_car_record_by_poles(int pole[10], string znach[10], car **car_list, int size_of_list)
 {
+    bool is_printed = false;
     for (int i = 0; i < size_of_list; i++)
     {
         bool flag = true;
@@ -479,6 +493,8 @@ int print_car_record_by_poles(int pole[10], string znach[10], car **car_list, in
         if (flag)
             print_car_record(*((*car_list)+i));
     }
+    if (!is_printed)
+        cout << "Nothing to print" << endl;
     cout << endl;
     return 0;
 }

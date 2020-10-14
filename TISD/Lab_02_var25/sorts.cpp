@@ -1,5 +1,6 @@
 #include "sorts.h"
 
+//Функция обмена записей о машинах местами
 void swap_car_records(car *car_list1, car *car_list2)
 {
     car tmp_car = *car_list1;
@@ -15,6 +16,7 @@ void swap_keys(int *key1, int *key2)
     *key2 = tmp_key;
 }
 
+//Функция обмена ключей местами в таблице
 void swap_price_keys(price_keys *key1, price_keys *key2)
 {
     price_keys tmp_key = *key1;
@@ -22,6 +24,7 @@ void swap_price_keys(price_keys *key1, price_keys *key2)
     *key2 = tmp_key;
 }
 
+//Функция сортировки списка машин пузырьком
 void car_sort_puz(car **mas, int size_of_mas, int (*comparator)(const car*, const car*))
 {
     for (int i = 0; i < size_of_mas; i++)
@@ -57,6 +60,7 @@ void car_sort_puz_by_keys(car **mas, int size_of_mas, int (*comparator)(const ca
         }
 }
 
+//Функция сортировки таблицы ключей пузырьком
 void price_keys_sort_puz(price_keys **mas, int size_of_mas)
 {
     for (int i = 0; i < size_of_mas; i++)
@@ -74,6 +78,7 @@ void price_keys_sort_puz(price_keys **mas, int size_of_mas)
         }
 }
 
+//Функция сортировки таблицы ключей быстрой сортировкой
 void price_keys_sort_qsort(price_keys *a, int l, int r)
 {
     int i = l, j = r;
@@ -95,6 +100,7 @@ void price_keys_sort_qsort(price_keys *a, int l, int r)
         price_keys_sort_qsort(a, i, r);
 }
 
+//Функция сортировки списка машин быстрой сортировкой
 void car_sort_qsort(car *a, int l, int r, int (*comparator)(const car*, const car*))
 {
     int i = l, j = r;
@@ -116,6 +122,7 @@ void car_sort_qsort(car *a, int l, int r, int (*comparator)(const car*, const ca
         car_sort_qsort(a, i, r, comparator);
 }
 
+//Функция тестирования сортировки списка машин пузырьком на время
 void car_sort_puz_test(car **mas, int size_of_mas, int (*comparator)(const car*, const car*), int mn)
 {
     clock_t start = clock();
@@ -128,6 +135,7 @@ void car_sort_puz_test(car **mas, int size_of_mas, int (*comparator)(const car*,
     printf("Bubble sort by table test time: %.3f seconds\n", seconds);
 }
 
+//Функция тестирования сортировки таблицы ключей пузырьком на время
 void price_keys_sort_puz_test(price_keys **mas, int size_of_mas, int mn)
 {
     clock_t start = clock();
@@ -140,6 +148,7 @@ void price_keys_sort_puz_test(price_keys **mas, int size_of_mas, int mn)
     printf("Bubble sort by keys test time: %.3f seconds\n", seconds);
 }
 
+//Функция тестирования сортировки таблицы ключей быстрой сортировкой на время
 void price_keys_sort_qsort_test(price_keys *a, int l, int r, int mn)
 {
     clock_t start = clock();
@@ -152,6 +161,7 @@ void price_keys_sort_qsort_test(price_keys *a, int l, int r, int mn)
     printf("Quick sort by keys test time: %.3f seconds\n", seconds);
 }
 
+//Функция тестирования сортировки списка машин быстрой сортировкой на время
 void car_sort_qsort_test(car *a, int l, int r, int (*comparator)(const car*, const car*), int mn)
 {
     clock_t start = clock();
