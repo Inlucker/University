@@ -51,6 +51,8 @@ int main()
     }
     int input = -1;
 
+    //cout << sizeof (car) << " " << sizeof (price_keys) << endl;
+
     while (input != 0)
     {
         cout << endl;
