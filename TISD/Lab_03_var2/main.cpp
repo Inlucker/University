@@ -245,11 +245,11 @@ int main()
     matrix test1, test2, test3;
 
     matrix_calloc(&test1, 3, 4);
-    gen_matrix(&test1, 3, 4, 50);
+    gen_matrix(&test1, 3, 4, 100);
     print_matrix(test1);
 
     matrix_calloc(&test2, 3, 4);
-    gen_matrix(&test2, 3, 4, 20);
+    gen_matrix(&test2, 3, 4, 100);
     print_matrix(test2);
 
     matrix_calloc(&test3, 3, 4);
@@ -263,7 +263,7 @@ int main()
     fill_sparse_matrix(&test, test3);
     //print_sparse_matirx(test);
 
-    sparse_matrix sparse1, sparse2;
+    sparse_matrix sparse1, sparse2, sparse3;
     sparse_matirx_calloc(&sparse1, test1.rows, test1.columns, get_elems_amount(test1));
     fill_sparse_matrix(&sparse1, test1);
     print_sparse_matirx(sparse1);
@@ -272,11 +272,14 @@ int main()
     fill_sparse_matrix(&sparse2, test2);
     print_sparse_matirx(sparse2);
 
-    sparse_matrx_sum(sparse1, sparse2, &test);
+    sparse_matrx_sum(sparse1, sparse2, &sparse3);
+
+    print_sparse_matirx(sparse3);
 
     delete_sparse_matirx(&test);
     delete_sparse_matirx(&sparse1);
     delete_sparse_matirx(&sparse2);
+    delete_sparse_matirx(&sparse3);
 
     delete_matirx(&test1);
     delete_matirx(&test2);
