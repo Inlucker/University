@@ -245,11 +245,11 @@ int main()
     matrix test1, test2, test3;
 
     matrix_calloc(&test1, 3, 4);
-    gen_matrix(&test1, 3, 4, 100);
+    gen_matrix(&test1, 3, 4, 50);
     print_matrix(test1);
 
     matrix_calloc(&test2, 3, 4);
-    gen_matrix(&test2, 3, 4, 100);
+    gen_matrix(&test2, 3, 4, 17);
     print_matrix(test2);
 
     matrix_calloc(&test3, 3, 4);

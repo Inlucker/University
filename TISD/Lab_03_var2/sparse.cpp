@@ -93,55 +93,27 @@ int sparse_matrx_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
     }
 
     int i = 0;
-    int k = -1;
+    int k = 0;
     int j = a.mtrx_id[i];
     list <int> :: iterator it = a.columns_id.begin();
+    int tmp_i = 0;
 
     while (i < a.mtrx_size)
     {
-        while (*it == -1)
+        while (*it == -1 && k + tmp_i <= a.columns)
         {
             it++;
-            k++;
+            tmp_i++;
         }
         if (i == *it)
         {
+            k += tmp_i;
+            tmp_i = 1;
             it++;
-            k++;
         }
         *((tmp1 + k * a.rows) + j) = i + 1;
         i++;
         j = a.mtrx_id[i];
-
-    }
-
-    int *tmp2 = new int  [rez->rows * rez->columns];
-
-    for (int i = 0; i < rez->rows * rez->columns; i++)
-    {
-        *(tmp2 + i) = 0;
-    }
-
-    i = 0;
-    k = -1;
-    j = b.mtrx_id[i];
-    it = b.columns_id.begin();
-
-    while (i < b.mtrx_size)
-    {
-        while (*it == -1)
-        {
-            it++;
-            k++;
-        }
-        if (i == *it)
-        {
-            it++;
-            k++;
-        }
-        *((tmp2 + k * b.rows) + j) = i + 1;
-        i++;
-        j = b.mtrx_id[i];
 
     }
 
@@ -151,13 +123,45 @@ int sparse_matrx_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
     }
     cout << endl;
 
+    int *tmp2 = new int  [rez->rows * rez->columns];
+
+    for (int i = 0; i < rez->rows * rez->columns; i++)
+    {
+        *(tmp2 + i) = 0;
+    }
+
+    i = 0;
+    k = 0;
+    j = b.mtrx_id[i];
+    it = b.columns_id.begin();
+    tmp_i = 0;
+
+    while (i < b.mtrx_size)
+    {
+        while (*it == -1 && k + tmp_i <= b.columns)
+        {
+            it++;
+            tmp_i++;
+        }
+        if (i == *it)
+        {
+            k += tmp_i;
+            tmp_i = 1;
+            it++;
+        }
+        *((tmp2 + k * b.rows) + j) = i + 1;
+        i++;
+        j = b.mtrx_id[i];
+
+    }
+
     for (int i = 0; i < rez->rows * rez->columns; i++)
     {
         cout << *(tmp2 + i) << " ";
     }
     cout << endl;
 
-    //If upper works
+    //If upper works //down doesnt work too with diff a & b mtrx size
     int rez_elems_amount = 0;
     for (int i = 0; i < rez->rows * rez->columns; i++)
     {
