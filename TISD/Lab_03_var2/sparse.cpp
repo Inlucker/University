@@ -84,7 +84,7 @@ int sparse_matrx_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
     rez->columns = a.columns;
     //sparse_matirx_calloc(rez, rez->rows, rez->columns, rez->rows * rez->columns);
 
-    //here
+    //here solved?
     int *tmp1 = new int  [rez->rows * rez->columns];
 
     for (int i = 0; i < rez->rows * rez->columns; i++)
@@ -100,7 +100,7 @@ int sparse_matrx_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
 
     while (i < a.mtrx_size)
     {
-        while (*it == -1 && k + tmp_i <= a.columns)
+        while (*it == -1 && k + tmp_i < a.columns - 1)
         {
             it++;
             tmp_i++;
@@ -138,7 +138,7 @@ int sparse_matrx_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
 
     while (i < b.mtrx_size)
     {
-        while (*it == -1 && k + tmp_i <= b.columns)
+        while (*it == -1 && k + tmp_i < b.columns - 1)
         {
             it++;
             tmp_i++;
@@ -198,6 +198,7 @@ int sparse_matrx_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
     delete [] tmp1;
     delete [] tmp2;
 
+    //not working?
     list <int> :: iterator a_it = a.columns_id.begin();
     list <int> :: iterator b_it = b.columns_id.begin();
     for (list <int> :: iterator i = rez->columns_id.begin(); i != rez->columns_id.end(); ++i)
