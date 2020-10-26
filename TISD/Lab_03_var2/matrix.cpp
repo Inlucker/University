@@ -49,8 +49,10 @@ void print_matrix(matrix m)
     cout << endl;
 }
 
-void matrx_sum(matrix a, matrix b, matrix *rez)
+int matrx_sum(matrix a, matrix b, matrix *rez)
 {
+    if (a.columns != b.columns && b.columns != rez->columns && a.rows != b.rows && b.rows != rez->rows)
+        return ERROR;
     for (int i = 0; i < rez->rows; i++)
     {
         for (int j = 0; j < rez->columns; j++)
@@ -58,4 +60,5 @@ void matrx_sum(matrix a, matrix b, matrix *rez)
             *((rez->mtrx + i*rez->columns) + j) = *((a.mtrx + i*a.columns) + j) + *((b.mtrx + i*b.columns) + j);
         }
     }
+    return 0;
 }

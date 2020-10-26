@@ -7,6 +7,6 @@ int gen_matrix(matrix *m, int rows, int columns, int percent);
 
 void print_matrix(matrix m);
 
-void matrx_sum(matrix a, matrix b, matrix *rez);
+int matrx_sum(matrix a, matrix b, matrix *rez);
 
 #endif // MATRIX_H

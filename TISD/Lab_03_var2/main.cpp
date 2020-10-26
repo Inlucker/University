@@ -18,7 +18,7 @@ int main()
     gen_matrix(&test2, test2.rows, test2.columns, 50);
 
     matrix_calloc(&test3, starting_rows, starting_columns);
-    //gen_matrix(&test3, test3.rows, test3.columns, 75);
+    matrx_sum(test1, test2, &test3);
 
     sparse_matrix sparse1, sparse2, sparse3;
 
@@ -28,8 +28,14 @@ int main()
     sparse_matirx_calloc(&sparse2, starting_rows, starting_columns, get_elems_amount(test2));
     fill_sparse_matrix(&sparse2, test2);
 
-    sparse_matirx_calloc(&sparse3, starting_rows, starting_columns, 0);
+    sparse_matirx_calloc(&sparse3, starting_rows, starting_columns, get_elems_amount(test3));
     fill_sparse_matrix(&sparse3, test3);
+
+    /*print_sparse_matirx(sparse3);
+
+    delete_sparse_matirx(&sparse3);
+    sparse_matrx_sum(sparse1, sparse2, &sparse3);
+    print_sparse_matirx(sparse3);*/
 
     int input = -1;
 
@@ -42,7 +48,7 @@ int main()
         cout << "2 - Print sparse matrixes" << endl;
         cout << "3 - Generate matrixes" << endl;
         cout << "4 - Input sparse matrix" << endl;
-        cout << "5 - calculate addition into matrix 3" << endl;
+        cout << "5 - calculate addition into matrix 3 and print it in sparse form" << endl;
         cout << "6 - Time tests" << endl;
         /*cout << "6 - Print key_list" << endl;
         cout << "7 - Print car_list using key_list" << endl;
@@ -141,6 +147,37 @@ int main()
                 cout << "Wrong input" << endl;
                 break;
             }
+            break;
+        }
+        case 4:
+        {
+            //Not yet
+            cout << "Input sparse matrix" << endl;
+            break;
+        }
+        case 5:
+        {
+            delete_sparse_matirx(&sparse3);
+            delete_matirx(&test3);
+
+            if (matrix_calloc(&test3, test1.rows, test1.columns))
+            {
+                cout << "Calloc error" << endl;
+                break;
+            }
+            if (matrx_sum(test1, test2, &test3))
+            {
+                cout << "Addition error" << endl;
+                break;
+            }
+
+            if (sparse_matrx_sum(sparse1, sparse2, &sparse3))
+            {
+                cout << "Addition error" << endl;
+                break;
+            }
+            cout << "Calculation is done:" << endl;
+            print_sparse_matirx(sparse3);
             break;
         }
         case 0:

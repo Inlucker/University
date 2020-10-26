@@ -175,7 +175,8 @@ int sparse_matrx_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
             rez_elems_amount++;
     }
 
-    sparse_matirx_calloc(rez, rez->rows, rez->columns, rez_elems_amount);
+    if (sparse_matirx_calloc(rez, rez->rows, rez->columns, rez_elems_amount))
+        return ERROR;
 
     j = 0;
     for (int i = 0; i < rez->rows * rez->columns; i++)
