@@ -57,23 +57,30 @@ int gen_sparse_matrix(sparse_matrix *m, int rows, int columns, int percent)
 
 void print_sparse_matirx(sparse_matrix m)
 {
-    for (int i = 0; i < m.mtrx_size; i++)
+    if (m.mtrx_size != 0)
     {
-        cout << *(m.mtrx + i) << " ";
-    }
-    cout << endl;
+        for (int i = 0; i < m.mtrx_size; i++)
+        {
+            cout << *(m.mtrx + i) << " ";
+        }
+        cout << endl;
 
-    for (int i = 0; i < m.mtrx_size; i++)
-    {
-        cout << *(m.mtrx_id + i) << " ";
-    }
-    cout << endl;
+        for (int i = 0; i < m.mtrx_size; i++)
+        {
+            cout << *(m.mtrx_id + i) << " ";
+        }
+        cout << endl;
 
-    for (list <int> :: iterator i = m.columns_id.begin(); i != m.columns_id.end(); ++i)
-    {
-        cout << (*i) << " ";
+        for (list <int> :: iterator i = m.columns_id.begin(); i != m.columns_id.end(); ++i)
+        {
+            cout << (*i) << " ";
+        }
+        cout << "\n" << endl;
     }
-    cout << "\n" << endl;
+    else
+    {
+        cout << "No non-zero elemments" << endl;
+    }
 }
 
 int sparse_matrx_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
