@@ -37,6 +37,8 @@ void delete_sparse_matirx(sparse_matrix *m)
 
 int matrix_calloc(matrix *m, int rows, int columns)
 {
+    if (rows < 0 || columns < 0)
+        return ERROR;
     m->rows = rows;
     m->columns = columns;
 

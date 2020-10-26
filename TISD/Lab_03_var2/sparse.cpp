@@ -12,7 +12,7 @@ int get_elems_amount(matrix m)
     return rez;
 }
 
-int fill_sparse_matrix(sparse_matrix *rez, matrix m)
+void fill_sparse_matrix(sparse_matrix *rez, matrix m)
 {
     rez->mtrx_size = get_elems_amount(m);
 
@@ -41,7 +41,6 @@ int fill_sparse_matrix(sparse_matrix *rez, matrix m)
         else
             isFirst = true;
     }
-    return 0;
 }
 
 int gen_sparse_matrix(sparse_matrix *m, int rows, int columns, int percent)

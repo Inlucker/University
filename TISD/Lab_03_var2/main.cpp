@@ -86,6 +86,63 @@ int main()
             print_sparse_matirx(sparse3);
             break;
         }
+        case 3:
+        {
+            _flushall();
+            cout << "Enter rows (<=10 000): " << endl;
+            int rows = 0;
+            cin >> rows;
+            if (rows > 10000 || rows < 0)
+            {
+                cout << "Wrong input" << endl;
+                break;
+            }
+
+            _flushall();
+            cout << "Enter columns (<=10 000): " << endl;
+            int columns = 0;
+            cin >> columns;
+            if (columns > 10000 || columns < 0)
+            {
+                cout << "Wrong input" << endl;
+                break;
+            }
+
+            _flushall();
+            cout << "Enter the percentage of generation (1 - 100): " << endl;
+            int percent = 0;
+            cin >> percent;
+            if (percent > 100 || percent <= 0)
+            {
+                cout << "Wrong input" << endl;
+                break;
+            }
+
+            delete_matirx(&test1);
+            delete_matirx(&test2);
+
+            if  (matrix_calloc(&test1, rows, columns) != 0 || matrix_calloc(&test2, rows, columns) != 0)
+            {
+                cout << "Error calloc" << endl;
+                break;
+            }
+            if (gen_matrix(&test1, rows, columns, percent) == 0 && gen_matrix(&test2, rows, columns, percent) == 0)
+            {
+                delete_sparse_matirx(&sparse1);
+                sparse_matirx_calloc(&sparse1, rows, columns, get_elems_amount(test1));
+                fill_sparse_matrix(&sparse1, test1);
+
+                delete_sparse_matirx(&sparse2);
+                sparse_matirx_calloc(&sparse2, rows, columns, get_elems_amount(test2));
+                fill_sparse_matrix(&sparse2, test2);
+            }
+            else
+            {
+                cout << "Wrong input" << endl;
+                break;
+            }
+            break;
+        }
         case 0:
         {
             cout << "Good buy!" << endl;

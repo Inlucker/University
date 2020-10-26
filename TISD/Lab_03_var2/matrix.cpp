@@ -6,6 +6,8 @@ int gen_matrix(matrix *m, int rows, int columns, int percent)
         return ERROR;
 
     int elems_amount = (rows * columns * percent) / 100;
+    if (elems_amount == 0)
+        elems_amount = 1;
     //cout << elems_amount << endl;
 
     int cur_el_number = 0;
