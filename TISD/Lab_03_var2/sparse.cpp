@@ -102,7 +102,7 @@ int sparse_matrx_sum2(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
 
     while (cur_column < rez->columns)
     {
-        while(1)
+        while(a.mtrx_size > a_id || b.mtrx_size > b_id)
         {
             //cout << "cur_column: " << cur_column << endl;
             list <int> :: iterator a_it_next = next(a_it);
@@ -119,9 +119,10 @@ int sparse_matrx_sum2(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
 
             if (((a_id == *a_it_next || a.mtrx_size <= a_id) && (b_id == *b_it_next || b.mtrx_size <= b_id)) || (*a_it == -1 && *b_it == -1))
                 break;
-
-            if (*(a.mtrx_id + a_id) == cur_row && *a_it != -1 && a_id != *next(a_it))
+            //cout << "cur_row: " << cur_row << endl;
+            if (*(a.mtrx_id + a_id) == cur_row && *a_it != -1 && a_id != *a_it_next)
             {
+                //cout << "a: mtrx_id[a_id] - " << *(a.mtrx_id + a_id) << "; *a_it - " << *a_it << "; a_id - " << a_id << "; *next(a_it) - " << *next(a_it) << endl;
                 *(rez->mtrx + rez_id) += *(a.mtrx + a_id);
                 a_id++;
                 if (is_first)
@@ -130,8 +131,9 @@ int sparse_matrx_sum2(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
                     is_first = false;
                 }
             }
-            if (*(b.mtrx_id + b_id) == cur_row && *b_it != -1 && b_id != *next(b_it))
+            if (*(b.mtrx_id + b_id) == cur_row && *b_it != -1 && b_id != *b_it_next)
             {
+                //cout << "b: mtrx_id[b_id] - " << *(b.mtrx_id + b_id) << "; *b_it - " << *b_it << "; b_id - " << b_id << "; *next(b_it) - " << *next(b_it) << endl;
                 *(rez->mtrx + rez_id) += *(b.mtrx + b_id);
                 b_id++;
                 if (is_first)
