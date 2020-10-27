@@ -165,6 +165,31 @@ int sparse_matrx_sum2(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
     return 0;
 }
 
+//STUPID FUNCTION FOR NOTHING
+/*void fill_columns_id(sparse_matrix *m)
+{
+    list <int> :: iterator it = m->columns_id.begin();
+    int i = 0;
+    while (i < m->mtrx_size)
+    {
+        while (*it == -1)
+        {
+            it++;
+        }
+        *it = i;
+        it++;
+        while (*it == -1)
+        {
+            it++;
+        }
+        cout << *it << endl;
+        while (i != *it && i < m->mtrx_size)
+        {
+            i++;
+        }
+    }
+}*/
+
 int sparse_matrx_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez, int rows)
 {
     if (a.columns != b.columns)

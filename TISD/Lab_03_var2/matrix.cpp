@@ -36,6 +36,26 @@ int gen_matrix(matrix *m, int rows, int columns, int percent)
     return 0;
 }
 
+void fill_matrix(matrix *rez, sparse_matrix m)
+{
+    int cur_m_id = 0;
+    list <int> :: iterator it = m.columns_id.begin();
+    for (int i = 0; i < rez->columns; i++)
+    {
+        for (int j = 0; j < rez->rows; j++)
+        {
+            if (j == *(m.mtrx_id + cur_m_id) && *it != -1)
+            {
+                *((rez->mtrx + j * rez->columns) + i) = *(m.mtrx + cur_m_id);
+                cur_m_id++;
+            }
+            else
+                *((rez->mtrx + j * rez->columns) + i) = 0;
+        }
+        it++;
+    }
+}
+
 void print_matrix(matrix m)
 {
     for (int i = 0; i < m.rows; i++)

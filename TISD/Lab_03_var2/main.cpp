@@ -117,7 +117,7 @@ int main()
             cout << "Enter rows (<=10 000): " << endl;
             int rows = 0;
             cin >> rows;
-            if (rows > 10000 || rows < 0)
+            if (rows > 10000 || rows <= 0)
             {
                 cout << "Wrong input" << endl;
                 break;
@@ -127,7 +127,7 @@ int main()
             cout << "Enter columns (<=10 000): " << endl;
             int columns = 0;
             cin >> columns;
-            if (columns > 10000 || columns < 0)
+            if (columns > 10000 || columns <= 0)
             {
                 cout << "Wrong input" << endl;
                 break;
@@ -170,8 +170,148 @@ int main()
         }
         case 4:
         {
-            //Not yet
-            cout << "Input sparse matrix" << endl;
+            sparse_matrix sparse;
+            matrix test;
+
+            _flushall();
+            cout << "Enter rows (<=1 000): " << endl;
+            int rows = 0;
+            cin >> rows;
+            if (rows > 1000 || rows <= 0)
+            {
+                cout << "Wrong input" << endl;
+                break;
+            }
+
+            _flushall();
+            cout << "Enter columns (<=1 000): " << endl;
+            int columns = 0;
+            cin >> columns;
+            if (columns > 1000 || columns <= 0)
+            {
+                cout << "Wrong input" << endl;
+                break;
+            }
+
+            _flushall();
+            cout << "Enter the elems_amount (<= rows * columns): " << endl;
+            int elems_amount = 0;
+            cin >> elems_amount;
+            if (elems_amount > rows * columns || elems_amount <= 0)
+            {
+                cout << "Wrong input" << endl;
+                break;
+            }
+
+            if (sparse_matrix_calloc(&sparse, columns, elems_amount))
+            {
+                cout << "Calloc error" << endl;
+                break;
+            }
+
+            if (matrix_calloc(&test, rows, columns))
+            {
+                cout << "Calloc error" << endl;
+                delete_sparse_matirx(&sparse);
+                break;
+            }
+
+            _flushall();
+            cout << "Enter mtrx:" << endl;
+            for (int i = 0; i < elems_amount; i++)
+            {
+                int input;
+                while (!(cin >> input))
+                {
+                    cin.clear();
+                    _flushall();
+                    cout << "Wrong input, try again (current i = " << i << ")" << endl;
+                }
+                *(sparse.mtrx + i) = input;
+            }
+
+            _flushall();
+            cout << "Enter mtrx_id:" << endl;
+            for (int i = 0; i < elems_amount; i++)
+            {
+                int input;
+                while (!(cin >> input) || input >= rows)
+                {
+                    cin.clear();
+                    _flushall();
+                    cout << "Wrong input, try again (current i = " << i << ")" << endl;
+                }
+                *(sparse.mtrx_id + i) = input;
+            }
+
+            _flushall();
+            cout << "Enter columns_id (-1 if it has no non-zero elements):" << endl;
+            //int prev_input = -2;
+            for (list <int> :: iterator i = sparse.columns_id.begin(); i != sparse.columns_id.end(); ++i)
+            {
+                int input;// = -2;
+                //prev_input = input;
+                while (!(cin >> input))// || input >= elems_amount || (input <= prev_input && input != -1))
+                {
+                    cin.clear();
+                    _flushall();
+                    cout << "Wrong input, try again" << endl;
+                }
+                *i = input;
+            }
+            fill_matrix(&test, sparse);
+            fill_sparse_matrix(&sparse, test);
+            if (sparse.mtrx_size != elems_amount)
+            {
+                cout << "Wrong input" << endl;;
+                delete_sparse_matirx(&sparse);
+                delete_matirx(&test);
+                break;
+            }
+
+            cout << "Sparse:" << endl;
+            print_sparse_matirx(sparse);
+            cout << "Default:" << endl;
+            print_matrix(test);
+
+            _flushall();
+            cout << "Enter wich matrix it should be (1/2/3): " << endl;
+            int tmp = 0;
+            while (!(cin >> tmp) || tmp < 0 || tmp > 3)// || input >= elems_amount || (input <= prev_input && input != -1))
+            {
+                cin.clear();
+                _flushall();
+                cout << "Wrong input, try again (1/2/3)" << endl;
+            }
+
+            switch (tmp)
+            {
+            case 1:
+            {
+                sparse1 = sparse;
+                test1 = test;
+                break;
+            }
+            case 2:
+            {
+                sparse2 = sparse;
+                test2 = test;
+                break;
+            }
+            case 3:
+            {
+                sparse3 = sparse;
+                test3 = test;
+                break;
+            }
+            default:
+                cout << "Assign error" << endl;
+                delete_sparse_matirx(&sparse);
+                delete_matirx(&test);
+                break;
+            }
+
+            //cout << "Input sparse matrix" << endl;
             break;
         }
         case 5:
@@ -210,7 +350,7 @@ int main()
             cout << "Enter rows (<=10 000): " << endl;
             int rows = 0;
             cin >> rows;
-            if (rows > 10000 || rows < 0)
+            if (rows > 10000 || rows <= 0)
             {
                 cout << "Wrong input" << endl;
                 break;
@@ -220,7 +360,7 @@ int main()
             cout << "Enter columns (<=10 000): " << endl;
             int columns = 0;
             cin >> columns;
-            if (columns > 10000 || columns < 0)
+            if (columns > 10000 || columns <= 0)
             {
                 cout << "Wrong input" << endl;
                 break;
@@ -304,7 +444,7 @@ int main()
             cout << "Enter rows (<=10 000): " << endl;
             int rows = 0;
             cin >> rows;
-            if (rows > 10000 || rows < 0)
+            if (rows > 10000 || rows <= 0)
             {
                 cout << "Wrong input" << endl;
                 break;
@@ -314,7 +454,7 @@ int main()
             cout << "Enter columns (<=10 000): " << endl;
             int columns = 0;
             cin >> columns;
-            if (columns > 10000 || columns < 0)
+            if (columns > 10000 || columns <= 0)
             {
                 cout << "Wrong input" << endl;
                 break;

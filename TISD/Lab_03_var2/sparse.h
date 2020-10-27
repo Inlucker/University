@@ -13,6 +13,8 @@ void print_sparse_matirx(sparse_matrix m);
 
 int sparse_matrx_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez, int rows);
 
+//void fill_columns_id(sparse_matrix *m);
+
 int sparse_matrx_sum2(sparse_matrix a, sparse_matrix b, sparse_matrix *rez);
 
 #endif // SPARSE_H
