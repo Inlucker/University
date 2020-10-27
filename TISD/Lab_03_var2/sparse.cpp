@@ -43,16 +43,16 @@ void fill_sparse_matrix(sparse_matrix *rez, matrix m)
     }
 }
 
-int gen_sparse_matrix(sparse_matrix *m, int rows, int columns, int percent)
+/*int gen_sparse_matrix(sparse_matrix *m, int rows, int columns, int percent)
 {
     if (percent <= 0 || percent > 100 || rows <= 0 || columns <= 0)
         return ERROR;
     int elems_amount = (rows * columns * percent) / 100;
     if (elems_amount <= 0 || elems_amount > rows * columns)
         return ERROR;
-    sparse_matirx_calloc(m, rows, columns, elems_amount);
+    sparse_matrix_calloc(m, columns, elems_amount);
     return 0;
-}
+}*/
 
 void print_sparse_matirx(sparse_matrix m)
 {
@@ -98,10 +98,66 @@ int sparse_matrx_sum2(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
     list <int> :: iterator b_it = b.columns_id.begin();
     int rez_id = 0;
     list <int> :: iterator rez_it = rez->columns_id.begin();
+    bool is_first = true;
 
     while (cur_column < rez->columns)
     {
+        while(1)
+        {
+            //cout << "cur_column: " << cur_column << endl;
+            list <int> :: iterator a_it_next = next(a_it);
+            while(*a_it_next == -1 && a_it_next != a.columns_id.end())
+            {
+                a_it_next++;
+            }
+            list <int> :: iterator b_it_next = next(b_it);
+            while(*b_it_next == -1 && b_it_next != b.columns_id.end())
+            {
+                b_it_next++;
+            }
+            //cout << a_id << " " << *a_it_next << " " << b_id << " " << *b_it_next << endl;
 
+            if (((a_id == *a_it_next || a.mtrx_size <= a_id) && (b_id == *b_it_next || b.mtrx_size <= b_id)) || (*a_it == -1 && *b_it == -1))
+                break;
+
+            if (*(a.mtrx_id + a_id) == cur_row && *a_it != -1 && a_id != *next(a_it))
+            {
+                *(rez->mtrx + rez_id) += *(a.mtrx + a_id);
+                a_id++;
+                if (is_first)
+                {
+                    *rez_it = rez_id;
+                    is_first = false;
+                }
+            }
+            if (*(b.mtrx_id + b_id) == cur_row && *b_it != -1 && b_id != *next(b_it))
+            {
+                *(rez->mtrx + rez_id) += *(b.mtrx + b_id);
+                b_id++;
+                if (is_first)
+                {
+                    *rez_it = rez_id;
+                    is_first = false;
+                }
+            }
+            if (*(rez->mtrx + rez_id) != 0)
+            {
+                *(rez->mtrx_id + rez_id) = cur_row;
+                //cout << *(rez->mtrx + rez_id) << endl;
+                rez_id++;
+            }
+
+            //if (rez_id >= rez->mtrx_size)
+            if (a.mtrx_size <= a_id && b.mtrx_size <= b_id)
+                break;
+            cur_row++;
+        }
+        rez_it++;
+        a_it++;
+        b_it++;
+        cur_row = 0;
+        is_first = true;
+        cur_column++;
     }
 
     return 0;
@@ -188,7 +244,7 @@ int sparse_matrx_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez, int r
             rez_elems_amount++;
     }
 
-    if (sparse_matirx_calloc(rez, rows, rez->columns, rez_elems_amount))
+    if (sparse_matrix_calloc(rez, rez->columns, rez_elems_amount))
         return ERROR;
 
     j = 0;

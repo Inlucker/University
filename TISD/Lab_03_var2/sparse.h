@@ -7,7 +7,7 @@ int get_elems_amount(matrix m);
 
 void fill_sparse_matrix(sparse_matrix *rez, matrix m);
 
-int gen_sparse_matrix(sparse_matrix *m, int rows, int columns, int percent);
+//int gen_sparse_matrix(sparse_matrix *m, int rows, int columns, int percent);
 
 void print_sparse_matirx(sparse_matrix m);
 

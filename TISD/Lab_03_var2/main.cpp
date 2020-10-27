@@ -22,14 +22,32 @@ int main()
 
     sparse_matrix sparse1, sparse2, sparse3;
 
-    sparse_matirx_calloc(&sparse1, starting_rows, starting_columns, get_elems_amount(test1));
+    sparse_matrix_calloc(&sparse1, starting_columns, get_elems_amount(test1));
     fill_sparse_matrix(&sparse1, test1);
 
-    sparse_matirx_calloc(&sparse2, starting_rows, starting_columns, get_elems_amount(test2));
+    sparse_matrix_calloc(&sparse2, starting_columns, get_elems_amount(test2));
     fill_sparse_matrix(&sparse2, test2);
 
-    sparse_matirx_calloc(&sparse3, starting_rows, starting_columns, get_elems_amount(test3));
+    sparse_matrix_calloc(&sparse3, starting_columns, get_elems_amount(test3));
     fill_sparse_matrix(&sparse3, test3);
+
+    //memory_calculating(3, 4, 50);
+
+    /*cout << "sparse3: " << endl;
+    print_sparse_matirx(sparse3);
+    cout << "sparse1: " << endl;
+    print_sparse_matirx(sparse1);
+    cout << "sparse2: " << endl;
+    print_sparse_matirx(sparse2);
+    cout << "test1: " << endl;
+    print_matrix(test1);
+    cout << "test2: " << endl;
+    print_matrix(test2);
+
+    delete_sparse_matirx(&sparse3);
+    sparse_matrix_calloc(&sparse3, starting_columns, get_elems_amount(test3));
+    sparse_matrx_sum2(sparse1, sparse2, &sparse3);
+    print_sparse_matirx(sparse3);*/
 
     /*print_sparse_matirx(sparse3);
 
@@ -50,6 +68,7 @@ int main()
         cout << "4 - Input sparse matrix" << endl;
         cout << "5 - calculate addition into matrix 3 and print it in sparse form" << endl;
         cout << "6 - Time tests" << endl;
+        cout << "7 - Memory calculating" << endl;
         /*cout << "6 - Print key_list" << endl;
         cout << "7 - Print car_list using key_list" << endl;
         cout << "8 - BubbleSort car_list by field" << endl;
@@ -135,11 +154,11 @@ int main()
             if (gen_matrix(&test1, rows, columns, percent) == 0 && gen_matrix(&test2, rows, columns, percent) == 0)
             {
                 delete_sparse_matirx(&sparse1);
-                sparse_matirx_calloc(&sparse1, rows, columns, get_elems_amount(test1));
+                sparse_matrix_calloc(&sparse1, columns, get_elems_amount(test1));
                 fill_sparse_matrix(&sparse1, test1);
 
                 delete_sparse_matirx(&sparse2);
-                sparse_matirx_calloc(&sparse2, rows, columns, get_elems_amount(test2));
+                sparse_matrix_calloc(&sparse2, columns, get_elems_amount(test2));
                 fill_sparse_matrix(&sparse2, test2);
             }
             else
@@ -171,7 +190,12 @@ int main()
                 break;
             }
 
-            if (sparse_matrx_sum(sparse1, sparse2, &sparse3, test3.rows))
+            if (sparse_matrix_calloc(&sparse3, test3.columns, get_elems_amount(test3)))
+            {
+                cout << "Calloc error" << endl;
+                break;
+            }
+            if (sparse_matrx_sum2(sparse1, sparse2, &sparse3))
             {
                 cout << "Addition error" << endl;
                 break;
@@ -182,7 +206,6 @@ int main()
         }
         case 6:
         {
-
             _flushall();
             cout << "Enter rows (<=10 000): " << endl;
             int rows = 0;
@@ -225,11 +248,11 @@ int main()
             if (gen_matrix(&test1, rows, columns, percent) == 0 && gen_matrix(&test2, rows, columns, percent) == 0)
             {
                 delete_sparse_matirx(&sparse1);
-                sparse_matirx_calloc(&sparse1, rows, columns, get_elems_amount(test1));
+                sparse_matrix_calloc(&sparse1, columns, get_elems_amount(test1));
                 fill_sparse_matrix(&sparse1, test1);
 
                 delete_sparse_matirx(&sparse2);
-                sparse_matirx_calloc(&sparse2, rows, columns, get_elems_amount(test2));
+                sparse_matrix_calloc(&sparse2, columns, get_elems_amount(test2));
                 fill_sparse_matrix(&sparse2, test2);
             }
             else
@@ -242,12 +265,12 @@ int main()
             delete_matirx(&test3);
 
             //Default addition test
-            clock_t start = clock();
             if (matrix_calloc(&test3, rows, columns))
             {
                 cout << "Calloc error" << endl;
                 break;
             }
+            clock_t start = clock();
             if (matrx_sum(test1, test2, &test3))
             {
                 cout << "Addition error" << endl;
@@ -255,18 +278,60 @@ int main()
             }
             clock_t end = clock();
             double seconds = (double)(end - start) / CLOCKS_PER_SEC;
-            printf("Default matrixes addition test time: %.3f seconds\n", seconds);
+            printf("Default matrixes addition test time: %.4f seconds\n", seconds);
 
             //Sparse addition test
+            //cout << test3.columns << " " << get_elems_amount(test3) << endl;
+            if (sparse_matrix_calloc(&sparse3, columns, get_elems_amount(test3)))
+            {
+                cout << "Calloc error" << endl;
+                break;
+            }
             start = clock();
-            if (sparse_matrx_sum(sparse1, sparse2, &sparse3, test3.rows))
+            if (sparse_matrx_sum2(sparse1, sparse2, &sparse3))
             {
                 cout << "Addition error" << endl;
                 break;
             }
             end = clock();
             seconds = (double)(end - start) / CLOCKS_PER_SEC;
-            printf("Sparse matrixes addition test time: %.3f seconds\n", seconds);
+            printf("Sparse matrixes addition test time: %.4f seconds\n", seconds);
+            break;
+        }
+        case 7:
+        {
+            _flushall();
+            cout << "Enter rows (<=10 000): " << endl;
+            int rows = 0;
+            cin >> rows;
+            if (rows > 10000 || rows < 0)
+            {
+                cout << "Wrong input" << endl;
+                break;
+            }
+
+            _flushall();
+            cout << "Enter columns (<=10 000): " << endl;
+            int columns = 0;
+            cin >> columns;
+            if (columns > 10000 || columns < 0)
+            {
+                cout << "Wrong input" << endl;
+                break;
+            }
+
+            _flushall();
+            cout << "Enter the percentage of generation (1 - 100): " << endl;
+            int percent = 0;
+            cin >> percent;
+            if (percent > 100 || percent <= 0)
+            {
+                cout << "Wrong input" << endl;
+                break;
+            }
+
+            memory_calculating(rows, columns, percent);
+            break;
         }
         case 0:
         {

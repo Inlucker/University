@@ -9,7 +9,7 @@
 
 using namespace std;
 
-typedef double my_type;
+typedef int my_type;
 
 struct matrix
 {
@@ -34,12 +34,14 @@ struct sparse_matrix
     int columns;
 };
 
-int sparse_matirx_calloc(sparse_matrix *m, int rows, int columns, int elems_amount);
+int sparse_matrix_calloc(sparse_matrix *m, int columns, int elems_amount);
 
 void delete_sparse_matirx(sparse_matrix *m);
 
 int matrix_calloc(matrix *m, int rows, int columns);
 
 void delete_matirx(matrix *m);
+
+void memory_calculating(int rows, int columms, int percent);
 
 #endif // STRUCTS_H

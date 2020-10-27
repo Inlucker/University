@@ -1,8 +1,8 @@
 #include "structs.h"
 
-int sparse_matirx_calloc(sparse_matrix *m, int rows, int columns, int elems_amount)
+int sparse_matrix_calloc(sparse_matrix *m, int columns, int elems_amount)
 {
-    if (elems_amount <= 0 || rows <= 0 || columns <= 0)
+    if (elems_amount <= 0 || columns <= 0)
         return ERROR;
     m->mtrx_size = elems_amount;
     //m->rows = rows;
@@ -56,4 +56,16 @@ int matrix_calloc(matrix *m, int rows, int columns)
 void delete_matirx(matrix *m)
 {
     delete [] m->mtrx;
+}
+
+void memory_calculating(int rows, int columns, int percent)
+{
+    long long int r = rows, c = columns, p = percent;
+    long long int elems_amount = (r * c * p) / 100;
+    if (elems_amount == 0)
+        elems_amount = 1;
+    //int matrix_memory = sizeof (int) * (rows * columns) + sizeof (matrix);
+    //int sparse_matrix_memory = (sizeof(int) + sizeof(my_type)) * elems_amount + sizeof (sparse_matrix);
+    cout << "Default matrix: " <<sizeof (int) * (rows * columns) + sizeof (matrix) << " bytes. Sparse matrix: " << (sizeof(int) + sizeof(my_type)) * elems_amount + sizeof (sparse_matrix) <<
+            " bytes." << endl;
 }

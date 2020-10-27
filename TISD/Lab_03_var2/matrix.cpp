@@ -4,8 +4,8 @@ int gen_matrix(matrix *m, int rows, int columns, int percent)
 {
     if (percent <= 0 || percent > 100 || rows <= 0 || columns <= 0)
         return ERROR;
-
-    int elems_amount = (rows * columns * percent) / 100;
+    long long int r = rows, c = columns, p = percent;
+    long long int elems_amount = (r * c * p) / 100;
     if (elems_amount == 0)
         elems_amount = 1;
     //cout << elems_amount << endl;
