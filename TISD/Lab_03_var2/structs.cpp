@@ -5,7 +5,7 @@ int sparse_matirx_calloc(sparse_matrix *m, int rows, int columns, int elems_amou
     if (elems_amount <= 0 || rows <= 0 || columns <= 0)
         return ERROR;
     m->mtrx_size = elems_amount;
-    m->rows = rows;
+    //m->rows = rows;
     m->columns = columns;
 
     m->mtrx = new my_type [m->mtrx_size];

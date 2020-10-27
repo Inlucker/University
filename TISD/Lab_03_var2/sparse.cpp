@@ -82,18 +82,42 @@ void print_sparse_matirx(sparse_matrix m)
     }
 }
 
-int sparse_matrx_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
+int sparse_matrx_sum2(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
 {
-    if (a.columns != b.columns && a.rows != b.rows)
+    if (a.columns != b.columns && b.columns != rez->columns)
         return ERROR;
-    rez->rows = a.rows;
+    //rez->rows = a.rows;
     rez->columns = a.columns;
-    //sparse_matirx_calloc(rez, rez->rows, rez->columns, rez->rows * rez->columns);
+
+
+    int cur_row = 0;
+    int cur_column = 0;
+    int a_id = 0;
+    list <int> :: iterator a_it = a.columns_id.begin();
+    int b_id = 0;
+    list <int> :: iterator b_it = b.columns_id.begin();
+    int rez_id = 0;
+    list <int> :: iterator rez_it = rez->columns_id.begin();
+
+    while (cur_column < rez->columns)
+    {
+
+    }
+
+    return 0;
+}
+
+int sparse_matrx_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez, int rows)
+{
+    if (a.columns != b.columns)
+        return ERROR;
+    //rez->rows = a.rows;
+    rez->columns = a.columns;
 
     //here solved? Guess so yes!
-    int *tmp1 = new int  [rez->rows * rez->columns];
+    int *tmp1 = new int  [rows * rez->columns];
 
-    for (int i = 0; i < rez->rows * rez->columns; i++)
+    for (int i = 0; i < rows * rez->columns; i++)
     {
         *(tmp1 + i) = 0;
     }
@@ -117,21 +141,16 @@ int sparse_matrx_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
             tmp_i = 1;
             it++;
         }
-        *((tmp1 + k * a.rows) + j) = i + 1;
+        *((tmp1 + k * rows) + j) = i + 1;
         i++;
         j = a.mtrx_id[i];
 
     }
 
-    /*for (int i = 0; i < rez->rows * rez->columns; i++)
-    {
-        cout << *(tmp1 + i) << " ";
-    }
-    cout << endl;*/
 
-    int *tmp2 = new int  [rez->rows * rez->columns];
+    int *tmp2 = new int  [rows * rez->columns];
 
-    for (int i = 0; i < rez->rows * rez->columns; i++)
+    for (int i = 0; i < rows * rez->columns; i++)
     {
         *(tmp2 + i) = 0;
     }
@@ -155,31 +174,25 @@ int sparse_matrx_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
             tmp_i = 1;
             it++;
         }
-        *((tmp2 + k * b.rows) + j) = i + 1;
+        *((tmp2 + k * rows) + j) = i + 1;
         i++;
         j = b.mtrx_id[i];
 
     }
 
-    /*for (int i = 0; i < rez->rows * rez->columns; i++)
-    {
-        cout << *(tmp2 + i) << " ";
-    }
-    cout << endl;*/
-
     //If upper works
     int rez_elems_amount = 0;
-    for (int i = 0; i < rez->rows * rez->columns; i++)
+    for (int i = 0; i < rows * rez->columns; i++)
     {
         if (*(tmp1 + i) != 0 || *(tmp2 + i) != 0)
             rez_elems_amount++;
     }
 
-    if (sparse_matirx_calloc(rez, rez->rows, rez->columns, rez_elems_amount))
+    if (sparse_matirx_calloc(rez, rows, rez->columns, rez_elems_amount))
         return ERROR;
 
     j = 0;
-    for (int i = 0; i < rez->rows * rez->columns; i++)
+    for (int i = 0; i < rows * rez->columns; i++)
     {
         //cout << *(a.mtrx + *(tmp1 + i) - 1) << " " << *(b.mtrx + *(tmp2 + i) - 1) << " " << *(a.mtrx + *(tmp1 + i) - 1) + *(b.mtrx + *(tmp2 + i) - 1) << endl;
         //cout << *(tmp1 + i) << " " << *(tmp2 + i) << endl;
@@ -204,33 +217,16 @@ int sparse_matrx_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
         }
     }
 
-    //not working?
-    //list <int> :: iterator a_it = a.columns_id.begin();
-    //list <int> :: iterator b_it = b.columns_id.begin();
-    /*for (list <int> :: iterator i = rez->columns_id.begin(); i != rez->columns_id.end(); ++i)
-    {
-        if (*a_it == -1 && *b_it == -1)
-            *i = -1;
-        else if (*a_it == -1)
-            *i = *b_it;
-        else if (*b_it == -1)
-            *i = *a_it;
-        else
-            *i = min(*a_it, *b_it);
-        a_it++;
-        b_it++;
-    }*/
-
     //I think this works
     it = rez->columns_id.begin();
     int tmp = 0;
     bool flag = true;
     for (int i = 0; i < rez->columns; i++)
     {
-        for (int j = 0; j < rez->rows; j++)
+        for (int j = 0; j < rows; j++)
         {
             //cout << "tmp_id: " << i*rez->rows + j << " value1: " << *(tmp1 + i*rez->rows + j) << "; value2: " << *(tmp2 + i*rez->rows + j) << endl;
-            if (*(tmp1 + i*rez->rows + j) != 0 || *(tmp2 + i*rez->rows + j) != 0)
+            if (*(tmp1 + i* + j) != 0 || *(tmp2 + i* + j) != 0)
             {
                 if (flag)
                 {

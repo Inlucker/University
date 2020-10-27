@@ -30,7 +30,7 @@ struct sparse_matrix
     int *mtrx_id;
     list <int> columns_id;
     int mtrx_size;
-    int rows; //?
+    //int rows; //?
     int columns;
 };
 
