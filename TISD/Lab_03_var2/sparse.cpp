@@ -82,7 +82,7 @@ void print_sparse_matirx(sparse_matrix m)
     }
 }
 
-int sparse_matrx_sum2(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
+int sparse_matrix_sum2(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
 {
     if (a.columns != b.columns && b.columns != rez->columns)
         return ERROR;
@@ -102,24 +102,25 @@ int sparse_matrx_sum2(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
 
     while (cur_column < rez->columns)
     {
+        list <int> :: iterator a_it_next = next(a_it);
+        while(*a_it_next == -1 && a_it_next != a.columns_id.end())
+        {
+            a_it_next++;
+        }
+        list <int> :: iterator b_it_next = next(b_it);
+        while(*b_it_next == -1 && b_it_next != b.columns_id.end())
+        {
+            b_it_next++;
+        }
         while(a.mtrx_size > a_id || b.mtrx_size > b_id)
         {
             //cout << "cur_column: " << cur_column << endl;
-            list <int> :: iterator a_it_next = next(a_it);
-            while(*a_it_next == -1 && a_it_next != a.columns_id.end())
-            {
-                a_it_next++;
-            }
-            list <int> :: iterator b_it_next = next(b_it);
-            while(*b_it_next == -1 && b_it_next != b.columns_id.end())
-            {
-                b_it_next++;
-            }
             //cout << a_id << " " << *a_it_next << " " << b_id << " " << *b_it_next << endl;
+            //cout << "cur_row: " << cur_row << endl;
 
             if (((a_id == *a_it_next || a.mtrx_size <= a_id) && (b_id == *b_it_next || b.mtrx_size <= b_id)) || (*a_it == -1 && *b_it == -1))
                 break;
-            //cout << "cur_row: " << cur_row << endl;
+
             if (*(a.mtrx_id + a_id) == cur_row && *a_it != -1 && a_id != *a_it_next)
             {
                 //cout << "a: mtrx_id[a_id] - " << *(a.mtrx_id + a_id) << "; *a_it - " << *a_it << "; a_id - " << a_id << "; *next(a_it) - " << *next(a_it) << endl;
@@ -165,6 +166,138 @@ int sparse_matrx_sum2(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
     return 0;
 }
 
+int sparse_matrix_sum4(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
+{
+    if (a.columns != b.columns && b.columns != rez->columns)
+        return ERROR;
+    rez->columns = a.columns;
+
+    //int cur_row = 0;
+    int cur_column = 0;
+    int a_id = 0;
+    list <int> :: iterator a_it = a.columns_id.begin();
+    int b_id = 0;
+    list <int> :: iterator b_it = b.columns_id.begin();
+    int rez_id = 0;
+    list <int> :: iterator rez_it = rez->columns_id.begin();
+
+    while (cur_column < rez->columns)
+    {
+        int a_it_next_value = a.mtrx_size;
+        if (next(a_it) != a.columns_id.end())
+        {
+            list <int> :: iterator a_it_next = next(a_it);
+            while(*a_it_next == -1 && a_it_next != a.columns_id.end())
+            {
+                a_it_next++;
+            }
+            a_it_next_value = *a_it_next;
+            if (a_it_next != b.columns_id.end())
+                a_it_next_value = *a_it_next;
+        }
+
+        int b_it_next_value = b.mtrx_size;
+        if (next(b_it) != b.columns_id.end())
+        {
+            list <int> :: iterator b_it_next = next(b_it);
+            while(*b_it_next == -1 && b_it_next != b.columns_id.end())
+            {
+                b_it_next++;
+            }
+            if (b_it_next != b.columns_id.end())
+                b_it_next_value = *b_it_next;
+        }
+
+        if (*a_it != -1 || *b_it != -1)
+        {
+            *rez_it = rez_id;
+        }
+
+        //cout << "a: "<< *next(a_it) << " b: " << *next(b_it) << endl;
+        //cout << "cur_column: " << cur_column << "; rez_id - " << rez_id << endl;
+        while(a.mtrx_size > a_id || b.mtrx_size > b_id)
+        {
+            //cout << "cur_column: " << cur_column << endl;
+            //cout << a_id << " " << a_it_next_value << " " << b_id << " " << b_it_next_value << endl;
+
+            //cout << *(a.mtrx_id + a_id) << " " << *(a.mtrx + a_id) << " " << *(b.mtrx_id + b_id) << " " << *(b.mtrx + b_id) << endl;
+
+            if ((a_id == a_it_next_value && b_id == b_it_next_value) || (*a_it == -1 && *b_it == -1) || (a_id >= a.mtrx_size && b_id >= b.mtrx_size))
+                break;
+
+            if (*a_it != -1 && *b_it != -1)
+            {
+                if (a_id != a_it_next_value && b_id != b_it_next_value)
+                {
+                    if (*(a.mtrx_id + a_id) == *(b.mtrx_id + b_id))
+                    {
+                        *(rez->mtrx + rez_id) = *(a.mtrx + a_id) + *(b.mtrx + b_id);
+                        *(rez->mtrx_id + rez_id) = *(a.mtrx_id + a_id);
+                        rez_id++;
+                        a_id++;
+                        b_id++;
+                    }
+                    else if (*(a.mtrx_id + a_id) < *(b.mtrx_id + b_id))
+                    {
+                        *(rez->mtrx + rez_id) = *(a.mtrx + a_id);
+                        *(rez->mtrx_id + rez_id) = *(a.mtrx_id + a_id);
+                        rez_id++;
+                        a_id++;
+                    }
+                    else if (*(a.mtrx_id + a_id) > *(b.mtrx_id + b_id))
+                    {
+                        *(rez->mtrx + rez_id) = *(b.mtrx + b_id);
+                        *(rez->mtrx_id + rez_id) = *(b.mtrx_id + b_id);
+                        rez_id++;
+                        b_id++;
+                    }
+                    else
+                        cout << "WORLD ERROR" << endl;
+                }
+                else if (a_id != a_it_next_value)
+                {
+                    *(rez->mtrx + rez_id) = *(a.mtrx + a_id);
+                    *(rez->mtrx_id + rez_id) = *(a.mtrx_id + a_id);
+                    rez_id++;
+                    a_id++;
+                }
+                else if (b_id != b_it_next_value)
+                {
+                    *(rez->mtrx + rez_id) = *(b.mtrx + b_id);
+                    *(rez->mtrx_id + rez_id) = *(b.mtrx_id + b_id);
+                    rez_id++;
+                    b_id++;
+                }
+                else
+                    cout << "(INPUT_DATA_ERROR on rez_id = " << rez_id << endl;
+            }
+            else if (*a_it != -1)
+            {
+                *(rez->mtrx + rez_id) = *(a.mtrx + a_id);
+                *(rez->mtrx_id + rez_id) = *(a.mtrx_id + a_id);
+                rez_id++;
+                a_id++;
+            }
+            else if (*b_it != -1)
+            {
+                *(rez->mtrx + rez_id) = *(b.mtrx + b_id);
+                *(rez->mtrx_id + rez_id) = *(b.mtrx_id + b_id);
+                rez_id++;
+                b_id++;
+            }
+            else if (*a_it == -1 && *b_it == -1)
+                break;
+            else
+                cout << "ERROR on rez_id = " << rez_id << endl;
+        }
+        cur_column++;
+        rez_it++;
+        a_it++;
+        b_it++;
+    }
+    return 0;
+}
+
 //STUPID FUNCTION FOR NOTHING
 /*void fill_columns_id(sparse_matrix *m)
 {
@@ -190,7 +323,7 @@ int sparse_matrx_sum2(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
     }
 }*/
 
-int sparse_matrx_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez, int rows)
+int sparse_matrix_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez, int rows)
 {
     if (a.columns != b.columns)
         return ERROR;
@@ -274,6 +407,7 @@ int sparse_matrx_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez, int r
     if (sparse_matrix_calloc(rez, rez->columns, rez_elems_amount))
         return ERROR;
 
+    clock_t start = clock();
     j = 0;
     for (int i = 0; i < rows * rez->columns; i++)
     {
@@ -325,9 +459,115 @@ int sparse_matrx_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez, int r
         else
             flag = true;
     }
+    clock_t end = clock();
+    double seconds = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("Sparse matrixes addition test time: %.4f seconds\n", seconds);
 
     delete [] tmp1;
     delete [] tmp2;
 
     return 0;
 }
+
+//Оказалось sh*t idea
+/*int sparse_matrix_sum3(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
+{
+    if (a.columns != b.columns && b.columns != rez->columns)
+        return ERROR;
+
+    rez->columns = a.columns;
+
+    //int current_row = 0;
+    int cur_column = 0;
+    int a_id = 0;
+    list <int> :: iterator a_it = a.columns_id.begin();
+    int b_id = 0;
+    list <int> :: iterator b_it = b.columns_id.begin();
+    int rez_id = 0;
+    list <int> :: iterator rez_it = rez->columns_id.begin();
+    //bool is_first = true;
+
+    while (cur_column < rez->columns)
+    {
+        list <int> :: iterator a_it_next = next(a_it);
+        while(*a_it_next == -1 && a_it_next != a.columns_id.end())
+        {
+            a_it_next++;
+        }
+        list <int> :: iterator b_it_next = next(b_it);
+        while(*b_it_next == -1 && b_it_next != b.columns_id.end())
+        {
+            b_it_next++;
+        }
+
+        //cout << "a: "<< *next(a_it) << " b: " << *next(b_it) << endl;
+        //cout << "cur_column: " << cur_column << "; rez_id - " << rez_id << endl;
+        if (*a_it != -1 || *b_it != -1)
+        {
+            *rez_it = rez_id;
+        }
+
+        while(a.mtrx_size > a_id || b.mtrx_size > b_id)
+        {
+            //cout << "cur_column: " << cur_column << endl;
+            //cout << a_id << " " << *a_it_next << " " << b_id << " " << *b_it_next << endl;
+
+            if (((a_id == *a_it_next || a.mtrx_size <= a_id) && (b_id == *b_it_next || b.mtrx_size <= b_id) && cur_column != rez->columns - 1)
+                    || (a.mtrx_size <= a_id && b.mtrx_size <= b_id && cur_column == rez->columns - 1)
+                    || (*a_it == -1 && *b_it == -1))
+                break;
+
+            if ((*a_it != -1 && *b_it != -1 && a_id != *a_it_next && b_id != *b_it_next) || cur_column == rez->columns - 1)
+            {
+                if (*(a.mtrx_id + a_id) > *(b.mtrx_id + b_id))
+                {
+                    *(rez->mtrx + rez_id) = *(b.mtrx + b_id);
+                    *(rez->mtrx_id + rez_id) = *(b.mtrx_id + b_id);
+                    b_id++;
+                }
+                else if (*(a.mtrx_id + a_id) < *(b.mtrx_id + b_id))
+                {
+                    *(rez->mtrx + rez_id) = *(a.mtrx + a_id);
+                    *(rez->mtrx_id + rez_id) = *(a.mtrx_id + a_id);
+                    a_id++;
+                }
+                else
+                {
+                    *(rez->mtrx + rez_id) = *(a.mtrx + a_id) + *(b.mtrx + b_id);
+                    *(rez->mtrx_id + rez_id) = *(a.mtrx_id + a_id);
+                    a_id++;
+                    b_id++;
+                }
+
+                rez_id++;
+            }
+            else if (*a_it != -1 && a_id != *a_it_next)
+            {
+                *(rez->mtrx + rez_id) = *(a.mtrx + a_id);
+                *(rez->mtrx_id + rez_id) = *(a.mtrx_id + a_id);
+                rez_id++;
+                a_id++;
+            }
+            else if (*b_it != -1 && b_id != *b_it_next)
+            {
+                *(rez->mtrx + rez_id) =*(b.mtrx + b_id);
+                *(rez->mtrx_id + rez_id) = *(b.mtrx_id + b_id);
+                rez_id++;
+                b_id++;
+            }
+            else
+                break;
+
+
+            //if (rez_id >= rez->mtrx_size)
+        }
+        rez_it++;
+        a_it++;
+        b_it++;
+        //is_first = true;
+        cur_column++;
+    }
+
+    return 0;
+}*/
+

@@ -12,10 +12,10 @@ int main()
     int starting_rows = 3;
     int starting_columns = 4;
     matrix_calloc(&test1, starting_rows, starting_columns);
-    gen_matrix(&test1, test1.rows, test1.columns, 25);
+    gen_matrix(&test1, test1.rows, test1.columns, 40);
 
     matrix_calloc(&test2, starting_rows, starting_columns);
-    gen_matrix(&test2, test2.rows, test2.columns, 50);
+    gen_matrix(&test2, test2.rows, test2.columns, 40);
 
     matrix_calloc(&test3, starting_rows, starting_columns);
     matrx_sum(test1, test2, &test3);
@@ -30,6 +30,60 @@ int main()
 
     sparse_matrix_calloc(&sparse3, starting_columns, get_elems_amount(test3));
     fill_sparse_matrix(&sparse3, test3);
+
+    /*clock_t start = clock();
+    //int cur_row = 0;
+    int a_id = 0;
+    //list <int> :: iterator a_it = sparse1.columns_id.begin();
+    int b_id = 0;
+    //list <int> :: iterator b_it = sparse2.columns_id.begin();
+    int rez_id = 0;
+    list <int> :: iterator rez_it = sparse3.columns_id.begin();
+    //bool is_first = true;
+
+    //cout << get_elems_amount(test3) << endl;
+    while (rez_id < sparse3.mtrx_size)
+    {
+        if (a_id < sparse1.mtrx_size && b_id < sparse2.mtrx_size)
+        {
+            *(sparse3.mtrx + rez_id) = *(sparse1.mtrx + a_id) + *(sparse2.mtrx + b_id);
+            *(sparse3.mtrx_id + rez_id) = *(sparse1.mtrx_id + a_id);
+            a_id++;
+            b_id++;
+            rez_id++;
+        }
+        else if (a_id < sparse1.mtrx_size)
+        {
+            *(sparse3.mtrx + rez_id) = *(sparse1.mtrx + a_id);
+            *(sparse3.mtrx_id + rez_id) = *(sparse1.mtrx_id + a_id);
+            a_id++;
+            rez_id++;
+        }
+        else if (b_id < sparse2.mtrx_size)
+        {
+            *(sparse3.mtrx + rez_id) = *(sparse2.mtrx + b_id);
+            *(sparse3.mtrx_id + rez_id) = *(sparse2.mtrx_id + b_id);
+            b_id++;
+            rez_id++;
+        }
+        else
+        {
+            *(sparse3.mtrx + rez_id) = *(sparse1.mtrx + a_id - 1);
+            *(sparse3.mtrx_id + rez_id) = *(sparse1.mtrx_id + a_id - 1);
+            rez_id++;
+        }
+    }
+    for (list <int> :: iterator i = sparse3.columns_id.begin(); i != sparse3.columns_id.end(); ++i)
+    {
+        *i = 0;
+    }
+    clock_t end = clock();
+    double seconds = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("Time: %.4f seconds\n", seconds);
+
+    fill_sparse_matrix(&sparse3, test3);*/
+
+
 
     //memory_calculating(3, 4, 50);
 
@@ -69,13 +123,6 @@ int main()
         cout << "5 - calculate addition into matrix 3 and print it in sparse form" << endl;
         cout << "6 - Time tests" << endl;
         cout << "7 - Memory calculating" << endl;
-        /*cout << "6 - Print key_list" << endl;
-        cout << "7 - Print car_list using key_list" << endl;
-        cout << "8 - BubbleSort car_list by field" << endl;
-        cout << "9 - BubbleSort price_key_list" << endl;
-        cout << "10 - QuickSort price_key_list" << endl;
-        cout << "11 - QuickSort car_list by field" << endl;
-        cout << "12 - Time Tests for sorts" << endl;*/
         cout << "0 - Exit from programm" << endl;
         cout << endl;
 
@@ -335,13 +382,13 @@ int main()
                 cout << "Calloc error" << endl;
                 break;
             }
-            if (sparse_matrx_sum2(sparse1, sparse2, &sparse3))
+            if (sparse_matrix_sum4(sparse1, sparse2, &sparse3))
             {
                 cout << "Addition error" << endl;
                 break;
             }
-            cout << "Calculation is done:" << endl;
-            print_sparse_matirx(sparse3);
+            cout << "Calculation is done" << endl;
+            //print_sparse_matirx(sparse3);
             break;
         }
         case 6:
@@ -428,7 +475,7 @@ int main()
                 break;
             }
             start = clock();
-            if (sparse_matrx_sum2(sparse1, sparse2, &sparse3))
+            if (sparse_matrix_sum4(sparse1, sparse2, &sparse3))
             {
                 cout << "Addition error" << endl;
                 break;
