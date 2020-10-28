@@ -161,20 +161,20 @@ int main()
         case 3:
         {
             _flushall();
-            cout << "Enter rows (<=10 000): " << endl;
+            cout << "Enter rows (<=5 000): " << endl;
             int rows = 0;
             cin >> rows;
-            if (rows > 10000 || rows <= 0)
+            if (rows > 5000 || rows <= 0)
             {
                 cout << "Wrong input" << endl;
                 break;
             }
 
             _flushall();
-            cout << "Enter columns (<=10 000): " << endl;
+            cout << "Enter columns (<=5 000): " << endl;
             int columns = 0;
             cin >> columns;
-            if (columns > 10000 || columns <= 0)
+            if (columns > 5000 || columns <= 0)
             {
                 cout << "Wrong input" << endl;
                 break;
@@ -394,20 +394,20 @@ int main()
         case 6:
         {
             _flushall();
-            cout << "Enter rows (<=10 000): " << endl;
+            cout << "Enter rows (<=5 000): " << endl;
             int rows = 0;
             cin >> rows;
-            if (rows > 10000 || rows <= 0)
+            if (rows > 5000 || rows <= 0)
             {
                 cout << "Wrong input" << endl;
                 break;
             }
 
             _flushall();
-            cout << "Enter columns (<=10 000): " << endl;
+            cout << "Enter columns (<=5 000): " << endl;
             int columns = 0;
             cin >> columns;
-            if (columns > 10000 || columns <= 0)
+            if (columns > 5000 || columns <= 0)
             {
                 cout << "Wrong input" << endl;
                 break;
@@ -488,20 +488,20 @@ int main()
         case 7:
         {
             _flushall();
-            cout << "Enter rows (<=10 000): " << endl;
+            cout << "Enter rows (<=5 000): " << endl;
             int rows = 0;
             cin >> rows;
-            if (rows > 10000 || rows <= 0)
+            if (rows > 5000 || rows <= 0)
             {
                 cout << "Wrong input" << endl;
                 break;
             }
 
             _flushall();
-            cout << "Enter columns (<=10 000): " << endl;
+            cout << "Enter columns (<=5 000): " << endl;
             int columns = 0;
             cin >> columns;
-            if (columns > 10000 || columns <= 0)
+            if (columns > 5000 || columns <= 0)
             {
                 cout << "Wrong input" << endl;
                 break;
