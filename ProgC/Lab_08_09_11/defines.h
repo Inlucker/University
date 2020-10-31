@@ -13,9 +13,6 @@
 #define ALLOC_ERROR -3
 #define ADDITION_ERROR -4
 #define FILE_OUTPUT_ERROR -5
-//#define MEMORY_ERROR -3
-//#define FILTR_ERROR -5
-
-//typedef double my_type;
+#define COMPOSITION_ERROR -3
 
 #endif // DEFINES_H

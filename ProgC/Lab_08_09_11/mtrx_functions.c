@@ -77,8 +77,8 @@ double** read_mtrx_from_file(char *file_name, double *mtrx, int *rows, int *colu
 
         if (i == i_max && j == j_max)
         {
-            *columns = i;
-            *rows = j;
+            *rows = i;
+            *columns = j;
         }
         else
         {
@@ -104,6 +104,22 @@ void mtrx_addition(double **mtrx_ptrs1, double **mtrx_ptrs2, double **rez_mtrx_p
             *(*(rez_mtrx_ptrs + i) + j) = *(*(mtrx_ptrs1 + i) + j) + *(*(mtrx_ptrs2 + i) + j);
         }
     }
+}
+
+void mtrx_composition(double **mtrx_ptrs1, double **mtrx_ptrs2, double **rez_mtrx_ptrs, int rows, int columns, int columns1)
+{
+    for (int i = 0; i < columns; i++)
+    {
+        for (int j = 0; j < rows; j++)
+        {
+            *(*(rez_mtrx_ptrs + i) + j) = 0;
+            for (int k = 0; k < columns1; k++)
+            {
+                *(*(rez_mtrx_ptrs + i) + j) += *(*(mtrx_ptrs1 + i) + k) * *(*(mtrx_ptrs2 + k) + j);
+            }
+        }
+    }
+
 }
 
 void print_mtrx(double **mtrx_ptrs, int rows, int columns)
