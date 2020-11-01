@@ -28,7 +28,6 @@ int read_args(int argc, char **argv, int *action, char *file_name1, char *file_n
 
             strcpy(file_name1, argv[2]);
             strcpy(rez_file_name, argv[3]);
-            *action = 0;
             break;
         }
         case 5:
@@ -77,11 +76,31 @@ int output_rez(char *rez_file_name, double** mtrx_ptrs, int rows, int columns)
         {
             for (int j = 0; j < rows; j++)
             {
-                fprintf(f, "%.3f ", *(*(mtrx_ptrs + i) + j));
+                fprintf(f, "%f ", *(*(mtrx_ptrs + i) + j));
             }
             fprintf(f, "\n");
         }
         fprintf(f, "\n");
+    }
+    else
+        return FILE_OUTPUT_ERROR;
+
+    fclose(f);
+
+    return 0;
+}
+
+int output_solvation(char *rez_file_name, double** mtrx_ptrs, int rows)
+{
+    FILE *f = NULL;
+    f = fopen(rez_file_name, "w");
+
+    if (f != NULL)
+    {
+        for (int j = 0; j < rows; j++)
+        {
+            fprintf(f, "%f ", *(*(mtrx_ptrs + j)));
+        }
     }
     else
         return FILE_OUTPUT_ERROR;

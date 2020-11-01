@@ -68,6 +68,14 @@ int main(int argc, char **argv)
             print_mtrx(mtrx2_ptrs, rows2, columns2);
             print_mtrx(rez_mtrx_ptrs, rows1, columns1);
             output_rez(rez_file_name, rez_mtrx_ptrs, rows1, columns1);
+
+            free(mtrx1);
+            free(mtrx1_ptrs);
+            free(mtrx2);
+            free(mtrx2_ptrs);
+            free(rez_mtrx);
+            free(rez_mtrx_ptrs);
+
             break;
         }
         case 2:
@@ -128,6 +136,47 @@ int main(int argc, char **argv)
             mtrx_composition(mtrx1_ptrs, mtrx2_ptrs, rez_mtrx_ptrs, rows, columns, columns1);
 
             output_rez(rez_file_name, rez_mtrx_ptrs, rows, columns);
+
+            free(mtrx1);
+            free(mtrx1_ptrs);
+            free(mtrx2);
+            free(mtrx2_ptrs);
+            free(rez_mtrx);
+            free(rez_mtrx_ptrs);
+
+            break;
+        }
+        case 3:
+        {
+            double *mtrx = NULL;
+            double **mtrx_ptrs = NULL;
+            int columns = 0, rows = 0;
+
+            mtrx_ptrs = read_mtrx_from_file(file_name1, mtrx, &rows, &columns);
+            if (mtrx_ptrs == NULL)
+            {
+                return FILE_READ_ERROR;
+            }
+            if (rows != columns - 1)
+            {
+                free(mtrx);
+                free(mtrx_ptrs);
+                return COMPOSITION_ERROR;
+            }
+            //print_mtrx(mtrx_ptrs, rows, columns);
+
+            double *rez_mtrx = NULL;
+            double **rez_mtrx_ptrs = NULL;
+            //rez_mtrx_ptrs = matrix_malloc(rez_mtrx, rows, 1);
+            rez_mtrx_ptrs = solve_mtrx(mtrx_ptrs, rows, columns, rez_mtrx);
+
+            output_solvation(rez_file_name, rez_mtrx_ptrs, rows);
+
+            free(mtrx);
+            free(mtrx_ptrs);
+            free(rez_mtrx);
+            free(rez_mtrx_ptrs);
+
             break;
         }
         default:
