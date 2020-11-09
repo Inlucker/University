@@ -34,6 +34,8 @@ struct sparse_matrix
     int columns;
 };
 
+int sparse_matrix_malloc(sparse_matrix *m, int columns, int elems_amount);
+
 int sparse_matrix_calloc(sparse_matrix *m, int columns, int elems_amount);
 
 void delete_sparse_matirx(sparse_matrix *m);

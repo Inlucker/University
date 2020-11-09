@@ -166,8 +166,10 @@ int sparse_matrix_sum2(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
     return 0;
 }
 
-int sparse_matrix_sum4(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
+int sparse_matrix_sum4(sparse_matrix a, sparse_matrix b, sparse_matrix *rez) //works for sure
 {
+    //clock_t start = clock();
+
     if (a.columns != b.columns && b.columns != rez->columns)
         return ERROR;
     rez->columns = a.columns;
@@ -295,6 +297,11 @@ int sparse_matrix_sum4(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
         a_it++;
         b_it++;
     }
+
+    /*clock_t end = clock();
+    double sparse_seconds = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("Sparse matrixes addition(inside) test time: %.4f seconds\n", sparse_seconds/6);*/
+
     return 0;
 }
 

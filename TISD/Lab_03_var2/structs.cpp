@@ -1,5 +1,25 @@
 #include "structs.h"
 
+int sparse_matrix_malloc(sparse_matrix *m, int columns, int elems_amount)
+{
+    if (elems_amount <= 0 || columns <= 0)
+        return ERROR;
+    m->mtrx_size = elems_amount;
+    //m->rows = rows;
+    m->columns = columns;
+
+    m->mtrx = new my_type [m->mtrx_size];
+
+    m->mtrx_id = new int [m->mtrx_size];
+
+    for (int i = 0; i < m->columns; i++)
+    {
+        m->columns_id.push_back(-1);
+    }
+
+    return 0;
+}
+
 int sparse_matrix_calloc(sparse_matrix *m, int columns, int elems_amount)
 {
     if (elems_amount <= 0 || columns <= 0)

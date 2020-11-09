@@ -120,7 +120,7 @@ int main()
         cout << "2 - Print sparse matrixes" << endl;
         cout << "3 - Generate matrixes" << endl;
         cout << "4 - Input sparse matrix" << endl;
-        cout << "5 - calculate addition into matrix 3 and print it in sparse form" << endl;
+        cout << "5 - calculate addition into matrix 3" << endl; //<< " and print it in sparse form" << endl;
         cout << "6 - Time tests" << endl;
         cout << "7 - Memory calculating" << endl;
         cout << "0 - Exit from programm" << endl;
@@ -195,7 +195,7 @@ int main()
 
             if  (matrix_calloc(&test1, rows, columns) != 0 || matrix_calloc(&test2, rows, columns) != 0)
             {
-                cout << "Error calloc" << endl;
+                cout << "Error alloc" << endl;
                 break;
             }
             if (gen_matrix(&test1, rows, columns, percent) == 0 && gen_matrix(&test2, rows, columns, percent) == 0)
@@ -252,13 +252,13 @@ int main()
 
             if (sparse_matrix_calloc(&sparse, columns, elems_amount))
             {
-                cout << "Calloc error" << endl;
+                cout << "Alloc error" << endl;
                 break;
             }
 
             if (matrix_calloc(&test, rows, columns))
             {
-                cout << "Calloc error" << endl;
+                cout << "Alloc error" << endl;
                 delete_sparse_matirx(&sparse);
                 break;
             }
@@ -368,7 +368,7 @@ int main()
 
             if (matrix_calloc(&test3, test1.rows, test1.columns))
             {
-                cout << "Calloc error" << endl;
+                cout << "Alloc error" << endl;
                 break;
             }
             if (matrx_sum(test1, test2, &test3))
@@ -379,9 +379,10 @@ int main()
 
             if (sparse_matrix_calloc(&sparse3, test3.columns, get_elems_amount(test3)))
             {
-                cout << "Calloc error" << endl;
+                cout << "Alloc error" << endl;
                 break;
             }
+            //if (sparse_matrix_sum(sparse1, sparse2, &sparse3, test3.rows))
             if (sparse_matrix_sum4(sparse1, sparse2, &sparse3))
             {
                 cout << "Addition error" << endl;
@@ -429,7 +430,7 @@ int main()
 
             if  (matrix_calloc(&test1, rows, columns) != 0 || matrix_calloc(&test2, rows, columns) != 0)
             {
-                cout << "Error calloc" << endl;
+                cout << "Error alloc" << endl;
                 break;
             }
             if (gen_matrix(&test1, rows, columns, percent) == 0 && gen_matrix(&test2, rows, columns, percent) == 0)
@@ -454,7 +455,7 @@ int main()
             //Default addition test
             if (matrix_calloc(&test3, rows, columns))
             {
-                cout << "Calloc error" << endl;
+                cout << "Alloc error" << endl;
                 break;
             }
             clock_t start = clock();
@@ -471,10 +472,11 @@ int main()
             //cout << test3.columns << " " << get_elems_amount(test3) << endl;
             if (sparse_matrix_calloc(&sparse3, columns, get_elems_amount(test3)))
             {
-                cout << "Calloc error" << endl;
+                cout << "Alloc error" << endl;
                 break;
             }
             start = clock();
+            //if (sparse_matrix_sum(sparse1, sparse2, &sparse3, rows))
             if (sparse_matrix_sum4(sparse1, sparse2, &sparse3))
             {
                 cout << "Addition error" << endl;
@@ -482,7 +484,7 @@ int main()
             }
             end = clock();
             seconds = (double)(end - start) / CLOCKS_PER_SEC;
-            printf("Sparse matrixes addition test time: %.4f seconds\n", seconds);
+            printf("Sparse matrixes addition test time: %.4f seconds\n", seconds/6);
             break;
         }
         case 7:
