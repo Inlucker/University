@@ -66,6 +66,7 @@ void memory_calculating(int rows, int columns, int percent)
         elems_amount = 1;
     //int matrix_memory = sizeof (int) * (rows * columns) + sizeof (matrix);
     //int sparse_matrix_memory = (sizeof(int) + sizeof(my_type)) * elems_amount + sizeof (sparse_matrix);
-    cout << "Default matrix: " <<sizeof (int) * (rows * columns) + sizeof (matrix) << " bytes. Sparse matrix: " << (sizeof(int) + sizeof(my_type)) * elems_amount + sizeof (sparse_matrix) <<
-            " bytes." << endl;
+    //cout << sizeof (list <int>) << " bytes." << endl;
+    cout << "Default matrix: " << sizeof (my_type) * (rows * columns) + sizeof (matrix) << " bytes. Sparse matrix: " << (sizeof(int) + sizeof(my_type)) * elems_amount
+          + ((sizeof(int) + 2 * sizeof(int*)) * columns) + sizeof (sparse_matrix) << " bytes." << endl;
 }

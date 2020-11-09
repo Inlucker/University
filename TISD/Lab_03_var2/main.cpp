@@ -221,27 +221,27 @@ int main()
             matrix test;
 
             _flushall();
-            cout << "Enter rows (<=1 000): " << endl;
+            cout << "Enter rows (<=5 000): " << endl;
             int rows = 0;
             cin >> rows;
-            if (rows > 1000 || rows <= 0)
+            if (rows > 5000 || rows <= 0)
             {
                 cout << "Wrong input" << endl;
                 break;
             }
 
             _flushall();
-            cout << "Enter columns (<=1 000): " << endl;
+            cout << "Enter columns (<=5 000): " << endl;
             int columns = 0;
             cin >> columns;
-            if (columns > 1000 || columns <= 0)
+            if (columns > 5000 || columns <= 0)
             {
                 cout << "Wrong input" << endl;
                 break;
             }
 
             _flushall();
-            cout << "Enter the elems_amount (<= rows * columns): " << endl;
+            cout << "Enter the number of non-zero elements (<= rows * columns): " << endl;
             int elems_amount = 0;
             cin >> elems_amount;
             if (elems_amount > rows * columns || elems_amount <= 0)
@@ -286,7 +286,7 @@ int main()
                 {
                     cin.clear();
                     _flushall();
-                    cout << "Wrong input, try again (current i = " << i << ")" << endl;
+                    cout << "Wrong input (should be < " << rows << "), try again (current i = " << i << ")" << endl;
                 }
                 *(sparse.mtrx_id + i) = input;
             }
