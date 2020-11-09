@@ -324,7 +324,7 @@ int main()
             _flushall();
             cout << "Enter wich matrix it should be (1/2/3): " << endl;
             int tmp = 0;
-            while (!(cin >> tmp) || tmp < 0 || tmp > 3)// || input >= elems_amount || (input <= prev_input && input != -1))
+            while (!(cin >> tmp) || tmp <= 0 || tmp > 3)// || input >= elems_amount || (input <= prev_input && input != -1))
             {
                 cin.clear();
                 _flushall();
@@ -483,8 +483,8 @@ int main()
                 break;
             }
             end = clock();
-            seconds = (double)(end - start) / CLOCKS_PER_SEC;
-            printf("Sparse matrixes addition test time: %.4f seconds\n", seconds/6);
+            double sparse_seconds = (double)(end - start) / CLOCKS_PER_SEC;
+            printf("Sparse matrixes addition test time: %.4f seconds\n", sparse_seconds/6);
             break;
         }
         case 7:

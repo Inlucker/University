@@ -18,12 +18,6 @@ struct matrix
     int columns;
 };
 
-/*struct list
-{
-    int value;
-    int *next_ptr = NULL;
-};*/
-
 struct sparse_matrix
 {
     my_type *mtrx;
