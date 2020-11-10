@@ -15,9 +15,11 @@ int sparse_matrix_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez, int 
 
 //void fill_columns_id(sparse_matrix *m);
 
+int sparse_matrix_sum_cheat(sparse_matrix a, sparse_matrix b, sparse_matrix *rez, int elems_amount);
+
 int sparse_matrix_sum2(sparse_matrix a, sparse_matrix b, sparse_matrix *rez);
 
-int sparse_matrix_sum4(sparse_matrix a, sparse_matrix b, sparse_matrix *rez);
+int sparse_matrix_sum4(sparse_matrix a, sparse_matrix b, sparse_matrix *rez); //works for sure
 
 //int sparse_matrix_sum3(sparse_matrix a, sparse_matrix b, sparse_matrix *rez);
 

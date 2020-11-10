@@ -383,6 +383,7 @@ int main()
                 break;
             }
             //if (sparse_matrix_sum(sparse1, sparse2, &sparse3, test3.rows))
+            //if (sparse_matrix_sum_last(sparse1, sparse2, &sparse3, get_elems_amount(test3)))
             if (sparse_matrix_sum4(sparse1, sparse2, &sparse3))
             {
                 cout << "Addition error" << endl;
