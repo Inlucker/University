@@ -3,6 +3,8 @@
 
 #include "structs.h"
 
+int gen_matrix2(matrix *m, int rows, int columns, int percent);
+
 int gen_matrix(matrix *m, int rows, int columns, int percent);
 
 void fill_matrix(matrix *rez, sparse_matrix m);

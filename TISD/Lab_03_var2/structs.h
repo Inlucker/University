@@ -6,6 +6,7 @@
 #include <ctime>
 
 #define ERROR -1;
+#define CLOCK_PER_SEC 6000;
 
 using namespace std;
 

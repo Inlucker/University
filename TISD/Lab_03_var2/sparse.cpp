@@ -60,19 +60,22 @@ void print_sparse_matirx(sparse_matrix m)
     {
         for (int i = 0; i < m.mtrx_size; i++)
         {
-            cout << *(m.mtrx + i) << " ";
+            //cout << *(m.mtrx + i) << " ";
+            printf("%3d ", *(m.mtrx + i));
         }
         cout << endl;
 
         for (int i = 0; i < m.mtrx_size; i++)
         {
-            cout << *(m.mtrx_id + i) << " ";
+            //cout << *(m.mtrx_id + i) << " ";
+            printf("%3d ", *(m.mtrx_id + i));
         }
         cout << endl;
 
         for (list <int> :: iterator i = m.columns_id.begin(); i != m.columns_id.end(); ++i)
         {
-            cout << (*i) << " ";
+            //cout << (*i) << " ";
+            printf("%2d ", *(i));
         }
         cout << "\n" << endl;
     }
@@ -150,15 +153,15 @@ int sparse_matrix_sum_cheat(sparse_matrix a, sparse_matrix b, sparse_matrix *rez
                 {
                     if (*(a.mtrx_id + a_id) == *(b.mtrx_id + b_id))
                     {
-                        a_mas[rez_id] = *(a.mtrx_id + a_id);
-                        b_mas[rez_id] = *(b.mtrx_id + b_id);
+                        a_mas[rez_id] = a_id;
+                        b_mas[rez_id] = b_id;
                         rez_id++;
                         a_id++;
                         b_id++;
                     }
                     else if (*(a.mtrx_id + a_id) < *(b.mtrx_id + b_id))
                     {
-                        a_mas[rez_id] = *(a.mtrx_id + a_id);
+                        a_mas[rez_id] = a_id;
                         b_mas[rez_id] = -1;
                         rez_id++;
                         a_id++;
@@ -166,7 +169,7 @@ int sparse_matrix_sum_cheat(sparse_matrix a, sparse_matrix b, sparse_matrix *rez
                     else if (*(a.mtrx_id + a_id) > *(b.mtrx_id + b_id))
                     {
                         a_mas[rez_id] = -1;
-                        b_mas[rez_id] = *(b.mtrx_id + b_id);
+                        b_mas[rez_id] = b_id;
                         rez_id++;
                         b_id++;
                     }
@@ -175,7 +178,7 @@ int sparse_matrix_sum_cheat(sparse_matrix a, sparse_matrix b, sparse_matrix *rez
                 }
                 else if (a_id != a_it_next_value)
                 {
-                    a_mas[rez_id] = *(a.mtrx_id + a_id);
+                    a_mas[rez_id] = a_id;
                     b_mas[rez_id] = -1;
                     rez_id++;
                     a_id++;
@@ -183,7 +186,7 @@ int sparse_matrix_sum_cheat(sparse_matrix a, sparse_matrix b, sparse_matrix *rez
                 else if (b_id != b_it_next_value)
                 {
                     a_mas[rez_id] = -1;
-                    b_mas[rez_id] = *(b.mtrx_id + b_id);
+                    b_mas[rez_id] = b_id;
                     rez_id++;
                     b_id++;
                 }
@@ -192,7 +195,7 @@ int sparse_matrix_sum_cheat(sparse_matrix a, sparse_matrix b, sparse_matrix *rez
             }
             else if (*a_it != -1)
             {
-                a_mas[rez_id] = *(a.mtrx_id + a_id);
+                a_mas[rez_id] = a_id;
                 b_mas[rez_id] = -1;
                 rez_id++;
                 a_id++;
@@ -200,7 +203,7 @@ int sparse_matrix_sum_cheat(sparse_matrix a, sparse_matrix b, sparse_matrix *rez
             else if (*b_it != -1)
             {
                 a_mas[rez_id] = -1;
-                b_mas[rez_id] = *(b.mtrx_id + b_id);
+                b_mas[rez_id] = b_id;
                 rez_id++;
                 b_id++;
             }
@@ -227,8 +230,8 @@ int sparse_matrix_sum_cheat(sparse_matrix a, sparse_matrix b, sparse_matrix *rez
     }
     cout << endl;*/
 
-    a_id = 0;
-    b_id = 0;
+    //a_id = 0;
+    //b_id = 0;
     rez_id = 0;
 
     clock_t start = clock();
@@ -237,25 +240,25 @@ int sparse_matrix_sum_cheat(sparse_matrix a, sparse_matrix b, sparse_matrix *rez
     {
         if (a_mas[rez_id] != -1 && b_mas[rez_id] != -1)
         {
-            *(rez->mtrx + rez_id) = *(a.mtrx + a_id) + *(b.mtrx + b_id);
-            *(rez->mtrx_id + rez_id) = *(a.mtrx_id + a_id);
+            *(rez->mtrx + rez_id) = *(a.mtrx + a_mas[rez_id]) + *(b.mtrx + b_mas[rez_id]);
+            *(rez->mtrx_id + rez_id) = *(a.mtrx_id + a_mas[rez_id]);
             rez_id++;
-            a_id++;
-            b_id++;
+            //a_id++;
+            //b_id++;
         }
         else if (a_mas[rez_id] != -1)
         {
-            *(rez->mtrx + rez_id) = *(a.mtrx + a_id);
-            *(rez->mtrx_id + rez_id) = *(a.mtrx_id + a_id);
+            *(rez->mtrx + rez_id) = *(a.mtrx + a_mas[rez_id]);
+            *(rez->mtrx_id + rez_id) = *(a.mtrx_id + a_mas[rez_id]);
             rez_id++;
-            a_id++;
+            //a_id++;
         }
         else if (b_mas[rez_id] != -1)
         {
-            *(rez->mtrx + rez_id) = *(b.mtrx + b_id);
-            *(rez->mtrx_id + rez_id) = *(b.mtrx_id + b_id);
+            *(rez->mtrx + rez_id) = *(b.mtrx + b_mas[rez_id]);
+            *(rez->mtrx_id + rez_id) = *(b.mtrx_id + b_mas[rez_id]);
             rez_id++;
-            b_id++;
+            //b_id++;
         }
         else
         {

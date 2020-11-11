@@ -383,7 +383,7 @@ int main()
                 break;
             }
             //if (sparse_matrix_sum(sparse1, sparse2, &sparse3, test3.rows))
-            //if (sparse_matrix_sum_last(sparse1, sparse2, &sparse3, get_elems_amount(test3)))
+            //if (sparse_matrix_sum_cheat(sparse1, sparse2, &sparse3, get_elems_amount(test3)))
             if (sparse_matrix_sum4(sparse1, sparse2, &sparse3))
             {
                 cout << "Addition error" << endl;
@@ -484,8 +484,8 @@ int main()
                 break;
             }
             end = clock();
-            double sparse_seconds = (double)(end - start) / CLOCKS_PER_SEC;
-            printf("Sparse matrixes addition test time: %.4f seconds\n", sparse_seconds/6);
+            seconds = (double)(end - start) / CLOCKS_PER_SEC;
+            printf("Sparse matrixes addition test time: %.4f seconds\n", seconds);
             break;
         }
         case 7:

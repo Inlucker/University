@@ -6,6 +6,37 @@ int gen_matrix(matrix *m, int rows, int columns, int percent)
         return ERROR;
     long long int r = rows, c = columns, p = percent;
     long long int elems_amount = (r * c * p) / 100;
+    //printf("%d\n", elems_amount);
+    if (elems_amount == 0)
+        elems_amount = 1;
+    //cout << elems_amount << endl;
+
+    int cur_el_number = 0;
+
+    m->rows = rows;
+    m->columns = columns;
+
+    while (cur_el_number < elems_amount)
+    {
+        int i = rand() % rows;
+        int j = rand() % columns;
+        while (*((m->mtrx + i*columns) + j) != 0)
+        {
+            i = rand() % rows;
+            j = rand() % columns;
+        }
+        *((m->mtrx + i*columns) + j) = rand() % 100 + 1;
+        cur_el_number++;
+    }
+    return 0;
+}
+
+int gen_matrix2(matrix *m, int rows, int columns, int percent)
+{
+    if (percent <= 0 || percent > 100 || rows <= 0 || columns <= 0)
+        return ERROR;
+    long long int r = rows, c = columns, p = percent;
+    long long int elems_amount = (r * c * p) / 100;
     if (elems_amount == 0)
         elems_amount = 1;
     //cout << elems_amount << endl;
@@ -62,7 +93,8 @@ void print_matrix(matrix m)
     {
         for (int j = 0; j < m.columns; j++)
         {
-            cout << *((m.mtrx + i * m.columns) + j) << " ";
+            printf("%3d ", *((m.mtrx + i * m.columns) + j));
+            //cout << *((m.mtrx + i * m.columns) + j) << " ";
         }
         cout << endl;
     }
