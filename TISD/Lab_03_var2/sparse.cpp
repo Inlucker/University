@@ -358,7 +358,7 @@ int sparse_matrix_sum2(sparse_matrix a, sparse_matrix b, sparse_matrix *rez)
     return 0;
 }
 
-int sparse_matrix_sum4(sparse_matrix a, sparse_matrix b, sparse_matrix *rez) //works for sure
+int sparse_matrix_sum(sparse_matrix a, sparse_matrix b, sparse_matrix *rez) //works for sure
 {
     //clock_t start = clock();
 

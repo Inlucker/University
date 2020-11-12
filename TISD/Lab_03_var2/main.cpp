@@ -384,7 +384,7 @@ int main()
             }
             //if (sparse_matrix_sum(sparse1, sparse2, &sparse3, test3.rows))
             //if (sparse_matrix_sum_cheat(sparse1, sparse2, &sparse3, get_elems_amount(test3)))
-            if (sparse_matrix_sum4(sparse1, sparse2, &sparse3))
+            if (sparse_matrix_sum(sparse1, sparse2, &sparse3))
             {
                 cout << "Addition error" << endl;
                 break;
@@ -478,7 +478,7 @@ int main()
             }
             start = clock();
             //if (sparse_matrix_sum(sparse1, sparse2, &sparse3, rows))
-            if (sparse_matrix_sum4(sparse1, sparse2, &sparse3))
+            if (sparse_matrix_sum(sparse1, sparse2, &sparse3))
             {
                 cout << "Addition error" << endl;
                 break;
