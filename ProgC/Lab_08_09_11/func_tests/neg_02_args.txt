@@ -1,0 +1,1 @@
+wrong_action neg_02_in.txt neg_02_out.txt

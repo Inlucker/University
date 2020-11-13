@@ -4,6 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        defines.c \
         io_functions.c \
         main.c \
         mtrx_functions.c

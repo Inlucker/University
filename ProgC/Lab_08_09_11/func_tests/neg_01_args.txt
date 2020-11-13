@@ -1,0 +1,1 @@
+wrong_number_of_arguments neg_01_out.txt

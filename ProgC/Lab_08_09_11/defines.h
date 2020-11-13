@@ -13,7 +13,8 @@
 #define FILE_READ_ERROR -2
 #define ALLOC_ERROR -3
 #define ADDITION_ERROR -4
-#define FILE_OUTPUT_ERROR -5
-#define COMPOSITION_ERROR -3
+#define COMPOSITION_ERROR -5
+#define SOLVATION_ERROR -6
+#define FILE_OUTPUT_ERROR -7
 
 #endif // DEFINES_H

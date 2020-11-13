@@ -5,7 +5,6 @@ int read_args(int argc, char **argv, int *action, char *file_name1, char *file_n
     switch (argc)
     {
         case 4:
-        {
             if (strcmp(argv[1], "o") == 0)
             {
                 *action = 3;
@@ -29,9 +28,7 @@ int read_args(int argc, char **argv, int *action, char *file_name1, char *file_n
             strcpy(file_name1, argv[2]);
             strcpy(rez_file_name, argv[3]);
             break;
-        }
         case 5:
-        {
             if (strcmp(argv[1], "a") == 0)
             {
                 *action = 1;
@@ -55,7 +52,6 @@ int read_args(int argc, char **argv, int *action, char *file_name1, char *file_n
             strcpy(file_name2, argv[3]);
             strcpy(rez_file_name, argv[4]);
             break;
-        }
         default:
             return CONSOLE_ARGS_ERROR;
             break;
@@ -63,7 +59,7 @@ int read_args(int argc, char **argv, int *action, char *file_name1, char *file_n
     return 0;
 }
 
-int output_rez(char *rez_file_name, double** mtrx_ptrs, int rows, int columns)
+int output_rez(char *rez_file_name, double **mtrx_ptrs, int rows, int columns)
 {
     FILE *f = NULL;
     f = fopen(rez_file_name, "w");
@@ -72,15 +68,16 @@ int output_rez(char *rez_file_name, double** mtrx_ptrs, int rows, int columns)
 
     if (f != NULL)
     {
-        for (int i = 0; i < columns; i++)
+        for (int i = 0; i < rows; i++)
         {
-            for (int j = 0; j < rows; j++)
+            for (int j = 0; j < columns; j++)
             {
-                fprintf(f, "%f ", *(*(mtrx_ptrs + i) + j));
+                //fprintf(f, "%f ", *(*(mtrx_ptrs + i) + j));
+                fprintf(f, "%f ", mtrx_ptrs[i][j]);
             }
             fprintf(f, "\n");
         }
-        fprintf(f, "\n");
+        //fprintf(f, "\n");
     }
     else
         return FILE_OUTPUT_ERROR;
@@ -90,7 +87,7 @@ int output_rez(char *rez_file_name, double** mtrx_ptrs, int rows, int columns)
     return 0;
 }
 
-int output_solvation(char *rez_file_name, double** mtrx_ptrs, int rows)
+int output_solvation(char *rez_file_name, double **mtrx_ptrs, int rows)
 {
     FILE *f = NULL;
     f = fopen(rez_file_name, "w");
