@@ -31,7 +31,7 @@ char pop_masstack(masstack *m)
 {
     if (m->cur_ptr <= m->mas )
     {
-        cout << "EmptyStackError" << endl;
+        cout << "This masstack is empty" << endl;
         return EMPTYSTACKERROR;
     }
     m->cur_ptr--;
