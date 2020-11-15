@@ -30,6 +30,21 @@ liststack* add_liststack(char simbol, liststack *l)
     return next_liststack;
 }
 
+liststack* input_liststack(string str)
+{
+    liststack *new_liststack = NULL;
+    for (int i = 0; i < str.length(); i++)
+    {
+        new_liststack = add_liststack(str[i], new_liststack);
+    }
+    return new_liststack;
+}
+
+bool is_liststack_empty(liststack *l)
+{
+    return (l == NULL);
+}
+
 char pop_liststack(liststack **l)
 {
     liststack *tmp = *l;
@@ -84,3 +99,91 @@ void print_liststack_status(liststack *l)
     cout << "\n" << endl;
 }
 
+int check_brackets_liststack(liststack *l)
+{
+    string str = "";
+    //liststack *l = l;
+    if (l != NULL)
+    {
+        //cout << "Liststack: " << endl;
+        do
+        {
+            str += l->elem;
+            l = l->previous_ptr;
+        }
+        while (l != NULL);
+        //cout << l->elem;
+    }
+    else
+        cout << "This liststack is empty" << endl;
+
+    //cout << str << endl;
+
+    int brackets[3] = {0, 0, 0};
+    liststack *lastbrackets = NULL;
+    for (int i = str.length() - 1; i >= 0; i--)
+    {
+        if (str[i] == '(')
+        {
+            brackets[0]++;
+            lastbrackets = add_liststack(str[i], lastbrackets);
+        }
+        else if (str[i] == '{')
+        {
+            brackets[1]++;
+            lastbrackets = add_liststack(str[i], lastbrackets);
+        }
+        else if (str[i] == '[')
+        {
+            brackets[2]++;
+            lastbrackets = add_liststack(str[i], lastbrackets);
+        }
+        else if (str[i] == ')')
+        {
+            if (is_liststack_empty(lastbrackets))
+            {
+                free_liststack(&lastbrackets);
+                return 0;
+            }
+            if (pop_liststack(&lastbrackets) != '(')
+            {
+                free_liststack(&lastbrackets);
+                return 0;
+            }
+            brackets[0]--;
+        }
+        else if (str[i] == '}')
+        {
+            if (is_liststack_empty(lastbrackets))
+            {
+                free_liststack(&lastbrackets);
+                return 0;
+            }
+            if (pop_liststack(&lastbrackets) != '{')
+            {
+                free_liststack(&lastbrackets);
+                return 0;
+            }
+            brackets[1]--;
+        }
+        else if (str[i] == ']')
+        {
+            if (is_liststack_empty(lastbrackets))
+            {
+                free_liststack(&lastbrackets);
+                return 0;
+            }
+            if (pop_liststack(&lastbrackets) != '[')
+            {
+                free_liststack(&lastbrackets);
+                return 0;
+            }
+            brackets[2]--;
+        }
+    }
+
+    if (brackets[0] == 0 && brackets[1] == 0 && brackets[2] == 0)
+        return 1;
+    else
+        return 0;
+}

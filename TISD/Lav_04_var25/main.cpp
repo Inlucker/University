@@ -7,12 +7,16 @@ int main()
     string input;
     cin >> input;
     masstack m1 = input_masstack(input);
+    liststack *l1 = input_liststack(input);
 
     print_masstack(m1);
+    print_liststack(l1);
 
-    cout << check_brackets_masstack(m1);
+    cout << check_brackets_masstack(m1) << endl;
+    cout << check_brackets_liststack(l1) << endl;
 
     free_masstack(&m1);
+    free_liststack(&l1);
 
     /*char c = 'a';
     char test = '-';
