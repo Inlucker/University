@@ -1,6 +1,8 @@
 #ifndef LISTSTACK_H
 #define LISTSTACK_H
 
+#include "defines.h"
+
 struct liststack
 {
     char elem;

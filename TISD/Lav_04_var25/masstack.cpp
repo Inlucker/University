@@ -1,4 +1,3 @@
-#include "defines.h"
 #include "masstack.h"
 
 masstack malloc_masstack(int size)
@@ -20,19 +19,38 @@ int add_masstack(char simbol, masstack *m)
     if (m->cur_ptr - m->mas + 1 > m->capacity)
     {
         cout << "OverflowError" << endl;
-        return OVERFLOWERROR;
+        return OVERFLOW_ERROR;
     }
     *(m->cur_ptr) = simbol;
     m->cur_ptr++;
     return 0;
 }
 
+masstack input_masstack(string str)
+{
+    masstack new_masstack = malloc_masstack(str.length());
+    for (int i = 0; i < str.length(); i++)
+    {
+        if (add_masstack(str[i], &new_masstack) != 0)
+        {
+            cout << "Input Error" << endl;
+            return new_masstack;
+        }
+    }
+    return new_masstack;
+}
+
+bool is_masstack_empty(masstack m)
+{
+    return m.cur_ptr <= m.mas;
+}
+
 char pop_masstack(masstack *m)
 {
-    if (m->cur_ptr <= m->mas )
+    if (is_masstack_empty(*m))
     {
         cout << "This masstack is empty" << endl;
-        return EMPTYSTACKERROR;
+        return EMPTY_STACK_ERROR;
     }
     m->cur_ptr--;
 
@@ -58,4 +76,75 @@ void print_masstack_status(masstack m)
     cout << "Top border: " << (void*)(m.mas + m.capacity) << endl;
     cout << endl;
     //printf("Starting ptr: %p\nCurrent ptr: %p\nCapacity: %d/%d\nTop border: %p\n\n", m.mas, m.cur_ptr, m.cur_ptr - m.mas, m.capacity, m.mas + m.capacity);
+}
+
+int check_brackets_masstack(masstack m)
+{
+    string str = "";
+    char *i = m.cur_ptr - 1;
+    while (i >= m.mas)
+    {
+        str += *i; // << " ";
+        i--;
+    }
+    //cout << str << endl;
+
+    int brackets[3] = {0, 0, 0};
+    masstack lastbrackets = malloc_masstack(str.length());
+    for (int i = str.length() - 1; i >= 0; i--)
+    {
+        if (str[i] == '(')
+        {
+            brackets[0]++;
+            if (add_masstack(str[i], &lastbrackets) != 0)
+            {
+                return CHECK_ERROR;
+            }
+        }
+        else if (str[i] == '{')
+        {
+            brackets[1]++;
+            if (add_masstack(str[i], &lastbrackets) != 0)
+            {
+                return CHECK_ERROR;
+            }
+        }
+        else if (str[i] == '[')
+        {
+            brackets[2]++;
+            if (add_masstack(str[i], &lastbrackets) != 0)
+            {
+                return CHECK_ERROR;
+            }
+        }
+        else if (str[i] == ')')
+        {
+            if (is_masstack_empty(lastbrackets))
+                return 0;
+            if (pop_masstack(&lastbrackets) != '(')
+                return 0;
+            brackets[0]--;
+        }
+        else if (str[i] == '}')
+        {
+            if (is_masstack_empty(lastbrackets))
+                return 0;
+            if (pop_masstack(&lastbrackets) != '{')
+                return 0;
+            brackets[1]--;
+        }
+        else if (str[i] == ']')
+        {
+            if (is_masstack_empty(lastbrackets))
+                return 0;
+            if (pop_masstack(&lastbrackets) != '[')
+                return 0;
+            brackets[2]--;
+        }
+    }
+
+    if (brackets[0] == 0 && brackets[1] == 0 && brackets[2] == 0)
+        return 1;
+    else
+        return 0;
 }

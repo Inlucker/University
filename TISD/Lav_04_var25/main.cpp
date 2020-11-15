@@ -4,7 +4,17 @@
 
 int main()
 {
-    char c = 'a';
+    string input;
+    cin >> input;
+    masstack m1 = input_masstack(input);
+
+    print_masstack(m1);
+
+    cout << check_brackets_masstack(m1);
+
+    free_masstack(&m1);
+
+    /*char c = 'a';
     char test = '-';
     liststack *l1 = create_liststack(c);
     c++;
@@ -53,7 +63,9 @@ int main()
     print_masstack(m1);
     print_masstack_status(m1);
 
+    cout << check_brackets_masstack(m1);
+
     free_liststack(&l1);
-    free_masstack(&m1);
+    free_masstack(&m1);*/
     return 0;
 }

@@ -1,4 +1,3 @@
-#include "defines.h"
 #include "liststack.h"
 
 liststack* create_liststack(char first_simbol)
@@ -37,7 +36,7 @@ char pop_liststack(liststack **l)
     if (tmp == NULL)
     {
         cout << "ListStack is empty" << endl;
-        return EMPTYSTACKERROR;
+        return EMPTY_STACK_ERROR;
     }
     char rez = tmp->elem;
     if (tmp != NULL)

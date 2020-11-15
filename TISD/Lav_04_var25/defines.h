@@ -2,11 +2,13 @@
 #define DEFINES_H
 
 #include <iostream>
+#include <string>
 
 #define MAX_MEMORY_SIZE 100
 
-#define OVERFLOWERROR -1
-#define EMPTYSTACKERROR -2
+#define OVERFLOW_ERROR -1
+#define EMPTY_STACK_ERROR -2
+#define CHECK_ERROR -3
 
 using namespace std;
 
