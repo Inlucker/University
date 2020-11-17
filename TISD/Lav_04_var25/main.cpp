@@ -4,7 +4,6 @@
 
 int main()
 {
-    cout << sizeof (liststack) << endl;
     cout << "Hi" << endl;
     srand(time(0));
 
@@ -72,7 +71,12 @@ int main()
             _flushall();
             cout << "Enter the expression: ";
             string inp;
-            cin >> inp;
+            getline(cin, inp);
+            if (inp.length() <= 0)
+            {
+                cout << "Wrong input - empty input" << endl;
+                break;
+            }
             _flushall();
             cout << "Enter the capacity: ";
             int cap;
@@ -80,6 +84,11 @@ int main()
             if (cap < inp.length())
             {
                 cout << "Wrong input - capacity is smaller than expression length" << endl;
+                break;
+            }
+            if (cap > 10000)
+            {
+                cout << "Wrong input - capacity is too big" << endl;
                 break;
             }
             mas_stack = input_masstack(inp, cap);
@@ -142,7 +151,12 @@ int main()
             _flushall();
             cout << "Enter the expression: ";
             string inp;
-            cin >> inp;
+            getline(cin, inp);
+            if (inp.length() <= 0)
+            {
+                cout << "Wrong input - empty input" << endl;
+                break;
+            }
             list_stack = input_liststack(inp);
             break;
         }
@@ -178,6 +192,11 @@ int main()
         }
         case 12:
         {
+            if (is_liststack_empty(list_stack))
+            {
+                cout << "List_stack is empty" << endl;
+                break;
+            }
             int rez = check_brackets_liststack(list_stack);
             if (rez == 1)
                 cout << "Brackets in list_stack are ok" << endl;
@@ -190,9 +209,16 @@ int main()
         case 13:
         {
             _flushall();
-            cout << "Enter the iterations: ";
+            cout << "Enter the iterations(1 - 50000): ";
             int iterations;
             cin >> iterations;
+
+            if (iterations <= 0 || iterations > 50000 )
+            {
+                cout << "Wrong input" << endl;
+                break;
+            }
+
             masstack mas_stack1 = malloc_masstack(10000);
             for (int i = 0; i < 10000; i++)
             {
@@ -242,6 +268,11 @@ int main()
             else
                 cout << "Wrong input" << endl;
 
+            break;
+        }
+        case 0:
+        {
+            cout << "Good buy!" << endl;
             break;
         }
         default:
