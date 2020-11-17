@@ -209,43 +209,78 @@ int main()
         case 13:
         {
             _flushall();
-            cout << "Enter the iterations(1 - 50000): ";
+            cout << "Enter the iterations(1 - 10000): ";
             int iterations;
             cin >> iterations;
 
-            if (iterations <= 0 || iterations > 50000 )
+            if (iterations <= 0 || iterations > 10000 )
             {
                 cout << "Wrong input" << endl;
                 break;
             }
 
-            masstack mas_stack1 = malloc_masstack(10000);
-            for (int i = 0; i < 10000; i++)
+            masstack mas_stack1 = malloc_masstack(10000 * iterations);
+            for (int i = 0; i < 10000 * iterations; i++)
             {
-                if (add_masstack(i, &mas_stack1) != 0)
+                //if (add_masstack(rand() % 94 + 32, &mas_stack1) != 0)
+                if (add_masstack(rand() % 10 + '0', &mas_stack1) != 0)
                 {
                     break;
                 }
             }
 
             clock_t start = clock();
-            for (int i = 0; i < iterations; i++)
-                check_brackets_masstack(mas_stack1);
+            //for (int i = 0; i < iterations; i++)
+            check_brackets_masstack(mas_stack1);
             clock_t end = clock();
             double seconds = (double)(end - start) / CLOCKS_PER_SEC;
-            printf("Check_brackets_masstack test time: %.4f seconds\n", seconds);
+            printf("Check_brackets_masstack test time (no brackets): %.4f seconds\n", seconds);
 
             free_masstack(&mas_stack1);
 
             liststack *list_stack1 = create_liststack('a');
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < 10000 * iterations; i++)
             {
-                list_stack1 = add_liststack('a' + 1 + i, list_stack1);
+                //list_stack1 = add_liststack(rand() % 94 + 32, list_stack1);
+                list_stack1 = add_liststack(rand() % 10 + '0', list_stack1);
             }
 
             start = clock();
-            for (int i = 0; i < iterations; i++)
-                check_brackets_liststack(list_stack1);
+            //for (int i = 0; i < iterations; i++)
+            check_brackets_liststack(list_stack1);
+            end = clock();
+            seconds = (double)(end - start) / CLOCKS_PER_SEC;
+            printf("Check_brackets_liststack test time (no brackets): %.4f seconds\n", seconds);
+
+            free_liststack(&list_stack1);
+
+            mas_stack1 = malloc_masstack(10000 * iterations);
+            for (int i = 0; i < 10000 * iterations; i++)
+            {
+                if (add_masstack(rand() % 94 + 32, &mas_stack1) != 0)
+                {
+                    break;
+                }
+            }
+
+            start = clock();
+            //for (int i = 0; i < iterations; i++)
+            check_brackets_masstack(mas_stack1);
+            end = clock();
+            seconds = (double)(end - start) / CLOCKS_PER_SEC;
+            printf("Check_brackets_masstack test time: %.4f seconds\n", seconds);
+
+            free_masstack(&mas_stack1);
+
+            list_stack1 = create_liststack('a');
+            for (int i = 0; i < 10000 * iterations; i++)
+            {
+                list_stack1 = add_liststack(rand() % 94 + 32, list_stack1);
+            }
+
+            start = clock();
+            //for (int i = 0; i < iterations; i++)
+            check_brackets_liststack(list_stack1);
             end = clock();
             seconds = (double)(end - start) / CLOCKS_PER_SEC;
             printf("Check_brackets_liststack test time: %.4f seconds\n", seconds);
