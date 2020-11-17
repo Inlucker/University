@@ -24,6 +24,7 @@ int main()
     {
         list_stack = add_liststack('a' + 1 + i, list_stack);
     }
+    int list_stack_id = 26;
 
     //print_liststack(l1);
     //print_liststack_status(l1);
@@ -158,7 +159,13 @@ int main()
                 cout << "Wrong input - empty input" << endl;
                 break;
             }
+            if (inp.length() > MAX_MEMORY_SIZE)
+            {
+                cout << "Wrong input - too long expression" << endl;
+                break;
+            }
             free_liststack(&list_stack);
+            list_stack_id = inp.length();
             list_stack = input_liststack(inp);
             break;
         }
@@ -173,6 +180,12 @@ int main()
             cout << "Enter the symbol to add: ";
             char inp;
             cin >> inp;
+            if (list_stack_id + 1 > MAX_MEMORY_SIZE)
+            {
+                cout << "OverFlowError id = " << list_stack_id << endl;
+                break;
+            }
+            list_stack_id++;
             list_stack = add_liststack(inp, list_stack);
             break;
         }
@@ -189,7 +202,7 @@ int main()
         }
         case 11:
         {
-            print_liststack_status(list_stack);
+            print_liststack_status(list_stack, list_stack_id);
             break;
         }
         case 12:
@@ -254,7 +267,7 @@ int main()
 
             start = clock();
             liststack *list_stack1 = create_liststack('a');
-            for (int i = 0; i < 10000 * iterations; i++)
+            for (int i = 0; i < 10000 * iterations - 1; i++)
             {
                 //list_stack1 = add_liststack(rand() % 94 + 32, list_stack1);
                 list_stack1 = add_liststack(rand() % 10 + '0', list_stack1);
@@ -296,7 +309,7 @@ int main()
             free_masstack(&mas_stack1);
 
             list_stack1 = create_liststack('a');
-            for (int i = 0; i < 10000 * iterations; i++)
+            for (int i = 0; i < 10000 * iterations - 1; i++)
             {
                 list_stack1 = add_liststack(rand() % 94 + 32, list_stack1);
             }

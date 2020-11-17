@@ -4,6 +4,7 @@ liststack* create_liststack(char first_simbol)
 {
     liststack *new_liststack = new liststack [1];
     new_liststack->elem = first_simbol;
+    //new_liststack->id = 1;
     new_liststack->previous_ptr = NULL;
     return new_liststack;
 }
@@ -24,8 +25,17 @@ void free_liststack(liststack **l)
 
 liststack* add_liststack(char simbol, liststack *l)
 {
+    /*if (l->id + 1 > MAX_MEMORY_SIZE)
+    {
+        cout << "OverFlowError id = " << l->id << endl;
+        return l;
+    }*/
     liststack *next_liststack = new liststack [1];
     next_liststack->elem = simbol;
+    /*if (l == NULL)
+        next_liststack->id = 1;
+    else
+        next_liststack->id = l->id + 1;*/
     next_liststack->previous_ptr = l;
     return next_liststack;
 }
@@ -35,6 +45,11 @@ liststack* input_liststack(string str)
     liststack *new_liststack = NULL;
     for (int i = 0; i < str.length(); i++)
     {
+        /*if (new_liststack->id + 1 > MAX_MEMORY_SIZE)
+        {
+            cout << "OverFlowError i = " << i << endl;
+            break;
+        }*/
         new_liststack = add_liststack(str[i], new_liststack);
     }
     return new_liststack;
@@ -81,16 +96,17 @@ void print_liststack(liststack *l)
     cout << "\n" << endl;
 }
 
-void print_liststack_status(liststack *l)
+void print_liststack_status(liststack *l, int id)
 {
     int i = 0;
     if (l != NULL)
     {
         do
         {
-            cout << "Ptr" << i << ": " << l << endl;
+            cout << "Ptr" << id << ": " << l << endl;
             l = l->previous_ptr;
             i++;
+            id--;
         }
         while (l != NULL);
     }

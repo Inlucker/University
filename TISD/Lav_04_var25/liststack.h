@@ -6,6 +6,7 @@
 struct liststack
 {
     char elem;
+    //int id; // Для ограничения максимального кол-ва элементов
     liststack* previous_ptr;
 };
 
@@ -23,7 +24,7 @@ char pop_liststack(liststack **l);
 
 void print_liststack(liststack *l);
 
-void print_liststack_status(liststack *l);
+void print_liststack_status(liststack *l, int id);
 
 int check_brackets_liststack(liststack *l);
 
