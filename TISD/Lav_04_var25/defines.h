@@ -5,7 +5,7 @@
 #include <string>
 #include <ctime>
 
-#define MAX_MEMORY_SIZE 100
+#define MAX_MEMORY_SIZE 100000000
 
 #define OVERFLOW_ERROR -1
 #define EMPTY_STACK_ERROR -2
