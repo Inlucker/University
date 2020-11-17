@@ -26,9 +26,17 @@ int add_masstack(char simbol, masstack *m)
     return 0;
 }
 
-masstack input_masstack(string str)
+bool is_masstack_full(masstack m)
 {
-    masstack new_masstack = malloc_masstack(str.length());
+    return m.cur_ptr - m.mas + 1 > m.capacity;
+}
+
+masstack input_masstack(string str, int capacity)
+{
+    int tmp = capacity;
+    if (tmp < str.length())
+        tmp = str.length();
+    masstack new_masstack = malloc_masstack(capacity);
     for (int i = 0; i < str.length(); i++)
     {
         if (add_masstack(str[i], &new_masstack) != 0)
@@ -49,7 +57,7 @@ char pop_masstack(masstack *m)
 {
     if (is_masstack_empty(*m))
     {
-        cout << "This masstack is empty" << endl;
+        cout << "This mas_stack is empty" << endl;
         return EMPTY_STACK_ERROR;
     }
     m->cur_ptr--;

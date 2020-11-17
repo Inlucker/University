@@ -88,7 +88,7 @@ void print_liststack_status(liststack *l)
     {
         do
         {
-            cout << "Ptr" << i << ": " << l->previous_ptr << endl;
+            cout << "Ptr" << i << ": " << l << endl;
             l = l->previous_ptr;
             i++;
         }

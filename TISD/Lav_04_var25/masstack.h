@@ -16,7 +16,9 @@ void free_masstack(masstack *m);
 
 int add_masstack(char simbol, masstack *m);
 
-masstack input_masstack(string str);
+bool is_masstack_full(masstack m);
+
+masstack input_masstack(string str, int capacity);
 
 bool is_masstack_empty(masstack m);
 

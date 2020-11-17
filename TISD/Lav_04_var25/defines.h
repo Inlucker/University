@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <ctime>
 
 #define MAX_MEMORY_SIZE 100
 
