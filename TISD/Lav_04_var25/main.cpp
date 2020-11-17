@@ -176,15 +176,15 @@ int main()
         }
         case 9:
         {
+            if (list_stack_id + 1 > MAX_MEMORY_SIZE)
+            {
+                cout << "OverFlowError" << endl;
+                break;
+            }
             _flushall();
             cout << "Enter the symbol to add: ";
             char inp;
             cin >> inp;
-            if (list_stack_id + 1 > MAX_MEMORY_SIZE)
-            {
-                cout << "OverFlowError id = " << list_stack_id << endl;
-                break;
-            }
             list_stack_id++;
             list_stack = add_liststack(inp, list_stack);
             break;
