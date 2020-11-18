@@ -103,7 +103,7 @@ void print_liststack_status(liststack *l, int id)
     {
         do
         {
-            cout << "Ptr" << id << ": " << l << endl;
+            cout << "Ptr" << id << ": " << l << ", element: " << l->elem << endl;
             l = l->previous_ptr;
             i++;
             id--;

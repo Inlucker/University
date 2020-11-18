@@ -26,6 +26,9 @@ int main()
     }
     int list_stack_id = 26;
 
+    void *free_memory_list[100];
+    int free_memory_list_id = 0;
+
     //print_liststack(l1);
     //print_liststack_status(l1);
 
@@ -53,6 +56,7 @@ int main()
         cout << "Compare commands:" << endl;
         cout << "13 - Compare work time for mas_stack and list_stack" << endl;
         cout << "14 - Compare memory for mas_stack and list_stack" << endl;
+        cout << "15 - Print freed memory ptrs for list_stack" << endl;
         cout << "0 - Exit from programm\n" << endl;
 
         _flushall();
@@ -192,9 +196,16 @@ int main()
         case 10:
         {
             liststack *adr = list_stack;
+            if (adr != NULL)
+            {
+                free_memory_list[free_memory_list_id] = adr;
+                free_memory_list_id++;
+            }
+
             char symbol = pop_liststack(&list_stack);
             if (symbol != EMPTY_STACK_ERROR)
             {
+                list_stack_id--;
                 cout << "Adress: " << adr << endl;
                 cout << "Poped: " << symbol << endl;
             }
@@ -339,6 +350,12 @@ int main()
             else
                 cout << "Wrong input" << endl;
 
+            break;
+        }
+        case 15:
+        {
+            for (int i = 0; i < free_memory_list_id; i++)
+                cout << free_memory_list[i] << endl;
             break;
         }
         case 0:
