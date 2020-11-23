@@ -23,7 +23,7 @@ int comp_string(const string *str1, const string *str2)
 
         if(tmp1[i] < tmp2[i])
             rez = -1;
-        else if (tmp1 > tmp2)
+        else if (tmp1[i] > tmp2[i])
             rez = 1;
         else
             rez = 0;
