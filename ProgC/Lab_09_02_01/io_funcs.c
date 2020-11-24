@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include "io_funcs.h"
 #include "functions.h"
 
@@ -6,15 +9,20 @@ int read_args(int argc, char **argv, char *prefix, char *file_name)
     switch (argc)
     {
         case 2:
-            strcpy(file_name, argv[1]);
-            break;
-        case 3:
-            strcpy(prefix, argv[2]);
             if (strlen(argv[1]) > M)
             {
                 //printf("Too long file name\n");
                 return CONSOLE_ARGS_ERROR;
             }
+            strcpy(file_name, argv[1]);
+            break;
+        case 3:
+            if (strlen(argv[1]) > M || strlen(argv[2]) > M)
+            {
+                //printf("Too long file or prefix name\n");
+                return CONSOLE_ARGS_ERROR;
+            }
+            strcpy(prefix, argv[2]);
             strcpy(file_name, argv[1]);
             break;
         default:
@@ -34,15 +42,27 @@ struct thing *read_file(char *file_name, int *n)
 
     if (f != NULL)
     {
-        int i = 0;
+        int i = 0, i_max = 0;;
         int input = 0;
+
+        while (!feof(f))
+        {
+            if (fgetc(f) == '\n')
+                i_max++;
+        }
+
+        if (i_max % 3 == 0)
+            i_max /= 3;
+        else
+            return NULL;
+
+        list = malloc(sizeof(struct thing) * i_max);
+
+        fseek(f, 0L, SEEK_SET);
 
         while (feof(f) == 0)
         {
             input = fscanf(f, "%s\n", list[i].name);
-
-            if (input == -1)
-                return NULL;
 
             if (input != 1 || strlen(list[i].name) > N)
                 return NULL;
@@ -59,11 +79,11 @@ struct thing *read_file(char *file_name, int *n)
             list[i].p = list[i].m / list[i].v;
             i++;
         }
-        if (i > L)
+        /*if (i > L)
         {
             //printf("Too much information in File\n");
             return NULL;
-        }
+        }*/
         *n = i;
     }
     else
@@ -76,7 +96,7 @@ struct thing *read_file(char *file_name, int *n)
     return list;
 }
 
-void output(char *prefix, struct thing list[], int n)
+void output(char *prefix, struct thing *list, int n)
 {
     if (strcmp(prefix, "") == 0)
     {

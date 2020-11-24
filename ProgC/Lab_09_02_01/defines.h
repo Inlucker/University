@@ -1,9 +1,6 @@
 #ifndef DEFINES_H
 #define DEFINES_H
 
-#include <stdio.h>
-#include <string.h>
-
 #define N 25
 #define M 100
 #define L 15

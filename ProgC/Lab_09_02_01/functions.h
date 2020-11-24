@@ -5,6 +5,4 @@
 
 void quick_sort(struct thing *a, int l, int r);
 
-
-
 #endif // FUNCTIONS_H
