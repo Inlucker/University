@@ -51,48 +51,42 @@ struct thing *read_file(char *file_name, int *n)
                 i_max++;
         }
 
-        if (i_max % 3 == 0)
+        if (i_max % 3 == 0 && i_max / 3 <= L)
+        {
             i_max /= 3;
-        else
-            return NULL;
 
-        if (i_max > L)
-        {
-            //printf("Too much information in File\n");
-            return NULL;
+            *n = i_max;
+
+            list = malloc(sizeof(struct thing) * i_max);
+
+            fseek(f, 0L, SEEK_SET);
+
+            while (feof(f) == 0)
+            {
+                input = fscanf(f, "%s\n", list[i].name);
+
+                if (input != 1 || strlen(list[i].name) > N)
+                    break;
+
+                input = fscanf(f, "%f\n", &list[i].m);
+
+                if (input != 1 || list[i].m <= 0)
+                    break;
+
+                input = fscanf(f, "%f\n", &list[i].v);
+                if (input != 1 || list[i].v <= 0)
+                    break;
+
+                list[i].p = list[i].m / list[i].v;
+                //printf("p%d = %f\n", i, list[i].p);
+                i++;
+            }
+            if (i != i_max)
+            {
+                free(list);
+                list = NULL;
+            }
         }
-
-        *n = i_max;
-
-        list = malloc(sizeof(struct thing) * i_max);
-
-        fseek(f, 0L, SEEK_SET);
-
-        while (feof(f) == 0)
-        {
-            input = fscanf(f, "%s\n", list[i].name);
-
-            if (input != 1 || strlen(list[i].name) > N)
-                return NULL;
-
-            input = fscanf(f, "%f\n", &list[i].m);
-
-            if (input != 1 || list[i].m <= 0 || list[i].m - 1.7976931348623157e+308 > 0)
-                return NULL;
-
-            input = fscanf(f, "%f\n", &list[i].v);
-            if (input != 1 || list[i].v <= 0 || list[i].v - 1.7976931348623157e+308 > 0)
-                return NULL;
-
-            list[i].p = list[i].m / list[i].v;
-            //printf("p%d = %f\n", i, list[i].p);
-            i++;
-        }
-    }
-    else
-    {
-        //printf("File read error\n");
-        return NULL;
     }
     fclose(f);
 
