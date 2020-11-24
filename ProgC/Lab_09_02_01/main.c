@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "functions.h"
 #include "io_funcs.h"
 
@@ -17,6 +18,8 @@ int main(int argc, char **argv)
         return FILE_READ_ERROR;
 
     output(prefix, list, n);
+
+    free(list);
 
     return 0;
 }

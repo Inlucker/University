@@ -1,0 +1,15 @@
+Rock1
+4
+1
+Rock2
+5
+1
+Rock3
+2
+1
+Rock4
+1
+1
+Rock5
+3
+1

@@ -56,6 +56,14 @@ struct thing *read_file(char *file_name, int *n)
         else
             return NULL;
 
+        if (i_max > L)
+        {
+            //printf("Too much information in File\n");
+            return NULL;
+        }
+
+        *n = i_max;
+
         list = malloc(sizeof(struct thing) * i_max);
 
         fseek(f, 0L, SEEK_SET);
@@ -77,14 +85,9 @@ struct thing *read_file(char *file_name, int *n)
                 return NULL;
 
             list[i].p = list[i].m / list[i].v;
+            //printf("p%d = %f\n", i, list[i].p);
             i++;
         }
-        /*if (i > L)
-        {
-            //printf("Too much information in File\n");
-            return NULL;
-        }*/
-        *n = i;
     }
     else
     {
@@ -94,6 +97,18 @@ struct thing *read_file(char *file_name, int *n)
     fclose(f);
 
     return list;
+}
+
+void print_things(struct thing *mas, int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        printf("%s: ", mas[i].name);
+        printf("m%d = %f; ", i, mas[i].m);
+        printf("v%d = %f; ", i, mas[i].v);
+        printf("p%d = %f\n", i, mas[i].p);
+    }
+    printf("\n");
 }
 
 void output(char *prefix, struct thing *list, int n)

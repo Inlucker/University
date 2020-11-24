@@ -1,7 +1,4 @@
-/*!
-  \file
-  \brief Исходный файл содержащий в себе реализации всех используемых функций
-  */
+#include "io_funcs.h"
 #include "functions.h"
 
 void quick_sort(struct thing *a, int l, int r)

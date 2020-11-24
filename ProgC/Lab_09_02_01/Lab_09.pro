@@ -6,7 +6,8 @@ CONFIG -= qt
 SOURCES += \
         functions.c \
         io_funcs.c \
-        main.c
+        main.c \
+        unit_tests.c
 
 HEADERS += \
     defines.h \
