@@ -1,7 +1,7 @@
 #ifndef MASQUEUE_H
 #define MASQUEUE_H
 
-#define my_type double
+#include "defines.h"
 
 struct masqueue
 {
@@ -9,19 +9,23 @@ struct masqueue
     int id_out;
     int size;
     int el_num;
-    my_type* ptr;
+    task* ptr;
 };
 
-masqueue create_masqueue(int size);
+masqueue *create_masqueue(int size);
 
-bool is_full(masqueue queue);
+bool is_full(masqueue *queue);
 
-bool is_mas_empty(masqueue queue);
+bool is_mas_empty(masqueue *queue);
 
-int add_task(masqueue *queue, my_type task);
+int add_task(masqueue *queue, task t);
 
-my_type pop_task(masqueue *queue);
+task pop_task(masqueue *queue);
 
-void print_masqueue_status(masqueue queue);
+void free(masqueue *queue);
+
+void print_masqueue(masqueue *queue);
+
+void print_masqueue_status(masqueue *queue);
 
 #endif // MASQUEUE_H
