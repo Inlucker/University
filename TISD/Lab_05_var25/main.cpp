@@ -26,7 +26,8 @@ int main()
     cout << "Hi!" << endl;
     srand(time(0));
 
-    mas_model3();
+    //mas_model2();
+    model();
 
     int input = -1;
 
@@ -58,7 +59,7 @@ int main()
         case 1:
         {
             clock_t start = clock();
-            mas_model();
+            mas_model3();
             clock_t end = clock();
             double seconds = (double)(end - start) / CLOCKS_PER_SEC;
             printf("Mas_model_time: %.3f seconds\n\n", seconds);
