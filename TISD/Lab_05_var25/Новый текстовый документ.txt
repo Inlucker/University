@@ -1,0 +1,5 @@
+model time = ~3000 not ~4500
+AFK_time = ~0
+Work _time = ~3000
+task1_in/out = ~1000
+task1_in/out = ~2000
