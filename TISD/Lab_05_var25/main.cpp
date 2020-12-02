@@ -26,6 +26,8 @@ int main()
     cout << "Hi!" << endl;
     srand(time(0));
 
+    mas_model();
+
     int input = -1;
 
     //cout << sizeof (car) << " " << sizeof (price_keys) << endl;

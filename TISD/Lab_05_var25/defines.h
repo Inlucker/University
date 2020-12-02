@@ -7,7 +7,7 @@
 //#define EMPTY_QUEUE_ERROR -2
 //#define CHECK_ERROR -3
 
-#define EPS 1000
+#define EPS 10
 
 #define task double
 

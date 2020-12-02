@@ -4,6 +4,11 @@
 #include "masqueue.h"
 #include "listqueue.h"
 
+#define T1 1, 5
+#define T2 0, 3
+#define T3 0, 4
+#define T4 0, 1
+
 using namespace std;
 
 double get_time(int t1, int t2)
@@ -40,7 +45,7 @@ void mas_model()
             in_flag = rand() % 2;
             if (in_flag == 0) //first type
             {
-                double tmp = get_time(1, 5);
+                double tmp = get_time(T1);
                 average_queue1_length = ((average_queue1_length) * (model_time_in / (model_time_in + tmp))) + ((task1_in + 1 - task1_out) * (tmp / (model_time_in + tmp)));
                 model_time_in += tmp;
                 if (flag == -1)
@@ -59,7 +64,7 @@ void mas_model()
             }
             else //second type
             {
-                double tmp = get_time(0, 3);
+                double tmp = get_time(T2);
                 average_queue2_length = ((average_queue2_length) * (model_time_in / (model_time_in + tmp))) + ((task2_in + 1 - task2_out) * (tmp / (model_time_in + tmp)));
                 model_time_in += tmp;
                 if (flag == -1)
@@ -91,7 +96,7 @@ void mas_model()
                     }
                     if (pop_task(mq1) != -1.0)
                     {
-                        double tmp = get_time(0, 4);
+                        double tmp = get_time(T3);
                         average_queue1_length = ((average_queue1_length) * (model_time_out / (model_time_out + tmp))) + ((task1_in - task1_out - 1) * (tmp / (model_time_out + tmp)));
                         model_time_out += tmp;
                         task1_out++;
@@ -103,7 +108,7 @@ void mas_model()
                     {
                         if (pop_task(mq2) != -1.0)
                         {
-                            double tmp = get_time(0, 1);
+                            double tmp = get_time(T4);
                             average_queue2_length = ((average_queue2_length) * (model_time_out / (model_time_out + tmp))) + ((task2_in - task2_out - 1) * (tmp / (model_time_out + tmp)));
                             model_time_out += tmp;
                             task2_out++;
@@ -139,7 +144,7 @@ void mas_model()
                     }
                     if (pop_task(mq2) != -1.0)
                     {
-                        double tmp = get_time(0, 1);
+                        double tmp = get_time(T4);
                         average_queue2_length = ((average_queue2_length) * (model_time_out / (model_time_out + tmp))) + ((task2_in - task2_out - 1) * (tmp / (model_time_out + tmp)));
                         model_time_out += tmp;
                         task2_out++;
@@ -151,7 +156,7 @@ void mas_model()
                     {
                         if (pop_task(mq1) != -1.0)
                         {
-                            double tmp = get_time(0, 4);
+                            double tmp = get_time(T3);
                             average_queue1_length = ((average_queue1_length) * (model_time_out / (model_time_out + tmp))) + ((task1_in - task1_out - 1) * (tmp / (model_time_out + tmp)));
                             model_time_out += tmp;
                             task1_out++;
@@ -182,7 +187,7 @@ void mas_model()
     print_masqueue_status(mq2);
     print_masqueue(mq2);*/
 
-    //cout << "Model_Time_in: " << model_time_in << endl;
+    cout << "Model_Time_in: " << model_time_in << endl;
     cout << "Model Time: " << model_time_out << endl;
     cout << "AFK time: " << afk_time << endl;
     cout << "Work time: " << model_time_out - afk_time << endl;
