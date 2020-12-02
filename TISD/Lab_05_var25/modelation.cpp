@@ -4,6 +4,8 @@
 #include "masqueue.h"
 #include "listqueue.h"
 
+#define EPS 1000
+
 #define T1 1, 5
 #define T2 0, 3
 #define T3 0, 4
