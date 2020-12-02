@@ -24,7 +24,11 @@ int main()
     cout << "Hi!" << endl;
     srand(time(0));
 
+    clock_t start = clock();
     mas_model();
+    clock_t end = clock();
+    double seconds = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("Mas_model_time: %.4f seconds\n", seconds);
 
     /*cout << "MASQUEUE:" << endl;
 

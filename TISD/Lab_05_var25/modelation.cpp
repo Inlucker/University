@@ -211,4 +211,5 @@ void mas_model()
 
     free_masqueue(mq1);
     free_masqueue(mq2);
+    cout << endl;
 }
