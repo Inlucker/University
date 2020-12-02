@@ -59,6 +59,7 @@ int main()
             clock_t end = clock();
             double seconds = (double)(end - start) / CLOCKS_PER_SEC;
             printf("Mas_model_time: %.3f seconds\n\n", seconds);
+            break;
         }
         case 2:
         {
@@ -67,6 +68,7 @@ int main()
             clock_t end = clock();
             double seconds = (double)(end - start) / CLOCKS_PER_SEC;
             printf("List_model_time: %.3f seconds\n\n", seconds);
+            break;
         }
         case 3:
         {
@@ -74,7 +76,7 @@ int main()
             cout << "Enter the size for mas_queue: ";
             int size;
             cin >> size;*/
-            cout << "Iteartion number: " << ITERATIONS << endl;
+            cout << "Iteartions number: " << ITERATIONS << endl;
             masqueue *mq = create_masqueue(ITERATIONS);
             clock_t start = clock();
             for (int i = 0; i < ITERATIONS; i++)
@@ -136,11 +138,12 @@ int main()
             end = clock();
             seconds = (double)(end - start) / CLOCKS_PER_SEC;
             printf("Free_time for list_queue: %.3f seconds\n", seconds);
+            break;
         }
         case 4:
         {
             _flushall();
-            cout << "Input elems: ";
+            cout << "Input size: ";
             int elems = 1;
             cin >> elems;
             cout << "Mas_stack: " << elems * sizeof(task) + sizeof (masqueue) << " bytes." << endl;

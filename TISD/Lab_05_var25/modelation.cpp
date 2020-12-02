@@ -208,7 +208,7 @@ void mas_model()
         cout << "Task2_out: " << task2_out << endl;
     }
 
-    cout << "OA_Procs: " << task2_out + task1_out << endl;
+    //cout << "OA_Procs: " << task2_out + task1_out << endl;
 
     free_masqueue(mq1);
     free_masqueue(mq2);
@@ -404,7 +404,7 @@ void list_model()
         cout << "Task2_out: " << task2_out << endl;
     }
 
-    cout << "OA_Procs: " << task2_out + task1_out << endl;
+    //cout << "OA_Procs: " << task2_out + task1_out << endl;
 
     free_listqueue(lq1);
     free_listqueue(lq2);
