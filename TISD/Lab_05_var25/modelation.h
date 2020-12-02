@@ -7,9 +7,11 @@ double get_time(int t1, int t2);
 
 task gen_task();
 
-//void model(); //shit
+void avg_model();
 
-//void mas_model3(); //aint right
+void model(); //shit
+
+void mas_model3(); //aint right
 
 void mas_model2(); //best for now
 

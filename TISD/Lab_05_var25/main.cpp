@@ -21,10 +21,28 @@ task gen_task()
     return (double)(rand() % EPS) / EPS;
 }*/
 
+uint64_t tick(void)
+{
+    uint32_t high, low;
+    __asm__ __volatile__(
+        "rdtsc\n"
+        "movl %%edx, %0\n"
+        "movl %%eax, %1\n"
+        : "=r"(high), "=r"(low)::"%rax", "%rbx", "%rcx", "%rdx");
+
+    uint64_t ticks = ((uint64_t)high << 32) | low;
+
+    return ticks;
+}
+
 int main()
 {
     cout << "Hi!" << endl;
     srand(time(0));
+
+    model();
+    //mas_model3();
+    //avg_model();
 
     int input = -1;
 
@@ -111,7 +129,7 @@ int main()
             seconds = (double)(end - start) / CLOCKS_PER_SEC;
             printf("Free_time for mas_queue: %.3f seconds\n", seconds);
 
-            masqueue *lq = create_masqueue(ITERATIONS);
+            listqueue *lq = create_listqueue();
             start = clock();
             for (int i = 0; i < ITERATIONS; i++)
             {
@@ -126,7 +144,7 @@ int main()
             {
                 if (pop_task(lq) == -1.0)
                 {
-                    cout << "EMPTY ERROR in mas_queue" << endl;
+                    cout << "EMPTY ERROR in list_queue" << endl;
                     break;
                 }
             }
@@ -134,8 +152,12 @@ int main()
             seconds = (double)(end - start) / CLOCKS_PER_SEC;
             printf("Pop_time for list_queue: %.3f seconds\n", seconds);
 
+            for (int i = 0; i < ITERATIONS; i++)
+            {
+                add_task(lq, gen_task());
+            }
             start = clock();
-            free_masqueue(lq);
+            free_listqueue(lq);
             end = clock();
             seconds = (double)(end - start) / CLOCKS_PER_SEC;
             printf("Free_time for list_queue: %.3f seconds\n", seconds);
@@ -200,6 +222,81 @@ int main()
             free_listqueue(lq);
             break;
         }
+        /*case 6:
+        {
+            cout << "Iteartions number: " << ITERATIONS << endl;
+            masqueue *mq = create_masqueue(ITERATIONS);
+            uint64_t start, end;
+
+            start = tick();
+            for (int i = 0; i < ITERATIONS; i++)
+            {
+                if (add_task(mq, gen_task()) != 0)
+                {
+                    cout << "OVERFLOW ERROR in mas_queue" << endl;
+                    break;
+                }
+            }
+            end = tick();
+            printf("%s %ju\n",
+                   "Add_time for mas_queue:", end - start);
+            //printf("Add_time for mas_queue: %.3f seconds\n", seconds);
+
+            start = tick();
+            for (int i = 0; i < ITERATIONS; i++)
+            {
+                if (pop_task(mq) == -1.0)
+                {
+                    cout << "EMPTY ERROR in mas_queue" << endl;
+                    break;
+                }
+            }
+            end = tick();
+            printf("%s %ju\n",
+                   "Pop_time for mas_queue:", end - start);
+
+            start = tick();
+            free_masqueue(mq);
+            end = tick();
+            printf("%s %ju\n",
+                   "Free_time for mas_queue:", end - start);
+
+            listqueue *lq = create_listqueue();
+
+            start = tick();
+            for (int i = 0; i < ITERATIONS; i++)
+            {
+                add_task(lq, gen_task());
+            }
+            end = tick();
+            printf("%s %ju\n",
+                   "Add_time for list_queue:", end - start);
+            //printf("Add_time for mas_queue: %.3f seconds\n", seconds);
+
+            start = tick();
+            for (int i = 0; i < ITERATIONS; i++)
+            {
+                if (pop_task(lq) == -1.0)
+                {
+                    cout << "EMPTY ERROR in list_queue" << endl;
+                    break;
+                }
+            }
+            end = tick();
+            printf("%s %ju\n",
+                   "Pop_time for list_queue:", end - start);
+
+            for (int i = 0; i < ITERATIONS; i++)
+            {
+                add_task(lq, gen_task());
+            }
+            start = tick();
+            free_listqueue(lq);
+            end = tick();
+            printf("%s %ju\n",
+                   "Free_time for list_queue:", end - start);
+            break;
+        }*/
         case 0:
         {
             cout << "Good buy!" << endl;
