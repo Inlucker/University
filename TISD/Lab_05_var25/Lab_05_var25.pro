@@ -6,9 +6,11 @@ CONFIG -= qt
 SOURCES += \
         listqueue.cpp \
         main.cpp \
-        masqueue.cpp
+        masqueue.cpp \
+        modelation.cpp
 
 HEADERS += \
     defines.h \
     listqueue.h \
-    masqueue.h
+    masqueue.h \
+    modelation.h
