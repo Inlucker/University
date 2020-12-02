@@ -17,7 +17,8 @@ void free_liststack(liststack **l)
         //cout << tmp->elem << endl;
         //cout << tmp->previous_ptr << endl;
         *l = tmp->previous_ptr;
-        free(tmp);
+        //free(tmp);
+        delete[] tmp;
     }
     //cout << l << endl;
     //free(l);
@@ -73,7 +74,8 @@ char pop_liststack(liststack **l)
     {
         *l = tmp->previous_ptr;
     }
-    free(tmp);
+    //free(tmp);
+    delete[] tmp;
     return rez;
 }
 
