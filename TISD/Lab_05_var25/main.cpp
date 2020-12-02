@@ -26,9 +26,6 @@ int main()
     cout << "Hi!" << endl;
     srand(time(0));
 
-    //mas_model2();
-    model();
-
     int input = -1;
 
     //cout << sizeof (car) << " " << sizeof (price_keys) << endl;
@@ -59,7 +56,7 @@ int main()
         case 1:
         {
             clock_t start = clock();
-            mas_model3();
+            mas_model2();
             clock_t end = clock();
             double seconds = (double)(end - start) / CLOCKS_PER_SEC;
             printf("Mas_model_time: %.3f seconds\n\n", seconds);
@@ -68,7 +65,7 @@ int main()
         case 2:
         {
             clock_t start = clock();
-            list_model();
+            list_model2();
             clock_t end = clock();
             double seconds = (double)(end - start) / CLOCKS_PER_SEC;
             printf("List_model_time: %.3f seconds\n\n", seconds);
