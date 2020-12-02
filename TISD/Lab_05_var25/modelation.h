@@ -9,4 +9,6 @@ task gen_task();
 
 void mas_model();
 
+void list_model();
+
 #endif // MODELATION_H

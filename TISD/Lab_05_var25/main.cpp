@@ -24,71 +24,57 @@ int main()
     cout << "Hi!" << endl;
     srand(time(0));
 
-    clock_t start = clock();
-    mas_model();
-    clock_t end = clock();
-    double seconds = (double)(end - start) / CLOCKS_PER_SEC;
-    printf("Mas_model_time: %.4f seconds\n", seconds);
+    int input = -1;
 
-    /*cout << "MASQUEUE:" << endl;
+    //cout << sizeof (car) << " " << sizeof (price_keys) << endl;
 
-    masqueue *mq = create_masqueue(10);
-    if (mq == NULL)
+    while (input != 0)
     {
-        cout << "Create_masqueue ERROR" << endl;;
-        return CREATE_ERROR;
-    }
+        cout << endl;
+        cout << "Mas_stack commands:" << endl;
+        cout << " 1 - Model mas_queue" << endl;
+        cout << " 2 - Model list_queue" << endl;
+        cout << " 3 - Compare time" << endl;
+        cout << " 4 - Compare memory" << endl;
 
-    for (int i = 0; i < 10; i++)
-    {
-        if (add_task(mq, (task)i) != 0)
+        _flushall();
+        cout << "Enter the number of command to be done: ";
+        while (!(cin >> input))
         {
-            cout << "Overflow error" << endl;
+            cout << "Wrong input" << endl;
+            cin.clear();
+            _flushall();
+            cout << "Enter the number of command to be done: ";
+        }
+
+        switch (input)
+        {
+        case 1:
+        {
+            clock_t start = clock();
+            mas_model();
+            clock_t end = clock();
+            double seconds = (double)(end - start) / CLOCKS_PER_SEC;
+            printf("Mas_model_time: %.4f seconds\n\n", seconds);
+        }
+        case 2:
+        {
+            clock_t start = clock();
+            list_model();
+            clock_t end = clock();
+            double seconds = (double)(end - start) / CLOCKS_PER_SEC;
+            printf("List_model_time: %.4f seconds\n\n", seconds);
+        }
+        case 0:
+        {
+            cout << "Good buy!" << endl;
+            break;
+        }
+        default:
+            cout << "Wrong command" << endl;
             break;
         }
     }
-
-    print_masqueue_status(mq);
-    print_masqueue(mq);
-
-    for (int i = 0; i < 8; i++)
-    {
-        task tmp = pop_task(mq);
-        if (tmp == -1.0)
-        {
-            cout << "Queue is empty" << endl;
-            break;
-        }
-        //cout << tmp << endl;
-    }
-
-    if (add_task(mq, 1.2) != 0)
-    {
-        cout << "Overflow error" << endl;
-    }
-
-    print_masqueue_status(mq);
-    print_masqueue(mq);
-
-    free_masqueue(mq);
-
-    cout << "\nLISTQUEUE:" << endl;
-
-    listqueue *lq = create_listqueue();
-    if (lq == NULL)
-    {
-        cout << "Create_listqueue ERROR" << endl;;
-        return CREATE_ERROR;
-    }
-
-    for (int i = 0; i < 10; i++)
-    {
-        add_task(lq, (task)i);
-    }
-
-    print_listqueue(lq);
-
-    free_listqueue(lq);*/
 
     return 0;
 }
