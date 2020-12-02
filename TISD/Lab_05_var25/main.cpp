@@ -38,6 +38,7 @@ int main()
         cout << "2 - Model list_queue" << endl;
         cout << "3 - Compare time" << endl;
         cout << "4 - Compare memory" << endl;
+        cout << "5 - Fragmentation check" << endl;
         cout << "0 - Exit from programm\n" << endl;
 
         _flushall();
@@ -148,6 +149,55 @@ int main()
             cin >> elems;
             cout << "Mas_stack: " << elems * sizeof(task) + sizeof (masqueue) << " bytes." << endl;
             cout << "List_stack: " << (elems + 1) * sizeof(listqueue_element) + sizeof (listqueue)  << " bytes." << endl;
+            break;
+        }
+        case 5:
+        {
+            listqueue *lq = create_listqueue();
+            for (int i = 0; i < 10; i++)
+            {
+                add_task(lq, gen_task());
+            }
+
+            cout << "Start listque: " << endl;
+            print_listqueue(lq);
+
+            listqueue_element *free_memory_list[10];
+            //int free_memory_list_id = 0;
+
+            for (int i = 0; i < 10; i++)
+            {
+                free_memory_list[i] = lq->ptr_out;
+                pop_task(lq);
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                add_task(lq, gen_task());
+            }
+
+            cout << "New listqueue: " << endl;
+            print_listqueue(lq);
+
+            cout << "Free memory list: " << endl;
+            for (int i = 0; i < 10; i++)
+            {
+                cout << "Ptr" << i << " = " << free_memory_list[i] << endl;
+            }
+            cout << endl;
+
+            cout << "Equal Ptrs: (Free list and New listqueue)" << endl;
+            listqueue_element *iterator = lq->ptr_out;
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    if (free_memory_list[j] == iterator)
+                    cout << "Ptr" << j << " = " << free_memory_list[j] << " and Ptr" << i << " = " << iterator << endl;
+                }
+                iterator = iterator->next_ptr;
+            }
+            free_listqueue(lq);
             break;
         }
         case 0:

@@ -79,9 +79,12 @@ void free_listqueue(listqueue *queue)
 void print_listqueue(listqueue *queue)
 {
     listqueue_element *iterator = queue->ptr_out;
+    int i = 0;
     while (iterator->next_ptr != NULL)
     {
-        cout << iterator->value << "; ";
+        cout << "Ptr" << i << " = " << iterator << ": ";
+        i++;
+        cout << iterator->value << "; " << endl;
         iterator = iterator->next_ptr;
     }
     cout << endl;
