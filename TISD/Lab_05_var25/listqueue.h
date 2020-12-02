@@ -26,7 +26,7 @@ void add_task(listqueue *queue, task t);
 
 task pop_task(listqueue *queue);
 
-void free(listqueue *queue);
+void free_listqueue(listqueue *queue);
 
 void print_listqueue(listqueue *queue);
 

@@ -31,7 +31,7 @@ listqueue *create_listqueue()
         }
         else
         {
-            free(new_listqueue);
+            free_listqueue(new_listqueue);
             new_listqueue = NULL;
         }
     }
@@ -64,7 +64,7 @@ task pop_task(listqueue *queue)
     return rez;
 }
 
-void free(listqueue *queue)
+void free_listqueue(listqueue *queue)
 {
     while (!is_list_empty(queue))
     {

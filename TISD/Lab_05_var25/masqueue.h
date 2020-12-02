@@ -22,7 +22,7 @@ int add_task(masqueue *queue, task t);
 
 task pop_task(masqueue *queue);
 
-void free(masqueue *queue);
+void free_masqueue(masqueue *queue);
 
 void print_masqueue(masqueue *queue);
 

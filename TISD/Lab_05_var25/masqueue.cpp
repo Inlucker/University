@@ -20,7 +20,7 @@ masqueue *create_masqueue(int size)
         }
         else
         {
-            free(new_queue);
+            free_masqueue(new_queue);
             new_queue = NULL;
         }
     }
@@ -45,7 +45,8 @@ int add_task(masqueue *queue, task t)
     {
         return OVERFLOW_ERROR;
     }
-    *(queue->ptr + queue->id_in) = t;
+    //*(queue->ptr + queue->id_in) = t;
+    queue->ptr[queue->id_in] = t;
     queue->id_in++;
     queue->el_num++;
     if (queue->id_in >= queue->size)
@@ -58,7 +59,7 @@ task pop_task(masqueue *queue)
     task rez = -1.0;
     if (!is_mas_empty(queue))
     {
-        rez = *(queue->ptr + queue->id_out);
+        rez = queue->ptr[queue->id_out]; // *(queue->ptr + queue->id_out);
         queue->id_out++;
         queue->el_num--;
         if (queue->id_out >= queue->size)
@@ -67,7 +68,7 @@ task pop_task(masqueue *queue)
     return rez;
 }
 
-void free(masqueue *queue)
+void free_masqueue(masqueue *queue)
 {
     delete[] queue->ptr;
     delete queue;
@@ -75,16 +76,23 @@ void free(masqueue *queue)
 
 void print_masqueue(masqueue *queue)
 {
-    int i = queue->id_out;
-    int elems = queue->el_num;
-    for (int j = elems; j > 0; j--)
+    if (queue->el_num != 0)
     {
-        cout << *(queue->ptr + i) << "; ";
-        i++;
-        if (i >= queue->size)
-            i = 0;
+        int i = queue->id_out;
+        int elems = queue->el_num;
+        for (int j = elems; j > 0; j--)
+        {
+            //cout << *(queue->ptr + i) << "; ";
+            cout << queue->ptr[i] << "; ";
+            i++;
+            if (i >= queue->size)
+                i = 0;
+        }
     }
+    else
+        cout << "Masqueue is empty";
     cout << endl;
+
 }
 
 void print_masqueue_status(masqueue *queue)
