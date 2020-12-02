@@ -26,7 +26,7 @@ int main()
     cout << "Hi!" << endl;
     srand(time(0));
 
-    mas_model();
+    mas_model3();
 
     int input = -1;
 
