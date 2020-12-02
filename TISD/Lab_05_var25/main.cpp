@@ -21,7 +21,7 @@ task gen_task()
     return (double)(rand() % EPS) / EPS;
 }*/
 
-uint64_t tick(void)
+/*uint64_t tick(void)
 {
     uint32_t high, low;
     __asm__ __volatile__(
@@ -33,14 +33,14 @@ uint64_t tick(void)
     uint64_t ticks = ((uint64_t)high << 32) | low;
 
     return ticks;
-}
+}*/
 
 int main()
 {
     cout << "Hi!" << endl;
     srand(time(0));
 
-    model();
+    //model();
     //mas_model3();
     //avg_model();
 
