@@ -169,6 +169,11 @@ int main()
             cout << "Input size: ";
             int elems = 1;
             cin >> elems;
+            if (elems <= 0)
+            {
+                cout << "Wrong input - size can't be <= 0" << endl;
+                break;
+            }
             cout << "Mas_stack: " << elems * sizeof(task) + sizeof (masqueue) << " bytes." << endl;
             cout << "List_stack: " << (elems + 1) * sizeof(listqueue_element) + sizeof (listqueue)  << " bytes." << endl;
             break;
