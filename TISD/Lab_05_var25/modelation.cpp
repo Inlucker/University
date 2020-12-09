@@ -8,7 +8,7 @@
 
 #define T1 1, 5
 #define T2 0, 3
-#define T3 0, 10 //0 10
+#define T3 0, 4 //0 4 || 0 10
 #define T4 0, 1
 
 using namespace std;
