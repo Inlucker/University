@@ -8,7 +8,7 @@
 
 #define T1 1, 5
 #define T2 0, 3
-#define T3 0, 4
+#define T3 0, 10 //0 10
 #define T4 0, 1
 
 using namespace std;
@@ -23,7 +23,7 @@ task gen_task()
 {
     return (double)(rand() % EPS) / EPS;
 }
-
+/*
 void model() //nah stupid idea
 {
     int flag = -1;
@@ -349,19 +349,6 @@ void avg_model()
     double model_time_in2 = 0;
     double model_time_out = 0;
 
-    /*int cur_time = 0;
-    while (task2_out != 100)
-    {
-        if (cur_time % 6 == 0)
-            task1_in++;
-        if (cur_time % 3 == 0)
-            task2_in++;
-        if (task1_in < task2_in)
-
-
-        cur_time ++;
-    }*/
-
     model_time_in2 += 1.5;
     task2_in++;
     afk_time += model_time_in2;
@@ -412,11 +399,12 @@ void avg_model()
     cout << "Task2_in: " << task2_in << endl;
     cout << "Task2_out: " << task2_out << endl;
 }
+*/
 
 void mas_model2()
 {
-    masqueue *mq1 = create_masqueue(1000);
-    masqueue *mq2 = create_masqueue(1000);
+    masqueue *mq1 = create_masqueue(10000);
+    masqueue *mq2 = create_masqueue(10000);
     int flag = -1;
     int task1_in = 0;
     int task2_in = 0;
@@ -432,7 +420,7 @@ void mas_model2()
 
     while (task1_out != 1000)
     {
-        if (model_time_in1 <= model_time_out)
+        while (model_time_in1 <= model_time_out)
         {
             double tmp = get_time(T1);
             average_queue1_length = ((average_queue1_length) * (model_time_in1 / (model_time_in1 + tmp))) + ((task1_in + 1 - task1_out) * (tmp / (model_time_in1 + tmp)));
@@ -451,7 +439,7 @@ void mas_model2()
             //printf("%.1f A1 - %.1f (1-5)\n", model_time_in1, tmp);
         }
 
-        if (model_time_in2 <= model_time_out)
+        while (model_time_in2 <= model_time_out)
         {
             double tmp = get_time(T2);
             average_queue2_length = ((average_queue2_length) * (model_time_in2 / (model_time_in2 + tmp))) + ((task2_in + 1 - task2_out) * (tmp / (model_time_in2 + tmp)));
@@ -681,7 +669,7 @@ void mas_model2()
     free_masqueue(mq2);
     cout << endl;
 }
-
+/*
 void mas_model()
 {
     masqueue *mq1 = create_masqueue(100);
@@ -841,11 +829,11 @@ void mas_model()
         }
     }
 
-    /*print_masqueue_status(mq1);
+    print_masqueue_status(mq1);
     print_masqueue(mq1);
 
     print_masqueue_status(mq2);
-    print_masqueue(mq2);*/
+    print_masqueue(mq2);
 
     cout << "Model_Time_in: " << model_time_in << endl;
     cout << "Model Time: " << model_time_out << endl;
@@ -879,6 +867,7 @@ void mas_model()
     free_masqueue(mq2);
     cout << endl;
 }
+*/
 
 void list_model2()
 {
@@ -899,7 +888,7 @@ void list_model2()
 
     while (task1_out != 1000)
     {
-        if (model_time_in1 <= model_time_out)
+        while (model_time_in1 <= model_time_out)
         {
             double tmp = get_time(T1);
             average_queue1_length = ((average_queue1_length) * (model_time_in1 / (model_time_in1 + tmp))) + ((task1_in + 1 - task1_out) * (tmp / (model_time_in1 + tmp)));
@@ -914,7 +903,7 @@ void list_model2()
             //printf("%.1f A1 - %.1f (1-5)\n", model_time_in1, tmp);
         }
 
-        if (model_time_in2 <= model_time_out)
+        while (model_time_in2 <= model_time_out)
         {
             double tmp = get_time(T2);
             average_queue2_length = ((average_queue2_length) * (model_time_in2 / (model_time_in2 + tmp))) + ((task2_in + 1 - task2_out) * (tmp / (model_time_in2 + tmp)));
@@ -1139,7 +1128,7 @@ void list_model2()
     free_listqueue(lq2);
     cout << endl;
 }
-
+/*
 void list_model()
 {
     listqueue *lq1 = create_listqueue();
@@ -1297,11 +1286,11 @@ void list_model()
         }
     }
 
-    /*print_masqueue_status(mq1);
+    print_masqueue_status(mq1);
     print_masqueue(mq1);
 
     print_masqueue_status(mq2);
-    print_masqueue(mq2);*/
+    print_masqueue(mq2);
 
     //cout << "Model_Time_in: " << model_time_in << endl;
     cout << "Model Time: " << model_time_out << endl;
@@ -1334,4 +1323,4 @@ void list_model()
     free_listqueue(lq1);
     free_listqueue(lq2);
     cout << endl;
-}
+}*/

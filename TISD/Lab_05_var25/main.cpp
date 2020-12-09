@@ -6,7 +6,7 @@
 #include <iostream>
 #include <ctime>
 
-#define ITERATIONS 1e8//100000000
+#define ITERATIONS 1e7//100000000
 
 using namespace std;
 
