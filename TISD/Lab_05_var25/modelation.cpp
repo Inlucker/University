@@ -438,7 +438,10 @@ void mas_model2()
             average_queue1_length = ((average_queue1_length) * (model_time_in1 / (model_time_in1 + tmp))) + ((task1_in + 1 - task1_out) * (tmp / (model_time_in1 + tmp)));
             model_time_in1 += tmp;
             if (add_task(mq1, gen_task()) != 0)
+            {
                 cout << "OVERFLOW ERROR" << endl;
+                return;
+            }
             /*if (model_time_in1 > model_time_out && task1_in == task1_out && task2_in == task2_out)
             {
                 afk_time +=  model_time_in1 - model_time_out;
@@ -454,7 +457,10 @@ void mas_model2()
             average_queue2_length = ((average_queue2_length) * (model_time_in2 / (model_time_in2 + tmp))) + ((task2_in + 1 - task2_out) * (tmp / (model_time_in2 + tmp)));
             model_time_in2 += tmp;
             if (add_task(mq2, gen_task()) != 0)
+            {
                 cout << "OVERFLOW ERROR" << endl;
+                return;
+            }
             /*if (model_time_in2 > model_time_out && task1_in == task1_out && task2_in == task2_out)
             {
                 afk_time +=  model_time_in2 - model_time_out;
@@ -520,9 +526,17 @@ void mas_model2()
         {
             case 1:
             {
-                if (model_time_in1 > model_time_out && task1_in == task1_out + 1)
+                if (model_time_in1 > model_time_out && task1_in == task1_out + 1 && task2_in - task2_out == 0)
                 {
                     afk_time +=  model_time_in1 - model_time_out;
+                    //cout << "1AFK time: " << afk_time << endl;
+                    //cout << "Current queue1 length: " << task1_in - task1_out << endl;
+                    //cout << "Current queue2 length: " << task2_in - task2_out << endl;
+                    /*cout << "Task1_in: " << task1_in << endl;
+                    cout << "Task1_out: " << task1_out << endl;
+                    cout << "Task2_in: " << task2_in << endl;
+                    cout << "Task2_out: " << task2_out << endl;*/
+                    //cout << endl;
                     model_time_out = model_time_in1;
                 }
                 if (pop_task(mq1) != -1.0)
@@ -550,6 +564,10 @@ void mas_model2()
                     }
                     else
                     {
+                        if (model_time_in1 < model_time_in2 &&  model_time_in1 > model_time_out)
+                            afk_time +=  model_time_in1 - model_time_out;
+                        else if (model_time_in2 <= model_time_in1 &&  model_time_in2 > model_time_out)
+                                afk_time +=  model_time_in1 - model_time_out;
                         model_time_out = min(model_time_in1, model_time_in2);
                     }
                 }
@@ -568,9 +586,17 @@ void mas_model2()
             }
             case 2:
             {
-                if (model_time_in2 > model_time_out && task2_in == task2_out + 1)
+                if (model_time_in2 > model_time_out && task2_in == task2_out + 1 && task1_in - task1_out == 0)
                 {
                     afk_time +=  model_time_in2 - model_time_out;
+                    //cout << "2AFK time: " << afk_time << endl;
+                    //cout << "Current queue1 length: " << task1_in - task1_out << endl;
+                    //cout << "Current queue2 length: " << task2_in - task2_out << endl;
+                    /*cout << "Task1_in: " << task1_in << endl;
+                    cout << "Task1_out: " << task1_out << endl;
+                    cout << "Task2_in: " << task2_in << endl;
+                    cout << "Task2_out: " << task2_out << endl;*/
+                    //cout << endl;
                     model_time_out = model_time_in2;
                 }
                 if (pop_task(mq2) != -1.0)
@@ -598,6 +624,10 @@ void mas_model2()
                     }
                     else
                     {
+                        if (model_time_in1 < model_time_in2 &&  model_time_in1 > model_time_out)
+                            afk_time +=  model_time_in1 - model_time_out;
+                        else if (model_time_in2 <= model_time_in1 &&  model_time_in2 > model_time_out)
+                                afk_time +=  model_time_in1 - model_time_out;
                         model_time_out = min(model_time_in1, model_time_in2);
                     }
                 }
@@ -620,8 +650,8 @@ void mas_model2()
     //cout << "Model_Time_in1: " << model_time_in1 << endl;
     //cout << "Model_Time_in2: " << model_time_in2 << endl;
     cout << "Model Time: " << model_time_out << endl;
-    cout << "AFK time: " << afk_time << endl;
-    cout << "Work time: " << model_time_out - afk_time << endl;
+    //cout << "AFK time: " << afk_time << endl;
+    //cout << "Work time: " << model_time_out - afk_time << endl;
 
     if (model_time_out < model_time_in1)
     {
@@ -954,9 +984,17 @@ void list_model2()
         {
             case 1:
             {
-                if (model_time_in1 > model_time_out && task1_in == task1_out + 1)
+                if (model_time_in1 > model_time_out && task1_in == task1_out + 1 && task2_in - task2_out == 0)
                 {
                     afk_time +=  model_time_in1 - model_time_out;
+                    //cout << "1AFK time: " << afk_time << endl;
+                    //cout << "Current queue1 length: " << task1_in - task1_out << endl;
+                    //cout << "Current queue2 length: " << task2_in - task2_out << endl;
+                    /*cout << "Task1_in: " << task1_in << endl;
+                    cout << "Task1_out: " << task1_out << endl;
+                    cout << "Task2_in: " << task2_in << endl;
+                    cout << "Task2_out: " << task2_out << endl;*/
+                    //cout << endl;
                     model_time_out = model_time_in1;
                 }
                 if (pop_task(lq1) != -1.0)
@@ -984,6 +1022,10 @@ void list_model2()
                     }
                     else
                     {
+                        if (model_time_in1 < model_time_in2 &&  model_time_in1 > model_time_out)
+                            afk_time +=  model_time_in1 - model_time_out;
+                        else if (model_time_in2 <= model_time_in1 &&  model_time_in2 > model_time_out)
+                                afk_time +=  model_time_in1 - model_time_out;
                         model_time_out = min(model_time_in1, model_time_in2);
                     }
                 }
@@ -1002,9 +1044,17 @@ void list_model2()
             }
             case 2:
             {
-                if (model_time_in2 > model_time_out && task2_in == task2_out + 1)
+                if (model_time_in2 > model_time_out && task2_in == task2_out + 1 && task1_in - task1_out == 0)
                 {
                     afk_time +=  model_time_in2 - model_time_out;
+                    //cout << "2AFK time: " << afk_time << endl;
+                    //cout << "Current queue1 length: " << task1_in - task1_out << endl;
+                    //cout << "Current queue2 length: " << task2_in - task2_out << endl;
+                    /*cout << "Task1_in: " << task1_in << endl;
+                    cout << "Task1_out: " << task1_out << endl;
+                    cout << "Task2_in: " << task2_in << endl;
+                    cout << "Task2_out: " << task2_out << endl;*/
+                    //cout << endl;
                     model_time_out = model_time_in2;
                 }
                 if (pop_task(lq2) != -1.0)
@@ -1032,6 +1082,10 @@ void list_model2()
                     }
                     else
                     {
+                        if (model_time_in1 < model_time_in2 &&  model_time_in1 > model_time_out)
+                            afk_time +=  model_time_in1 - model_time_out;
+                        else if (model_time_in2 <= model_time_in1 &&  model_time_in2 > model_time_out)
+                                afk_time +=  model_time_in1 - model_time_out;
                         model_time_out = min(model_time_in1, model_time_in2);
                     }
                 }
@@ -1054,8 +1108,8 @@ void list_model2()
     //cout << "Model_Time_in1: " << model_time_in1 << endl;
     //cout << "Model_Time_in2: " << model_time_in2 << endl;
     cout << "Model Time: " << model_time_out << endl;
-    cout << "AFK time: " << afk_time << endl;
-    cout << "Work time: " << model_time_out - afk_time << endl;
+    //cout << "AFK time: " << afk_time << endl;
+    //cout << "Work time: " << model_time_out - afk_time << endl;
 
     if (model_time_out < model_time_in1)
     {
