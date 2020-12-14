@@ -94,21 +94,28 @@ void append(node_t **head_a, node_t **head_b)
     *head_b = NULL;
 }
 
-//WORKING WITH SORTS
 void sorted_insert(node_t **head, node_t *element, int (*comparator)(const void *, const void *))
 {
     node_t *tmp = *head;
-    if (*head != NULL)
+    if (tmp != NULL)
     {
         node_t *tmp2 = *head;
         tmp = tmp->next;
-        while (comparator(element, tmp2) == 1 && tmp != NULL)
+        while (tmp != NULL && comparator(element, tmp) > 0)
         {
             tmp = tmp->next;
             tmp2 = tmp2->next;
         }
-        element->next = tmp;
-        tmp2->next = element;
+        if (tmp2 != *head || comparator(element, tmp2) > 0)
+        {
+            element->next = tmp;
+            tmp2->next = element;
+        }
+        else
+        {
+            element->next = tmp2;
+            *head = element;
+        }
     }
     else
     {
@@ -121,7 +128,7 @@ void sort(node_t **head, int (*comparator)(const void *, const void *))
 {
     node_t *new_head = NULL;
     node_t *tmp_el = *head;
-    while (tmp_el != new_head)
+    while (tmp_el != NULL)
     {
         node_t *tmp_el2 = tmp_el;
         tmp_el = tmp_el->next;
