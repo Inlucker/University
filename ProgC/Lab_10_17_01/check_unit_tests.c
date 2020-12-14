@@ -6,6 +6,19 @@
 #include <stdlib.h>
 #include <check.h>
 
+START_TEST(test_wrong_file)
+{
+    node_t *test1 = read_file("./unit_files/wrong_file_name.txt");
+
+    int areEqual = 0;
+
+    if (test1 == NULL)
+        areEqual = 1;
+
+    ck_assert_int_eq(areEqual, 1);
+}
+END_TEST
+
 START_TEST(test_sort)
 {
     node_t *test = read_file("./unit_files/unit_test_sort.txt");
@@ -29,6 +42,83 @@ START_TEST(test_sort)
         i = i->next;
     }
 
+    free_list(&test);
+    ck_assert_int_eq(areEqual, 1);
+}
+END_TEST
+
+START_TEST(test_pop_front)
+{
+    node_t *test = read_file("./unit_files/unit_test_pop.txt");
+
+    info_t *rez = pop_front(&test);
+
+    int areEqual = 1;
+
+    node_t *i = test;
+    int id = 4;
+    while (i != NULL)
+    {
+        info_t *tmp_data = i->data;
+        if (tmp_data->years != id)
+            areEqual = 0;
+        id--;
+        i = i->next;
+    }
+
+    free_list(&test);
+    ck_assert_int_eq(rez->years, 5);
+    ck_assert_int_eq(areEqual, 1);
+}
+END_TEST
+
+START_TEST(test_pop_back)
+{
+    node_t *test = read_file("./unit_files/unit_test_pop.txt");
+
+    info_t *rez = pop_back(&test);
+
+    int areEqual = 1;
+
+    node_t *i = test;
+    int id = 5;
+    while (i != NULL)
+    {
+        info_t *tmp_data = i->data;
+        if (tmp_data->years != id)
+            areEqual = 0;
+        id--;
+        i = i->next;
+    }
+
+    free_list(&test);
+    ck_assert_int_eq(rez->years, 1);
+    ck_assert_int_eq(areEqual, 1);
+}
+END_TEST
+
+START_TEST(test_append)
+{
+    node_t *test1 = read_file("./unit_files/unit_test_append1.txt");
+    node_t *test2 = read_file("./unit_files/unit_test_append2.txt");
+
+    append(&test1, &test2);
+
+    int areEqual = 1;
+
+    node_t *i = test1;
+    int id = 1;
+    while (i != NULL)
+    {
+        info_t *tmp_data = i->data;
+        if (tmp_data->years != id)
+            areEqual = 0;
+        id++;
+        i = i->next;
+    }
+
+    free_list(&test1);
+    //free_list(&test2);
     ck_assert_int_eq(areEqual, 1);
 }
 END_TEST
@@ -46,7 +136,7 @@ Suite* calc_avg_suite(void)
     // рода ошибочные ситуации при вызове calc_avg
     tc_neg = tcase_create("negatives");
     // Добавим в tc_neg соответствующие функции-тесты
-    //tcase_add_test(tc_neg, test_key_input_same_ptrs);
+    tcase_add_test(tc_neg, test_wrong_file);
 
     // Добавим сформированный тестовый случай в тестовый набор
     suite_add_tcase(s, tc_neg);
@@ -56,6 +146,9 @@ Suite* calc_avg_suite(void)
     tc_pos = tcase_create("positives");
     // Добавим в tc_pos соответствующие функции-тесты
     tcase_add_test(tc_pos, test_sort);
+    tcase_add_test(tc_pos, test_pop_front);
+    tcase_add_test(tc_pos, test_pop_back);
+    tcase_add_test(tc_pos, test_append);
 
     // Добавим сформированный тестовый случай в тестовый набор
     suite_add_tcase(s, tc_pos);

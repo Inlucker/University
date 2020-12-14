@@ -36,16 +36,19 @@ void add(node_t **head, void *element)
 
 void free_list(node_t **head)
 {
-    node_t *tmp = *head;
-    node_t *ptr_to_free = tmp;
-    while (tmp->next != NULL)
+    if (*head != NULL)
     {
-        tmp = tmp->next;
-        free(ptr_to_free);
-        ptr_to_free = tmp;
+        node_t *tmp = *head;
+        node_t *ptr_to_free = tmp;
+        while (tmp->next != NULL)
+        {
+            tmp = tmp->next;
+            free(ptr_to_free);
+            ptr_to_free = tmp;
+        }
+        free(tmp);
+        *head = NULL;
     }
-    free(tmp);
-    *head = NULL;
 }
 
 void* pop_front(node_t **head)
