@@ -98,6 +98,6 @@ void print_infos(node_t *head)
     }
     else
     {
-        printf("List is empty\n");
+        printf("List is empty\n\n");
     }
 }

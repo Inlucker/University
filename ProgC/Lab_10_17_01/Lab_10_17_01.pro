@@ -7,7 +7,8 @@ SOURCES += \
         main.c \
     node_funcs.c \
     comporators.c \
-    io_funcs.c
+    io_funcs.c \
+    check_unit_tests.c
 
 HEADERS += \
     defines.h \

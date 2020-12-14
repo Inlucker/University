@@ -133,7 +133,7 @@ void sort(node_t **head, int (*comparator)(const void *, const void *))
         node_t *tmp_el2 = tmp_el;
         tmp_el = tmp_el->next;
         sorted_insert(&new_head, tmp_el2, comparator);
-        print_infos(new_head);
+        //print_infos(new_head);
     }
     *head = new_head;
 }
