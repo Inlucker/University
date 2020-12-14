@@ -8,7 +8,7 @@
 
 START_TEST(test_sort)
 {
-    node_t *test = read_file("./unit_test_files/unit_test_sort.txt");
+    node_t *test = read_file("./unit_files/unit_test_sort.txt");
     //print_infos(test);
 
     sort(&test, (int(*)(const void *, const void *)) comp_info);
