@@ -24,7 +24,7 @@ START_TEST(test_sort)
     node_t *test = read_file("./unit_files/unit_test_sort.txt");
     //print_infos(test);
 
-    sort(&test, (int(*)(const void *, const void *)) comp_info);
+    test = sort(test, (int(*)(const void *, const void *)) comp_info);
 
     //print_infos(test);
 
@@ -68,6 +68,7 @@ START_TEST(test_pop_front)
 
     free_list(&test);
     ck_assert_int_eq(rez->years, 5);
+    free(rez);
     ck_assert_int_eq(areEqual, 1);
 }
 END_TEST
@@ -93,6 +94,7 @@ START_TEST(test_pop_back)
 
     free_list(&test);
     ck_assert_int_eq(rez->years, 1);
+    free(rez);
     ck_assert_int_eq(areEqual, 1);
 }
 END_TEST

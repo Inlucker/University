@@ -2,7 +2,7 @@
 CC := gcc
 
 # Опции компиляции
-CFLAGS := -std=c99 -Wall -pedantic -ggdb
+CFLAGS := -std=c99 -Wall -Werror -pedantic -ggdb
 
 # Общие объектные файлы
 OBJS := io_funcs.o node_funcs.o comporators.o

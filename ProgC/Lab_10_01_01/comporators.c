@@ -35,7 +35,7 @@ int comp_char(const char *i, const char *j)
     return rez;
 }
 
-int comp_info(const node_t *i, const node_t *j)
+int comp_node(const node_t *i, const node_t *j)
 {
     info_t *tmp_data1 = i->data;
     info_t *tmp_data2 = j->data;
@@ -46,5 +46,17 @@ int comp_info(const node_t *i, const node_t *j)
     if (rez != 0)
         return rez;
     rez = comp_double(&tmp_data1->intelect, &tmp_data2->intelect);
+    return rez;
+}
+
+int comp_info(const info_t *i, const info_t *j)
+{
+    int rez = comp_char(&i->name, &j->name);
+    if (rez != 0)
+        return rez;
+    rez = comp_int(&i->years, &j->years);
+    if (rez != 0)
+        return rez;
+    rez = comp_double(&i->intelect, &j->intelect);
     return rez;
 }

@@ -28,7 +28,7 @@ node_t *read_file(char *file_name)
 
             int tmp_int = 0;
             input = fscanf(f, "%d\n", &tmp_int);
-            if (input != 1 )
+            if (input != 1)
             {
                 i_max = 0;
                 break;
@@ -60,7 +60,7 @@ node_t *read_file(char *file_name)
                 info_t *tmp_data = malloc(sizeof(info_t));
 
                 input = fscanf(f, "%c\n", &tmp_data->name);
-                if (input != 1 )
+                if (input != 1)
                     break;
 
                 input = fscanf(f, "%d\n", &tmp_data->years);
@@ -88,7 +88,8 @@ void print_infos(node_t *head)
     if (head != NULL)
     {
         node_t *tmp = head;
-        do {
+        do
+        {
             info_t *tmp_data = tmp->data;
             printf("Data: %c %d %lf\n", tmp_data->name, tmp_data->years, tmp_data->intelect);
             //printf("Next_ptr: %p\n", tmp->next);
