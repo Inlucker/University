@@ -4,4 +4,11 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        main.c
+        main.c \
+    node_funcs.c \
+    io_funcs.c
+
+HEADERS += \
+    defines.h \
+    node_funcs.h \
+    io_funcs.h
