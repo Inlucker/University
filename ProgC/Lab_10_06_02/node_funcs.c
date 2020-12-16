@@ -124,3 +124,43 @@ void *pop_back(node_t **head)
     }
     return rez;
 }
+
+list_t *addition(list_t *list1, list_t *list2)
+{
+    list_t *rez = NULL;
+
+    if (list1 && list2)
+    {
+        int i = 0, j = 0;
+        rez = create_list();
+        node_t *it1 = list1->head;
+        node_t *it2 = list2->head;
+
+        while (it1 || it2)
+        {
+            if ((it1 && it1->data->column == j && it1->data->row == i) && (it2 && it2->data->column == j && it2->data->row == i))
+            {
+                add(&rez, i, j, it1->data->value + it2->data->value);
+                it1 = it1->next;
+                it2 = it2->next;
+            }
+            else if (it1 && it1->data->column == j && it1->data->row == i)
+            {
+                add(&rez, i, j, it1->data->value);
+                it1 = it1->next;
+            }
+            else if (it2 && it2->data->column == j && it2->data->row == i)
+            {
+                add(&rez, i, j, it2->data->value);
+                it2 = it2->next;
+            }
+            j++;
+            if ((!it1 || it1->data->row > i) && (!it2 || it2->data->row > i))
+            {
+                i++;
+                j = 0;
+            }
+        }
+    }
+    return rez;
+}
