@@ -18,6 +18,16 @@ void *pop_back(node_t **head);
 
 list_t *addition(list_t *list1, list_t *list2);
 
+node_t *find_row(node_t *head, int r);
+
+node_t *find_column(node_t *head, int c);
+
+int find_max_row(node_t *head);
+
+int find_max_column(node_t *head);
+
 list_t *compostion(list_t *list1, list_t *list2);
+
+void *delete_max_line(list_t *list);
 
 #endif // NODE_FUNCS_H

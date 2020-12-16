@@ -289,4 +289,52 @@ list_t *compostion(list_t *list1, list_t *list2)
     return rez;
 }
 
+void *delete_max_line(list_t *list)
+{
+    if (list)
+    {
+        int max = -1;
+        int max_row = -1;
+        node_t *tmp = list->head;
+        while (tmp)
+        {
+            if (tmp->data->value > max)
+            {
+                max = tmp->data->value;
+                max_row = tmp->data->row;
+            }
+            tmp = tmp->next;
+        }
 
+        tmp = list->head;
+        if (tmp->data->row != max_row)
+        {
+            while (tmp->next->data->row != max_row)
+            {
+                tmp = tmp->next;
+            }
+        }
+
+        node_t *tmp_end = tmp->next;
+        while (tmp_end && tmp_end->data->row == max_row)
+        {
+            node_t *node_to_free = tmp_end;
+            tmp_end = tmp_end->next;
+            free(node_to_free->data);
+            free(node_to_free);
+        }
+
+        tmp->next = tmp_end;
+
+        if (tmp == list->head)
+        {
+            list->head = tmp_end;
+            free(tmp->data);
+            free(tmp);
+        }
+
+        if (tmp_end == NULL)
+            list->tail = tmp;
+    }
+    return list;
+}

@@ -5,7 +5,7 @@
 #define EPS 1e-7
 
 #define CONSOLE_ARGS_ERROR -1
-#define FILE_READ_ERROR -2
+#define READ_ERROR -2
 #define MEMORY_ERROR -3
 #define FILE_OUTPUT_ERROR -4
 
