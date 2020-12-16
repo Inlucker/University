@@ -4,12 +4,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-node_t *read_file(char *file_name)
+list_t *read_file(char *file_name)
 {
     FILE *f = NULL;
     f = fopen(file_name, "r");
 
-    node_t *list = NULL;
+    list_t *list = NULL;
 
     if (f != NULL)
     {
@@ -21,12 +21,7 @@ node_t *read_file(char *file_name)
 
         if (input == 2 && i_max > 0 && j_max > 0)
         {
-            /*int i = 0;
-            int j = 0;
-            while (!feof(f))
-            {
-
-            }*/
+            list = create_list();
             //WORKING HERE
             for (int i = 0; i < i_max; i++)
             {
@@ -34,17 +29,20 @@ node_t *read_file(char *file_name)
                 {
                     int tmp_int = 0;
                     input = fscanf(f, "%d", &tmp_int);
-                    if (tmp_int != 0)
-                    {
-                        elem_t *tmp_elem = malloc(sizeof (elem_t));
-                        tmp_elem->row = i;
-                        tmp_elem->column = j;
-                    }
                     if (input != 1)
                     {
-
+                        i = i_max;
+                        j = j_max;
+                    }
+                    if (tmp_int != 0)
+                    {
+                        add(&list, i, j, tmp_int);
                     }
                 }
+            }
+            if (input != 1)
+            {
+                free_list(&list);
             }
         }
         fclose(f);
@@ -53,11 +51,16 @@ node_t *read_file(char *file_name)
     return list;
 }
 
-void print_mtrx(node_t *head)
+void print_node(node_t *head)
 {
     if (head != NULL)
     {
-
+        node_t *it = head;
+        while (head != NULL)
+        {
+            printf("%d %d %d ", it->data->row, it->data->column, it->data->value);
+            it = it->next;
+        }
     }
     else
     {
