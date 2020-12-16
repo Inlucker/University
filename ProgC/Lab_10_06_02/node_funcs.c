@@ -234,7 +234,11 @@ list_t *compostion(list_t *list1, list_t *list2)
                     {
                         tmp_value += it1_1->data->value * it2_2->data->value;
                         it1_1 = it1_1->next;
+                        while (it1_1 && it1_1->data->row != i)
+                            it1_1 = it1_1->next;
                         it2_2 = it2_2->next;
+                        while (it2_2 && it2_2->data->column != j)
+                            it2_2 = it2_2->next;
                     }
                     else if (it1_1->data->column > it2_2->data->row)
                     {
@@ -245,7 +249,7 @@ list_t *compostion(list_t *list1, list_t *list2)
                     else if (it1_1->data->column < it2_2->data->row)
                     {
                         it1_1 = it1_1->next;
-                        while (it1_1 && it1_1->data->column != i)
+                        while (it1_1 && it1_1->data->row != i)
                             it1_1 = it1_1->next;
                     }
                 }
