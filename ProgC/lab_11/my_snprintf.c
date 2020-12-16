@@ -7,15 +7,30 @@ int my_snprintf(char *str, size_t count, const char *fmt,...)
     va_list param_list;
     va_start(param_list, fmt);
 
+    //int flag = 0;
+
     int rez = 0;
+    int simbols = 0;
+
+    for (int i = 0; fmt[i] != '\0'; i++)
+    {
+        if (fmt[i]== '%')
+        {
+            i++;
+            if (fmt[i] != 's' && fmt[i] != 'h')
+                simbols++;
+        }
+        else
+        {
+            simbols++;
+        }
+    }
 
     char *str_param;
 
-    for (int i = 0; i < count; i++)
+    for (int i = 0; fmt[i] != '\0'; i++)
     {
-        if (fmt[i] == '\0')
-            break;
-        else if (fmt[i]== '%')
+        if (fmt[i]== '%')
         {
             i++;
             switch (fmt[i])
@@ -26,7 +41,8 @@ int my_snprintf(char *str, size_t count, const char *fmt,...)
                 break;
             case 's':
                 str_param = va_arg(param_list, char*);
-                for (int j = 0; j < strlen(str_param); j++)
+                simbols +=  strlen(str_param);
+                for (int j = 0; j < strlen(str_param) && rez < count; j++)
                 {
                     str[rez] = str_param[j];
                     rez++;
@@ -42,14 +58,22 @@ int my_snprintf(char *str, size_t count, const char *fmt,...)
         {
             str[rez] = fmt[i];
             rez++;
+            //simbols++;
+        }
+        if (count - rez <= 0)
+        {
+            break;
         }
     }
 
-    str[rez] = '\0';
+    if (count > rez)
+        str[rez] = '\0';
+    if (rez < simbols)
+    {
+        rez = -1;
+    }
 
     va_end(param_list);
-    if (strlen(str) > count)
-        rez = -1;
     return rez;
 }
 

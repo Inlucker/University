@@ -1,8 +1,10 @@
 #include "my_snprintf.h"
+#include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include <stdlib.h>
 
-#define T 5
+#define T 30
 
 double avg(int n, ...)
 {
@@ -34,19 +36,28 @@ int main()
 
     //printf("a = %5.2f\n", a);
 
-    char buffer[4] = "lold";
+    char buffer[20] = "lol";
 
-    char *s = "XDXDXD";
+    char *s = "XD LOL KEK";
+    char *s2 = "CHEBUREK";
     //int n = (-123) % 65536;
     //n = -123;
 
-    int j = my_snprintf(buffer, T, "%s", s);
+    //int rez = -2;
+    int rez = my_snprintf(buffer, T, "%s %s", s, s2);
+    /*char *buf1 = NULL;
+    buf1 = malloc(20);
+    sprintf(buf1, "%s", buffer);
+    printf("MY_SNPRINTF(buf1):\n%s; %d\n", buf1, rez);
+    free(buf1);*/
 
-    printf("MY_SNPRINTF:\nstring:\n%s\ncharacter count = %d\n\n",buffer, j);
+    printf("MY_SNPRINTF:\n%s; %d\n", buffer, rez);
 
-    j = snprintf(buffer, T, "%s", s);
+    snprintf(buffer, 3, "%s", "lol");
+    rez = snprintf(buffer, T, "%s %s", s, s2);
+    //j = snprintf(buffer, T, "%s %ho", s, n);
 
-    printf("SNPRINTF:\nstring:\n%s\ncharacter count = %d\n\n",buffer, j);
+    printf("SNPRINTF:\n%s; %d\n", buffer, rez);
 
     return 0;
 }

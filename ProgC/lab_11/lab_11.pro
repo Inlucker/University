@@ -5,7 +5,8 @@ CONFIG -= qt
 
 SOURCES += \
         main.c \
-        my_snprintf.c
+        my_snprintf.c \
+    check_unit_tests.c
 
 HEADERS += \
     defines.h \
