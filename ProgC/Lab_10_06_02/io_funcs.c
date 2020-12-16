@@ -96,7 +96,7 @@ void print_node(node_t *head)
         node_t *it = head;
         while (it != NULL)
         {
-            printf("%d %d %d \n", it->data->row, it->data->column, it->data->value);
+            printf("%d %d %d ", it->data->row, it->data->column, it->data->value);
             it = it->next;
         }
     }
@@ -104,5 +104,10 @@ void print_node(node_t *head)
     {
         printf("Mtrx is empty\n\n");
     }
-    printf("\n");
+    //printf("\n");
+}
+
+void print_list(list_t *list)
+{
+    print_node(list->head);
 }

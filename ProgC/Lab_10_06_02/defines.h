@@ -1,13 +1,11 @@
 #ifndef DEFINES_H
 #define DEFINES_H
 
-#define N 25
+#define N 4
 #define EPS 1e-7
 
-#define CONSOLE_ARGS_ERROR -1
-#define READ_ERROR -2
-#define MEMORY_ERROR -3
-#define FILE_OUTPUT_ERROR -4
+#define ARGS_ERROR -1
+#define INPUT_ERROR -2
 
 typedef struct node node_t;
 typedef struct elem elem_t;
