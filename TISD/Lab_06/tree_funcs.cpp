@@ -65,6 +65,28 @@ tree_node *search_node(tree_node *root, string value)
     return rez;
 }
 
+void print_tree(tree_node* root, int space)
+{
+    if (root == NULL)
+        return;
+
+    //cout << root->value;
+
+    space += 5;
+
+    print_tree(root->left, space);
+
+    cout << endl;
+
+    for (int i = 5; i < space; i++)
+    {
+        cout << " ";
+    }
+    cout << root->value << endl;
+
+    print_tree(root->right, space);
+}
+
 void delete_tree(tree_node *root)
 {
     if (root)

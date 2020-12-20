@@ -5,7 +5,9 @@
 
 int main()
 {
-    tree_node *root = read_file("tree01.txt");
+    tree_node *root = read_file("tree22.txt");
+
+    print_tree(root, 0);
 
     delete_tree(root);
 
