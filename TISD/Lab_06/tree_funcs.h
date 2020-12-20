@@ -9,7 +9,21 @@ void add_node(tree_node *root, tree_node *node);
 
 tree_node **search_node(tree_node **root, string value);
 
-void print_tree(tree_node* root, int space);
+void print_node(tree_node* root, int space);
+
+void print_tree(tree_node* root);
+
+int count_nodes(tree_node *root);
+
+tree_node *find_node_by_id(tree_node *root, int id, int *cur_id);
+
+tree_node *get_new_root(tree_node *root);
+
+void fill_root(tree_node *root, tree_node *tree, string root_value);
+
+void balance_tree(tree_node **root);
+
+int calculate_depth(tree_node *root);
 
 void delete_tree(tree_node **root);
 
