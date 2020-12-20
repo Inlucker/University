@@ -1,0 +1,82 @@
+#include "structures.h"
+#include "comporators.h"
+
+tree_node *create_node(string value)
+{
+    tree_node *new_node = new tree_node;
+    new_node->value = value;
+    new_node->left = NULL;
+    new_node->right = NULL;
+
+    return new_node;
+}
+
+void add_node(tree_node *root, tree_node *node)
+{
+    //tree_node *tmp_root = *root;
+    if (comp_string(&node->value, &root->value) < 0)
+    {
+        if (root->left != NULL)
+            add_node(root->left, node);
+        else
+        {
+            root->left = node;
+        }
+    }
+    else
+    {
+        if (root->right != NULL)
+            add_node(root->right, node);
+        else
+        {
+            root->right = node;
+        }
+    }
+}
+
+tree_node *search_node(tree_node *root, string value)
+{
+    tree_node *rez = NULL;
+    if (comp_string(&value, &root->value) < 0)
+    {
+        if (root->left != NULL)
+            rez = search_node(root->left, value);
+        /*else
+        {
+            rez = NULL;
+            //return rez;
+        }*/
+    }
+    else if (comp_string(&value, &root->value) > 0)
+    {
+        if (root->right != NULL)
+            rez = search_node(root->right, value);
+        /*else
+        {
+            rez = NULL;
+            //return rez;
+        }*/
+    }
+    else
+    {
+        rez = root;
+    }
+
+    return rez;
+}
+
+void delete_tree(tree_node *root)
+{
+    if (root)
+    {
+        if (root->left != NULL)
+        {
+            delete_tree(root->left);
+        }
+        if (root->right != NULL)
+        {
+            delete_tree(root->right);
+        }
+        delete root;
+    }
+}

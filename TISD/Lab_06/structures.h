@@ -1,17 +1,18 @@
 #ifndef STRUCTURES_H
 #define STRUCTURES_H
+#include "defines.h"
 
 struct list
 {
-    int value;
+    string value;
     list *next;
 };
 
-struct node
+struct tree_node
 {
-    int value;
-    node *left;
-    node *right;
+    string value;
+    tree_node *left;
+    tree_node *right;
 };
 
 #endif // STRUCTURES_H
