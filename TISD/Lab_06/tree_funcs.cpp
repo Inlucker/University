@@ -34,32 +34,22 @@ void add_node(tree_node *root, tree_node *node)
     }
 }
 
-tree_node *search_node(tree_node *root, string value)
+tree_node **search_node(tree_node **root, string value)
 {
-    tree_node *rez = NULL;
-    if (comp_string(&value, &root->value) < 0)
+    tree_node **rez = NULL;
+    if (comp_string(&value, &((*root)->value)) < 0)
     {
-        if (root->left != NULL)
-            rez = search_node(root->left, value);
-        /*else
-        {
-            rez = NULL;
-            //return rez;
-        }*/
+        if ((*root)->left != NULL)
+            rez = search_node(&((*root)->left), value);
     }
-    else if (comp_string(&value, &root->value) > 0)
+    else if (comp_string(&value, &((*root)->value)) > 0)
     {
-        if (root->right != NULL)
-            rez = search_node(root->right, value);
-        /*else
-        {
-            rez = NULL;
-            //return rez;
-        }*/
+        if ((*root)->right != NULL)
+            rez = search_node(&((*root)->right), value);
     }
     else
     {
-        rez = root;
+        return root;
     }
 
     return rez;
@@ -69,8 +59,6 @@ void print_tree(tree_node* root, int space)
 {
     if (root == NULL)
         return;
-
-    //cout << root->value;
 
     space += 5;
 
@@ -87,18 +75,23 @@ void print_tree(tree_node* root, int space)
     print_tree(root->right, space);
 }
 
-void delete_tree(tree_node *root)
+void delete_tree(tree_node **root)
 {
-    if (root)
+    if (root && *root)
     {
-        if (root->left != NULL)
+        tree_node *tmp_root = *root;
+        if (tmp_root->left != NULL)
         {
-            delete_tree(root->left);
+            delete_tree(&(tmp_root->left));
         }
-        if (root->right != NULL)
+        if (tmp_root->right != NULL)
         {
-            delete_tree(root->right);
+            delete_tree(&(tmp_root->left));
+
         }
-        delete root;
+        tree_node *ptr_to_delete = *root;
+        *root = NULL;
+        delete ptr_to_delete;
     }
+
 }
