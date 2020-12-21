@@ -3,6 +3,7 @@
 #include "io_funcs.h"
 #include "tree_funcs.h"
 #include "list_funcs.h"
+#include "hash_funcs.h"
 
 int main()
 {
@@ -32,6 +33,13 @@ int main()
     cout << "Current depth = " << depth << endl;
 
     print_hash_table(root);
+    //list_t *hash_table = create_hash_table(root);
+
+    hash_table_t *table = create_table(32);
+
+    add_line_to_table(table, "lasd");
+
+    free_table(&table);
 
     delete_tree(&root);
 
