@@ -1,6 +1,7 @@
 #include "tree_funcs.h"
 #include "structures.h"
 #include "comporators.h"
+#include "hash_funcs.h"
 
 tree_node *create_node(string value)
 {
@@ -183,6 +184,28 @@ void calculate_depth(tree_node *root, int *cur_depth)
         calculate_depth(root->right, &rez2);
         *cur_depth = max(rez1, rez2);
     }
+}
+
+void print_node_hash(tree_node *node, int m)
+{
+    if (node)
+    {
+        print_node_hash(node->left, m);
+
+        int hash = my_hash(node->value, m);
+        cout << hash << " " << node->value << endl;
+
+        print_node_hash(node->right, m);
+    }
+}
+
+void print_hash_table(tree_node *root)
+{
+    int mas_size = count_nodes(root);
+
+    cout << endl;
+    print_node_hash(root, mas_size + 1);
+    cout << endl;
 }
 
 void delete_tree(tree_node **root)

@@ -2,10 +2,10 @@
 #define STRUCTURES_H
 #include "defines.h"
 
-struct list
+struct list_t
 {
     string value;
-    list *next;
+    list_t *next;
 };
 
 struct tree_node
