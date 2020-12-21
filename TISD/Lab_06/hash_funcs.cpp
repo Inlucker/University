@@ -16,7 +16,7 @@ hash_table_t *create_table(int m)
     hash_table_t *new_table = new hash_table_t;
     new_table->head = NULL;
     new_table->tail = NULL;
-    new_table->max_size = m;
+    new_table->mas_size = m;
     return  new_table;
 }
 
@@ -33,7 +33,7 @@ hash_table_line_t *create_line(string value, int m)
 
 void add_line_to_table(hash_table_t *table, string value)
 {
-    hash_table_line_t *new_line = create_line(value, table->max_size);
+    hash_table_line_t *new_line = create_line(value, table->mas_size);
     if (table->head == NULL)
     {
         table->head = new_line;
@@ -67,13 +67,13 @@ void free_table(hash_table_t **table)
     free_line(&tmp_line);
     (*table)->head = NULL;
     (*table)->tail = NULL;
-    (*table)->max_size = -1;
+    (*table)->mas_size = -1;
     hash_table_t *ptr_to_delete = *table;
     *table = NULL;
     delete ptr_to_delete;
 }
 
-void get_table_from_tree(tree_node *root, list_t **table, int *size, int m)
+void get_table_from_tree(tree_node *root, hash_table_t *table, int *size, int m)
 {
     if (root)
     {
@@ -81,59 +81,64 @@ void get_table_from_tree(tree_node *root, list_t **table, int *size, int m)
 
         int cur_hash = my_hash(root->value, m);
         bool flag = true;
-        for (int i = 0; i < *size; i++)
+        hash_table_line_t *tmp_line = table->head;
+        while (tmp_line)
         {
-            if (my_hash(table[i]->value, m) == cur_hash)
+            if (tmp_line->hash == cur_hash)
             {
-                add_el_to_list(&table[i], root->value);
                 flag = false;
+                break;
             }
+            tmp_line = tmp_line->next_line;
         }
+
         if (flag)
-        {
-            list_t *new_line = NULL;
-            add_el_to_list(&new_line, root->value);
-            size++;
-        }
+            add_line_to_table(table, root->value);
+        else
+            add_el_to_list(&tmp_line->cur_line, root->value);
 
         get_table_from_tree(root->right, table, size, m);
     }
 }
 
-list_t *create_hash_table(tree_node *root)
+hash_table_t *create_hash_table(tree_node *root)
 {
-    list_t *rez = NULL;
-    int max_size = count_nodes(root);
-    get_table_from_tree(root, &rez, 0, max_size);
+    int mas_size = count_nodes(root);
+    bool is_simple = false;
+
+    while (!is_simple)
+    {
+        mas_size++;
+        is_simple = true;
+        for (int i = 2; i < mas_size/2; i++)
+        {
+            if (mas_size % i == 0)
+            {
+                is_simple = false;
+                break;
+            }
+        }
+
+    }
+
+    hash_table_t *rez = create_table(mas_size);
+    get_table_from_tree(root, rez, 0, mas_size);
     return rez;
 }
 
-/*void print_hash_table(list_t *arr)
+void print_hash_table(hash_table_t *table)
 {
-    printf("\n------------------------------------------\n"
-           "  ХЕШ | СООТВЕТСТВУЮЩИЕ ДАННЫЕ\n"
-           "------------------------------------------\n");
-    list_t *tmp = arr;
-
-    int f = 0;
-
-    for (int i = 0; i < size; i++)
+    hash_table_line_t *tmp_line = table->head;
+    while (tmp_line)
     {
-        f = 0;
-
-        tmp = &arr[i];
-        if (tmp != NULL)
+        list_t *tmp_list = tmp_line->cur_line;
+        cout << tmp_line->hash << ": ";
+        while (tmp_list)
         {
-            printf("%5d | ", i);
-            f = 1;
+            cout << " " << tmp_list->value;
+            tmp_list = tmp_list->next;
         }
-        while (tmp != NULL)
-        {
-            if (tmp != NULL)
-                printf("\"%s\" ", tmp->value.c_str());
-            tmp = tmp->next;
-        }
-        if (f)
-            printf("\n------------------------------------------\n");
+        cout << endl;
+        tmp_line = tmp_line->next_line;
     }
-}*/
+}

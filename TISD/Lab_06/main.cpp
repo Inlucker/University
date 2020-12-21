@@ -32,12 +32,13 @@ int main()
     calculate_depth(root, &depth);
     cout << "Current depth = " << depth << endl;
 
-    print_hash_table(root);
+    print_tree_hashes(root);
     //list_t *hash_table = create_hash_table(root);
 
-    hash_table_t *table = create_table(32);
+    hash_table_t *table = create_hash_table(root);
+    print_hash_table(table);
 
-    add_line_to_table(table, "lasd");
+    //add_line_to_table(table, "lasd");
 
     free_table(&table);
 

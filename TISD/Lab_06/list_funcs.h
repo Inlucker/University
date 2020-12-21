@@ -12,6 +12,6 @@ void free_list(list_t **list);
 
 //void append(list_t **head_a, list_t **head_b);
 
-list_t *create_hash_table(tree_node *root);
+hash_table_t *create_hash_table(tree_node *root);
 
 #endif // LIST_FUNCS_H

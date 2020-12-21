@@ -19,4 +19,10 @@ void free_table(hash_table_t **table);
 
 void free_table(hash_table_line_t **table);
 
+void get_table_from_tree(tree_node *root, hash_table_t *table, int *size, int m);
+
+hash_table_t *create_hash_table(tree_node *root);
+
+void print_hash_table(hash_table_t *table);
+
 #endif // HASH_FUNCS_H

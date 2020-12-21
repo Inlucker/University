@@ -19,7 +19,7 @@ struct hash_table_t
 {
     hash_table_line_t *head;
     hash_table_line_t *tail;
-    int max_size;
+    int mas_size;
 };
 
 struct tree_node

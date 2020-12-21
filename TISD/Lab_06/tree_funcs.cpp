@@ -199,7 +199,7 @@ void print_node_hash(tree_node *node, int m)
     }
 }
 
-void print_hash_table(tree_node *root)
+void print_tree_hashes(tree_node *root)
 {
     int mas_size = count_nodes(root);
     bool is_simple = false;
