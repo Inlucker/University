@@ -202,9 +202,25 @@ void print_node_hash(tree_node *node, int m)
 void print_hash_table(tree_node *root)
 {
     int mas_size = count_nodes(root);
+    bool is_simple = false;
+
+    while (!is_simple)
+    {
+        mas_size++;
+        is_simple = true;
+        for (int i = 2; i < mas_size/2; i++)
+        {
+            if (mas_size % i == 0)
+            {
+                is_simple = false;
+                break;
+            }
+        }
+
+    }
 
     cout << endl;
-    print_node_hash(root, mas_size + 1);
+    print_node_hash(root, mas_size);
     cout << endl;
 }
 
