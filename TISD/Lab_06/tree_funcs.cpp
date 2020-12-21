@@ -173,9 +173,16 @@ void balance_tree(tree_node **root)
     }
 }
 
-int calculate_depth(tree_node *root)
+void calculate_depth(tree_node *root, int *cur_depth)
 {
-    return 0;
+    if (root)
+    {
+        int rez1 = *cur_depth + 1;
+        int rez2 = *cur_depth + 1;
+        calculate_depth(root->left, &rez1);
+        calculate_depth(root->right, &rez2);
+        *cur_depth = max(rez1, rez2);
+    }
 }
 
 void delete_tree(tree_node **root)

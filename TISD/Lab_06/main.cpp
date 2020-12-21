@@ -11,10 +11,18 @@ int main()
     cout << "Before balance" << endl;
     print_tree(root);
 
+    int depth = 0;
+    calculate_depth(root, &depth);
+    cout << "Current depth = " << depth << endl;
+
     balance_tree(&root);
 
     cout << "After balance" << endl;
     print_tree(root);
+
+    depth = 0;
+    calculate_depth(root, &depth);
+    cout << "Current depth = " << depth << endl;
 
     //int nodes_number = count_nodes(root);
     //cout << "Nodes number is: " << nodes_number << endl;

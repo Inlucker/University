@@ -23,7 +23,7 @@ void fill_root(tree_node *root, tree_node *tree, string root_value);
 
 void balance_tree(tree_node **root);
 
-int calculate_depth(tree_node *root);
+void calculate_depth(tree_node *root, int *cur_depth);
 
 void delete_tree(tree_node **root);
 
