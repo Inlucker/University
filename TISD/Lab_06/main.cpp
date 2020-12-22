@@ -5,6 +5,8 @@
 #include "list_funcs.h"
 #include "hash_funcs.h"
 
+#define MAX_SIZE_OF_HASH_TABLE 100000
+
 int main()
 {
     /*tree_node *test_root = read_file("test2.txt");
@@ -86,7 +88,11 @@ int main()
             cout << "Enter the file name: ";
             string file_name;
             getline(cin, file_name);
-            root = read_file(file_name);
+            tree_node *tmp_root = read_file(file_name);
+            if (tmp_root)
+                root = tmp_root;
+            else
+                cout << "No such file" << endl;
             break;
         }
         case 2:
@@ -108,14 +114,14 @@ int main()
             string word;
             getline(cin, word);
             tree_node **node = search_word_in_tree(&root, word);
-            if (*node)
+            if (node)
             {
                 cout << "Word '" << (*node)->value << "' in tree have left " << (*node)->left << " ptr and right " << (*node)->right << " ptr." << endl;
                 if ((*node)->left)
                     cout << "Left word: " << (*node)->left->value << endl;
                 if ((*node)->right)
                     cout << "Right word: " << (*node)->right->value << endl;
-                print_searched_word_in_tree(root, 0, word);
+                print_searched_word_in_tree(root, word);
             }
             else
             {
@@ -153,7 +159,8 @@ int main()
             getline(cin, word);
             tree_node *tmp = create_node(word);
             add_node(root, tmp);
-            print_searched_word_in_tree(root, 0, word);
+            balance_tree(&root);
+            print_searched_word_in_tree(root, word);
             break;
         }
         case 7:
@@ -164,15 +171,45 @@ int main()
                 cout << "Enter the word: ";
                 string word;
                 getline(cin, word);
+                _flushall();
+                cout << "Enter the max compares number: ";
+                int max_comp;
+                cin >> max_comp;
+
+                if (max_comp <= 0)
+                {
+                    cout << "Wrong input" << endl;
+                    break;
+                }
+
                 int size = count_nodes(root);
 
-                int mas_size = make_simple(size);
+                int mas_size = size;
+                int comp_number = 100;
+                while (comp_number > max_comp && mas_size <= MAX_SIZE_OF_HASH_TABLE)
+                {
+                    mas_size = make_simple(mas_size);
+                    list_t *hash_table[mas_size];
+                    fill_hash_table(hash_table, mas_size, root, my_hash2);
+                    comp_number = count_max_comp(hash_table, mas_size);
+                    free_hash_table(hash_table, mas_size);
+                }
+
+                if (mas_size > MAX_SIZE_OF_HASH_TABLE)
+                {
+                    cout << "Cannot make hash table with max compare number: " << max_comp << " and with size <= " << MAX_SIZE_OF_HASH_TABLE << endl;
+                    break;
+                }
 
                 list_t *hash_table[mas_size];
-                fill_hash_table(hash_table, mas_size, root, my_hash);
-                print_hash_table(hash_table, mas_size, my_hash);
+                fill_hash_table(hash_table, mas_size, root, my_hash2);
+                print_hash_table(hash_table, mas_size, my_hash2);
 
-                cout << "\nHash for word '" << word << "' = " << search_word_in_hash_table(hash_table, mas_size, word, my_hash) << endl;
+                int rez_hash = search_word_in_hash_table(hash_table, mas_size, word, my_hash2);
+                if (rez_hash != -1)
+                    cout << "\nHash for word '" << word << "' = " << rez_hash << endl;
+                else
+                    cout << "\nNo word '" << word << "' in hash table" << endl;
 
                 free_hash_table(hash_table, mas_size);
             }

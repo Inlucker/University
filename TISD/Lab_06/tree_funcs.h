@@ -9,7 +9,9 @@ void add_node(tree_node *root, tree_node *node);
 
 tree_node **search_word_in_tree(tree_node **root, string word);
 
-void print_searched_word_in_tree(tree_node* root, int space, string word);
+void print_node_green(tree_node* root, int space, string word);
+
+void print_searched_word_in_tree(tree_node* root, string word);
 
 void print_node(tree_node* root, int space);
 

@@ -33,6 +33,8 @@ void fill_table_by_root(tree_node *root, int size, int m, list_t *table[], int h
 
 void fill_hash_table(list_t *table[], int size, tree_node *root, int hash_func(string, int));
 
+int count_max_comp(list_t *table[], int size);
+
 int print_hash_table(list_t *table[], int size, int hash_func(string, int));
 
 void free_hash_table(list_t *table[], int size);

@@ -1,7 +1,7 @@
 #include "hash_funcs.h"
 #include "tree_funcs.h"
 
-int my_hash2(string key, int n)
+int my_hash2(string key, int m)
 {
     char *s = (char*)key.c_str();
     unsigned long hash = 0;
@@ -12,7 +12,7 @@ int my_hash2(string key, int n)
         hash = ((hash << 5) + hash) + c;
     }
 
-    return hash % n;
+    return hash % m;
 }
 
 int my_hash(string key, int m)
@@ -210,12 +210,32 @@ void fill_hash_table(list_t *table[], int size, tree_node *root, int hash_func(s
     int mas_size = size;
 
     fill_table_by_root(root, size, mas_size, table, hash_func);
+}
 
+int count_max_comp(list_t *table[], int size)
+{
+    int max_compares = 0;
+    for (int i = 0; i < size; i++)
+    {
+        if (table[i])
+        {
+            list_t *tmp_line = table[i];
+            int tmp_compares = 0;
+            while(tmp_line)
+            {
+                tmp_line = tmp_line->next;
+                tmp_compares++;
+            }
+            if (tmp_compares > max_compares)
+                max_compares = tmp_compares;
+        }
+    }
+    return max_compares;
 }
 
 int print_hash_table(list_t *table[], int size, int hash_func(string, int))
 {
-    int max_colisions = 0;
+    int max_compares = 0;
     for (int i = 0; i < size; i++)
     {
         if (table[i])
@@ -230,12 +250,12 @@ int print_hash_table(list_t *table[], int size, int hash_func(string, int))
                 tmp_collisions++;
             }
             cout << endl;
-            if (tmp_collisions > max_colisions)
-                max_colisions = tmp_collisions;
+            if (tmp_collisions > max_compares)
+                max_compares = tmp_collisions;
         }
     }
-    cout << "\nMax collisions number = " << max_colisions << endl;
-    return max_colisions;
+    cout << "\nMax compare number = " << max_compares << endl;
+    return max_compares;
 }
 
 void free_hash_table(list_t *table[], int size)
@@ -255,7 +275,21 @@ int search_word_in_hash_table(list_t *table[], int size, string word, int hash_f
 
     int hash_rez = hash_func(word, size);
     if (size > hash_rez && table[hash_rez])
-        rez = hash_rez;
+    {
+        bool flag = false;
+        list_t *tmp_line = table[hash_rez];
+        while (tmp_line)
+        {
+            if (tmp_line->value == word)
+            {
+                flag = true;
+                break;
+            }
+            tmp_line = tmp_line->next;
+        }
+        if (flag)
+            rez = hash_rez;
+    }
 
     return rez;
 }
