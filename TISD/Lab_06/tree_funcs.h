@@ -7,7 +7,7 @@ tree_node *create_node(string value);
 
 void add_node(tree_node *root, tree_node *node);
 
-tree_node **search_node(tree_node **root, string value);
+tree_node **search_word_in_tree(tree_node **root, string word);
 
 void print_node(tree_node* root, int space);
 

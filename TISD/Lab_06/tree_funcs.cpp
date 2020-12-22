@@ -36,18 +36,18 @@ void add_node(tree_node *root, tree_node *node)
     }
 }
 
-tree_node **search_node(tree_node **root, string value)
+tree_node **search_word_in_tree(tree_node **root, string word)
 {
     tree_node **rez = NULL;
-    if (comp_string(&value, &((*root)->value)) < 0)
+    if (comp_string(&word, &((*root)->value)) < 0)
     {
         if ((*root)->left != NULL)
-            rez = search_node(&((*root)->left), value);
+            rez = search_word_in_tree(&((*root)->left), word);
     }
-    else if (comp_string(&value, &((*root)->value)) > 0)
+    else if (comp_string(&word, &((*root)->value)) > 0)
     {
         if ((*root)->right != NULL)
-            rez = search_node(&((*root)->right), value);
+            rez = search_word_in_tree(&((*root)->right), word);
     }
     else
     {
