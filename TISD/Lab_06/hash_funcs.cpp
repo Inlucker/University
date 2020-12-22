@@ -11,7 +11,7 @@ int my_hash(string key, int m)
     return rez % m;
 }
 
-hash_table_t *create_table(int m)
+/*hash_table_t *create_table(int m)
 {
     hash_table_t *new_table = new hash_table_t;
     new_table->head = NULL;
@@ -141,4 +141,58 @@ void print_hash_table(hash_table_t *table)
         cout << endl;
         tmp_line = tmp_line->next_line;
     }
+}*/
+
+void fill_table_by_root(tree_node *root, int size, int m, list_t *table[])
+{
+    if (root)
+    {
+        fill_table_by_root(root->left, size, m, table);
+
+        int cur_hash = my_hash(root->value, m);
+        if (table[cur_hash] == NULL)
+        {
+            list_t *new_line = NULL;
+            add_el_to_list(&new_line, root->value);
+            table[cur_hash] = new_line;
+        }
+        else
+        {
+            add_el_to_list(&table[cur_hash], root->value);
+        }
+
+        fill_table_by_root(root->right, size, m, table);
+    }
 }
+
+void fill_hash_table(list_t *table[], int size, tree_node *root)
+{
+    for (int i = 0; i < size; i++)
+    {
+        table[i] = NULL;
+    }
+
+    int mas_size = size;
+
+    fill_table_by_root(root, size, mas_size, table);
+
+}
+
+void print_hash_table(list_t *table[], int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        if (table[i])
+        {
+            cout << my_hash(table[i]->value, size) << ": ";
+            list_t *tmp_line = table[i];
+            while(tmp_line)
+            {
+                cout << " " << tmp_line->value << "; ";
+                tmp_line = tmp_line->next;
+            }
+            cout << endl;
+        }
+    }
+}
+

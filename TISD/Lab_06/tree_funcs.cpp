@@ -69,7 +69,10 @@ void print_node(tree_node* root, int space)
 
         for (int i = 5; i < space; i++)
         {
-            cout << " ";
+            if (i % 5 == 4)
+                cout << "|";
+            else
+                cout << " ";
         }
         cout << root->value << endl;
 
@@ -186,7 +189,7 @@ void calculate_depth(tree_node *root, int *cur_depth)
     }
 }
 
-void print_node_hash(tree_node *node, int m)
+/*void print_node_hash(tree_node *node, int m)
 {
     if (node)
     {
@@ -222,7 +225,7 @@ void print_tree_hashes(tree_node *root)
     cout << endl;
     print_node_hash(root, mas_size);
     cout << endl;
-}
+}*/
 
 void delete_tree(tree_node **root)
 {

@@ -32,15 +32,40 @@ int main()
     calculate_depth(root, &depth);
     cout << "Current depth = " << depth << endl;
 
-    print_tree_hashes(root);
+    //print_tree_hashes(root);
+
+    int size = count_nodes(root);
+
+    int mas_size = size;
+    bool is_simple = false;
+
+    while (!is_simple)
+    {
+        mas_size++;
+        is_simple = true;
+        for (int i = 2; i < mas_size/2; i++)
+        {
+            if (mas_size % i == 0)
+            {
+                is_simple = false;
+                break;
+            }
+        }
+    }
+
+    list_t *hash_table[mas_size];
+    fill_hash_table(hash_table, mas_size, root);
+    print_hash_table(hash_table, mas_size);
+
     //list_t *hash_table = create_hash_table(root);
 
-    hash_table_t *table = create_hash_table(root);
-    print_hash_table(table);
+
+    //hash_table_t *table = create_hash_table(root);
+    //print_hash_table(table);
 
     //add_line_to_table(table, "lasd");
 
-    free_table(&table);
+    //free_table(&table);
 
     delete_tree(&root);
 

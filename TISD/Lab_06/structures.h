@@ -8,19 +8,21 @@ struct list_t
     list_t *next;
 };
 
-struct hash_table_line_t
+//NOT USING
+/*struct hash_table_line_t
 {
     list_t *cur_line;
     int hash;
     hash_table_line_t *next_line;
 };
 
+//NOT USING
 struct hash_table_t
 {
     hash_table_line_t *head;
     hash_table_line_t *tail;
     int mas_size;
-};
+};*/
 
 struct tree_node
 {

@@ -25,9 +25,9 @@ void balance_tree(tree_node **root);
 
 void calculate_depth(tree_node *root, int *cur_depth);
 
-void print_node_hash(tree_node *node, int m);
+/*void print_node_hash(tree_node *node, int m);
 
-void print_tree_hashes(tree_node *root);
+void print_tree_hashes(tree_node *root);*/
 
 void delete_tree(tree_node **root);
 
