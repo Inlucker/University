@@ -295,9 +295,9 @@ int main()
                 time = tick();
                 file_search_rez = search_word_in_file(file_name, word);
                 time = tick() - time;
-                file_avg_search_ticks += time;
+                file_avg_search_ticks = (file_avg_search_ticks + time) / 2;
             }
-            file_avg_search_ticks /= iterations_number;
+            //file_avg_search_ticks /= iterations_number;
             printf("Search avg time for file: %d ticks; Last time: %llu\n", file_avg_search_ticks, time);
 
             tree_node *search_root = read_file(file_name);
