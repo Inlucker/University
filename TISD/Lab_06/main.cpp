@@ -58,7 +58,7 @@ int main()
     while (input != 0)
     {
         cout << endl;
-        cout << "Mas_stack commands:" << endl;
+        cout << "Сommands:" << endl;
         cout << "1 - Read tree from file" << endl;
         cout << "2 - Print tree" << endl;
         cout << "3 - Balance tree" << endl;
@@ -110,48 +110,62 @@ int main()
         }
         case 4:
         {
-            _flushall();
-            cout << "Enter the word: ";
-            string word;
-            getline(cin, word);
-            int comp_counter = 0;
-            tree_node **node = search_word_in_tree(&root, word, &comp_counter);
-            if (node)
+            if (root)
             {
-                cout << "Word '" << (*node)->value << "' in tree have left " << (*node)->left << " ptr and right " << (*node)->right << " ptr." << endl;
-                if ((*node)->left)
-                    cout << "Left word: " << (*node)->left->value << endl;
-                if ((*node)->right)
-                    cout << "Right word: " << (*node)->right->value << endl;
-                print_searched_word_in_tree(root, word);
-                cout << "Compare number: " << comp_counter << endl;
+                _flushall();
+                cout << "Enter the word: ";
+                string word;
+                getline(cin, word);
+                int comp_counter = 0;
+                tree_node **node = search_word_in_tree(&root, word, &comp_counter);
+                if (node)
+                {
+                    cout << "Word '" << (*node)->value << "' in tree have left " << (*node)->left << " ptr and right " << (*node)->right << " ptr." << endl;
+                    if ((*node)->left)
+                        cout << "Left word: " << (*node)->left->value << endl;
+                    if ((*node)->right)
+                        cout << "Right word: " << (*node)->right->value << endl;
+                    print_searched_word_in_tree(root, word);
+                    cout << "Compare number: " << comp_counter << endl;
+                }
+                else
+                {
+                    cout << "No such word in tree" << endl;
+                }
             }
             else
             {
-                cout << "No such word in tree" << endl;
+                cout << "Tree is empty" << endl;
             }
             break;
         }
         case 5:
         {
-            _flushall();
-            cout << "Enter the word: ";
-            string word;
-            getline(cin, word);
-            int comp_counter = 0;
-            tree_node **node = search_word_in_tree(&root, word, &comp_counter);
-            if (*node)
+            if (root)
             {
-                cout << "Deleted this part: " << endl;
-                cout << "\x1b[31m";
-                print_tree(*node);
-                cout << "\x1b[0m";
-                delete_tree(node);
-                print_tree(root);
+                _flushall();
+                cout << "Enter the word: ";
+                string word;
+                getline(cin, word);
+                int comp_counter = 0;
+                tree_node **node = search_word_in_tree(&root, word, &comp_counter);
+                if (node && *node)
+                {
+                    cout << "Deleted this part: " << endl;
+                    cout << "\x1b[31m";
+                    print_tree(*node);
+                    cout << "\x1b[0m";
+                    delete_tree(node);
+                    print_tree(root);
+                }
+                else
+                {
+                    cout << "No such word in tree" << endl;
+                }
             }
             else
             {
-                cout << "No such word in tree" << endl;
+                cout << "Tree is empty" << endl;
             }
             break;
         }
@@ -161,10 +175,17 @@ int main()
             cout << "Enter the word: ";
             string word;
             getline(cin, word);
-            tree_node *tmp = create_node(word);
-            add_node(root, tmp);
-            balance_tree(&root);
-            print_searched_word_in_tree(root, word);
+            if (root)
+            {
+                tree_node *tmp = create_node(word);
+                add_node(root, tmp);
+                balance_tree(&root);
+                print_searched_word_in_tree(root, word);
+            }
+            else
+            {
+                root = create_node(word);
+            }
             break;
         }
         case 7:
