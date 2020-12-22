@@ -58,7 +58,7 @@ int main()
     while (input != 0)
     {
         cout << endl;
-        cout << "Сommands:" << endl;
+        cout << "Commands:" << endl;
         cout << "1 - Read tree from file" << endl;
         cout << "2 - Print tree" << endl;
         cout << "3 - Balance tree" << endl;
@@ -382,7 +382,28 @@ int main()
                 int tree_size = nodes_number * sizeof (tree_node);
                 //cout << "sizeif string: " << sizeof(string) << "; sizeof  tree_node*: " << sizeof(tree_node*) << endl;
                 cout << "Tree size: " << tree_size << " bytes." << endl;
-                int hash_table_size = nodes_number * sizeof (list_t) + sizeof(list_t**);
+
+                int table_size = nodes_number;
+                int comp_number = 100;
+                int max_comp = 3;
+                while (comp_number > max_comp && table_size <= MAX_SIZE_OF_HASH_TABLE)
+                {
+                    table_size = make_simple(table_size);
+                    list_t *hash_table_tmp[table_size];
+                    fill_hash_table(hash_table_tmp, table_size, size_root, my_hash2);
+                    comp_number = count_max_comp(hash_table_tmp, table_size);
+                    free_hash_table(hash_table_tmp, table_size);
+                }
+
+                if (table_size > MAX_SIZE_OF_HASH_TABLE)
+                {
+                    cout << "Cannot make hash table with max compare number: " << max_comp << " and with size <= " << MAX_SIZE_OF_HASH_TABLE << endl;
+                    break;
+                }
+
+                list_t *hash_table_tmp[table_size];
+                fill_hash_table(hash_table_tmp, table_size, size_root, my_hash2);
+                int hash_table_size = nodes_number * sizeof (list_t) + table_size * sizeof (list_t*); //+ sizeof(list_t**);
                 cout << "Hash table size: " << hash_table_size << " bytes." << endl;
             }
             else
