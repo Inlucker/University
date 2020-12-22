@@ -412,6 +412,40 @@ int main()
             }
             break;
         }
+        /*case 11:
+        {
+            _flushall();
+            cout << "Enter the file name: ";
+            string file_name;
+            getline(cin, file_name);
+
+            string word = "";
+
+            tree_node *time_root = read_file(file_name);
+            if (time_root)
+            {
+                uint64_t time = 0;
+
+                int comp_counter = 0;
+                uint64_t tree_avg_search_ticks = get_avg_search_time(time_root, time_root, &comp_counter);
+                printf("Search avg time for tree: %llu ticks\n", tree_avg_search_ticks, time);
+                //cout << "Compare number for tree: " << comp_counter << endl;
+
+                balance_tree(&time_root);
+
+                //tree_node **balance_tree_search_rez = NULL;
+                comp_counter = 0;
+                uint64_t balance_tree_avg_search_ticks = get_avg_search_time(time_root, time_root, &comp_counter);
+                printf("Search avg time for balanced tree: %llu ticks\n", balance_tree_avg_search_ticks, time);
+                //cout << "Compare number for balanced tree: " << comp_counter << endl;
+            }
+            else
+            {
+                cout << "No such file" << endl;
+            }
+
+            break;
+        }*/
         case 0:
         {
             cout << "Good buy!" << endl;

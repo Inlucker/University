@@ -2,6 +2,7 @@
 #include "structures.h"
 #include "comporators.h"
 #include "hash_funcs.h"
+#include "get_ticks.h"
 
 tree_node *create_node(string value)
 {
@@ -56,6 +57,43 @@ tree_node **search_word_in_tree(tree_node **root, string word, int *comp_counter
         return root;
     }
 
+    return rez;
+}
+
+//wrong comp_counter
+uint64_t get_avg_search_time(tree_node *root, tree_node *cur_node, int *comp_counter)
+{
+    uint64_t rez = 0;
+    if (cur_node)
+    {
+        if (cur_node->left)
+        {
+            if (rez != 0)
+                rez = (rez + get_avg_search_time(root, cur_node->left, comp_counter)) / 2;
+            else
+                rez = get_avg_search_time(root, cur_node->left, comp_counter);
+            //*comp_counter /= 2;
+        }
+
+        uint64_t time = tick();
+        search_word_in_tree(&root, cur_node->value, comp_counter);
+        if (*comp_counter != 0)
+            *comp_counter /= 2;
+        time = tick() - time;
+        if (rez != 0)
+            rez = (rez + time) / 2;
+        else
+            rez = time;
+
+        if (cur_node->right)
+        {
+            if (rez != 0)
+                rez = (rez + get_avg_search_time(root, cur_node->right, comp_counter)) / 2;
+            else
+                rez = get_avg_search_time(root, cur_node->right, comp_counter);
+            //*comp_counter /= 2;
+        }
+    }
     return rez;
 }
 
