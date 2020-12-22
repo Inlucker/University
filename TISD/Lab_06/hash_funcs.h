@@ -7,6 +7,10 @@
 
 int my_hash(string key, int m);
 
+int my_hash2(string key, int m);
+
+int make_simple(int n);
+
 /*hash_table_t *create_table(int m);
 
 hash_table_line_t *create_line(string value, int m);
@@ -25,11 +29,11 @@ hash_table_t *create_hash_table(tree_node *root);
 
 void print_hash_table(hash_table_t *table);*/
 
-void fill_table_by_root(tree_node *root, int size, int m, list_t *table[]);
+void fill_table_by_root(tree_node *root, int size, int m, list_t *table[], int hash_func(string, int));
 
-void fill_hash_table(list_t *table[], int size, tree_node *root);
+void fill_hash_table(list_t *table[], int size, tree_node *root, int hash_func(string, int));
 
-void print_hash_table(list_t *table[], int size);
+int print_hash_table(list_t *table[], int size);
 
 void free_hash_table(list_t *table[], int size);
 

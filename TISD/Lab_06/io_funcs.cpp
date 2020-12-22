@@ -20,3 +20,17 @@ tree_node *read_file(string file_name)
     }
     return root;
 }
+
+int search_word_in_file(string file_name, string word)
+{
+    ifstream f(file_name);
+    string input = "";
+    int n = 1;
+    while(getline(f, input))
+    {
+        if (input == word)
+            break;
+        n++;
+    }
+    return n;
+}

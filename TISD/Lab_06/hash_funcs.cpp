@@ -1,6 +1,20 @@
 #include "hash_funcs.h"
 #include "tree_funcs.h"
 
+int my_hash2(string key, int n)
+{
+    char *s = (char*)key.c_str();
+    unsigned long hash = 0;
+    int c;
+
+    while ((c = *s++))
+    {
+        hash = ((hash << 5) + hash) + c;
+    }
+
+    return hash % n;
+}
+
 int my_hash(string key, int m)
 {
     int rez = 0;
@@ -9,6 +23,27 @@ int my_hash(string key, int m)
         rez += key[i];
     }
     return rez % m;
+}
+
+int make_simple(int n)
+{
+    int simple = n;
+    bool is_simple = false;
+
+    while (!is_simple)
+    {
+        simple++;
+        is_simple = true;
+        for (int i = 2; i < simple/2; i++)
+        {
+            if (simple % i == 0)
+            {
+                is_simple = false;
+                break;
+            }
+        }
+    }
+    return simple;
 }
 
 /*hash_table_t *create_table(int m)
@@ -143,13 +178,13 @@ void print_hash_table(hash_table_t *table)
     }
 }*/
 
-void fill_table_by_root(tree_node *root, int size, int m, list_t *table[])
+void fill_table_by_root(tree_node *root, int size, int m, list_t *table[], int hash_func(string, int))
 {
     if (root)
     {
-        fill_table_by_root(root->left, size, m, table);
+        fill_table_by_root(root->left, size, m, table, hash_func);
 
-        int cur_hash = my_hash(root->value, m);
+        int cur_hash = hash_func(root->value, m);
         if (table[cur_hash] == NULL)
         {
             list_t *new_line = NULL;
@@ -161,11 +196,11 @@ void fill_table_by_root(tree_node *root, int size, int m, list_t *table[])
             add_el_to_list(&table[cur_hash], root->value);
         }
 
-        fill_table_by_root(root->right, size, m, table);
+        fill_table_by_root(root->right, size, m, table, hash_func);
     }
 }
 
-void fill_hash_table(list_t *table[], int size, tree_node *root)
+void fill_hash_table(list_t *table[], int size, tree_node *root, int hash_func(string, int))
 {
     for (int i = 0; i < size; i++)
     {
@@ -174,26 +209,33 @@ void fill_hash_table(list_t *table[], int size, tree_node *root)
 
     int mas_size = size;
 
-    fill_table_by_root(root, size, mas_size, table);
+    fill_table_by_root(root, size, mas_size, table, hash_func);
 
 }
 
-void print_hash_table(list_t *table[], int size)
+int print_hash_table(list_t *table[], int size)
 {
+    int max_colisions = 0;
     for (int i = 0; i < size; i++)
     {
         if (table[i])
         {
             cout << my_hash(table[i]->value, size) << ": ";
             list_t *tmp_line = table[i];
+            int tmp_collisions = 0;
             while(tmp_line)
             {
                 cout << " " << tmp_line->value << "; ";
                 tmp_line = tmp_line->next;
+                tmp_collisions++;
             }
             cout << endl;
+            if (tmp_collisions > max_colisions)
+                max_colisions = tmp_collisions;
         }
     }
+    cout << "\nMax collisions number = " << max_colisions << endl;
+    return max_colisions;
 }
 
 void free_hash_table(list_t *table[], int size)
@@ -205,5 +247,10 @@ void free_hash_table(list_t *table[], int size)
             free_list(&table[i]);
         }
     }
+}
+
+void search_word(list_t *table[], int size)
+{
+
 }
 
