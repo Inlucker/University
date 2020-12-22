@@ -1,3 +1,4 @@
+#include "io_funcs.h"
 #include "tree_funcs.h"
 #include "structures.h"
 
@@ -24,13 +25,23 @@ tree_node *read_file(string file_name)
 int search_word_in_file(string file_name, string word)
 {
     ifstream f(file_name);
-    string input = "";
-    int n = 1;
-    while(getline(f, input))
+    int n = -1;
+    bool flag = false;
+    if (f.is_open())
     {
-        if (input == word)
-            break;
-        n++;
+        string input = "";
+        n = 0;
+        while(getline(f, input))
+        {
+            n++;
+            if (input == word)
+            {
+                flag = true;
+                break;
+            }
+        }
+        if (!flag)
+            n = 0;
     }
     return n;
 }

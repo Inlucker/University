@@ -57,6 +57,33 @@ tree_node **search_word_in_tree(tree_node **root, string word)
     return rez;
 }
 
+void print_searched_word_in_tree(tree_node* root, int space, string word)
+{
+    if (root)
+    {
+        space += 5;
+
+        print_searched_word_in_tree(root->left, space, word);
+
+        //cout << endl;
+
+        for (int i = 5; i < space; i++)
+        {
+            if (i % 5 == 4)
+                cout << "|";
+            else
+                cout << " ";
+        }
+        if (root->value == word)
+            cout << "\x1b[32m" << root->value << "\x1b[0m" << endl;
+        //"\x1b[31mNo such word in tree\x1b[0m"
+        else
+            cout << root->value << endl;
+
+        print_searched_word_in_tree(root->right, space, word);
+    }
+}
+
 void print_node(tree_node* root, int space)
 {
     if (root)
@@ -82,9 +109,19 @@ void print_node(tree_node* root, int space)
 
 void print_tree(tree_node* root)
 {
-    cout << endl;
-    print_node(root, 0);
-    cout << endl;
+    if (root)
+    {
+        cout << endl;
+        print_node(root, 0);
+        cout << endl;
+        int depth = 0;
+        calculate_depth(root, &depth);
+        cout << "Current depth = " << depth << endl;
+    }
+    else
+    {
+        cout << "Tree is empty" << endl;
+    }
 }
 
 int count_nodes(tree_node *root)
