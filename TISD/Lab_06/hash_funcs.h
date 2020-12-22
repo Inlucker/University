@@ -31,4 +31,6 @@ void fill_hash_table(list_t *table[], int size, tree_node *root);
 
 void print_hash_table(list_t *table[], int size);
 
+void free_hash_table(list_t *table[], int size);
+
 #endif // HASH_FUNCS_H

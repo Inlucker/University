@@ -7,13 +7,6 @@
 
 int main()
 {
-    list_t *list = NULL;
-    add_el_to_list(&list, "lol");
-    add_el_to_list(&list, "kek");
-    add_el_to_list(&list, "cheburek");
-
-    free_list(&list);
-
     tree_node *root = read_file("tree02.txt");
 
     cout << "Before balance" << endl;
@@ -32,8 +25,7 @@ int main()
     calculate_depth(root, &depth);
     cout << "Current depth = " << depth << endl;
 
-    //print_tree_hashes(root);
-
+    // Hash table creationg start
     int size = count_nodes(root);
 
     int mas_size = size;
@@ -56,16 +48,8 @@ int main()
     list_t *hash_table[mas_size];
     fill_hash_table(hash_table, mas_size, root);
     print_hash_table(hash_table, mas_size);
-
-    //list_t *hash_table = create_hash_table(root);
-
-
-    //hash_table_t *table = create_hash_table(root);
-    //print_hash_table(table);
-
-    //add_line_to_table(table, "lasd");
-
-    //free_table(&table);
+    free_hash_table(hash_table, mas_size);
+    // Hash table creationg end
 
     delete_tree(&root);
 

@@ -196,3 +196,14 @@ void print_hash_table(list_t *table[], int size)
     }
 }
 
+void free_hash_table(list_t *table[], int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        if (table[i])
+        {
+            free_list(&table[i]);
+        }
+    }
+}
+
