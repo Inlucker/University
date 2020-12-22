@@ -7,9 +7,9 @@
 
 int main()
 {
-    tree_node *root = read_file("tree05.txt");
+    tree_node *root = read_file("tree02.txt");
 
-    cout << "Line in fille 'tree02.txt' for word exception = " << search_word_in_file("tree02.txt", "exception") << endl;
+    cout << "Line in fille 'tree02.txt' for word 'exception' = " << search_word_in_file("tree02.txt", "exception") << endl;
 
     cout << "Before balance" << endl;
     print_tree(root);
@@ -34,7 +34,10 @@ int main()
 
     list_t *hash_table[mas_size];
     fill_hash_table(hash_table, mas_size, root, my_hash2);
-    print_hash_table(hash_table, mas_size);
+    print_hash_table(hash_table, mas_size, my_hash2);
+
+    cout << "Hash for word 'exception' = " << search_word_in_hash_table(hash_table, mas_size, "exception", my_hash2);
+
     free_hash_table(hash_table, mas_size);
     // Hash table creationg end
 

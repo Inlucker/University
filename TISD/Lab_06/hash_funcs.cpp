@@ -213,14 +213,14 @@ void fill_hash_table(list_t *table[], int size, tree_node *root, int hash_func(s
 
 }
 
-int print_hash_table(list_t *table[], int size)
+int print_hash_table(list_t *table[], int size, int hash_func(string, int))
 {
     int max_colisions = 0;
     for (int i = 0; i < size; i++)
     {
         if (table[i])
         {
-            cout << my_hash(table[i]->value, size) << ": ";
+            cout << hash_func(table[i]->value, size) << ": ";
             list_t *tmp_line = table[i];
             int tmp_collisions = 0;
             while(tmp_line)
@@ -249,8 +249,14 @@ void free_hash_table(list_t *table[], int size)
     }
 }
 
-void search_word(list_t *table[], int size)
+int search_word_in_hash_table(list_t *table[], int size, string word, int hash_func(string, int))
 {
+    int rez = -1;
 
+    int hash_rez = hash_func(word, size);
+    if (size > hash_rez && table[hash_rez])
+        rez = hash_rez;
+
+    return rez;
 }
 
