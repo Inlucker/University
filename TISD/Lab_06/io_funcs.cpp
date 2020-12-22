@@ -48,3 +48,17 @@ int search_word_in_file(string file_name, string word)
     }
     return n;
 }
+
+int get_file_size(string file_name)
+{
+    int size = -1;
+    ifstream file(file_name);
+    if (file.is_open())
+        {
+            size = 0;
+            file.seekg (0, std::ios::end);
+            size = file.tellg();
+            file.close();
+        }
+    return size;
+}

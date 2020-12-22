@@ -5,6 +5,7 @@ CONFIG -= qt
 
 SOURCES += \
         comporators.cpp \
+        get_ticks.cpp \
         hash_funcs.cpp \
         io_funcs.cpp \
         list_funcs.cpp \
@@ -14,6 +15,7 @@ SOURCES += \
 HEADERS += \
     comporators.h \
     defines.h \
+    get_ticks.h \
     hash_funcs.h \
     io_funcs.h \
     list_funcs.h \

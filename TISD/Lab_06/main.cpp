@@ -4,6 +4,7 @@
 #include "tree_funcs.h"
 #include "list_funcs.h"
 #include "hash_funcs.h"
+#include "get_ticks.h"
 
 #define MAX_SIZE_OF_HASH_TABLE 100000
 
@@ -113,7 +114,8 @@ int main()
             cout << "Enter the word: ";
             string word;
             getline(cin, word);
-            tree_node **node = search_word_in_tree(&root, word);
+            int comp_counter = 0;
+            tree_node **node = search_word_in_tree(&root, word, &comp_counter);
             if (node)
             {
                 cout << "Word '" << (*node)->value << "' in tree have left " << (*node)->left << " ptr and right " << (*node)->right << " ptr." << endl;
@@ -122,6 +124,7 @@ int main()
                 if ((*node)->right)
                     cout << "Right word: " << (*node)->right->value << endl;
                 print_searched_word_in_tree(root, word);
+                cout << "Compare number: " << comp_counter << endl;
             }
             else
             {
@@ -135,7 +138,8 @@ int main()
             cout << "Enter the word: ";
             string word;
             getline(cin, word);
-            tree_node **node = search_word_in_tree(&root, word);
+            int comp_counter = 0;
+            tree_node **node = search_word_in_tree(&root, word, &comp_counter);
             if (*node)
             {
                 cout << "Deleted this part: " << endl;
@@ -240,6 +244,130 @@ int main()
         }
         case 9:
         {
+            _flushall();
+            cout << "Enter the file name: ";
+            string file_name;
+            getline(cin, file_name);
+            _flushall();
+            cout << "Enter the word: ";
+            string word;
+            getline(cin, word);
+
+            int file_search_rez = -2;
+            file_search_rez = search_word_in_file(file_name, word);
+            if (file_search_rez == -1)
+            {
+                cout << "No such file" << endl;
+                break;
+            }
+            if (file_search_rez == 0)
+                cout << "Word is not found" << endl;
+
+            int iterations_number = 10000;
+
+            uint64_t time = 0;
+
+            int file_avg_search_ticks = 0;
+
+            for (int i = 0; i < iterations_number; i++)
+            {
+                time = tick();
+                file_search_rez = search_word_in_file(file_name, word);
+                time = tick() - time;
+                file_avg_search_ticks += time;
+            }
+            file_avg_search_ticks /= iterations_number;
+            printf("Search avg time for file: %d ticks; Last time: %llu\n", file_avg_search_ticks, time);
+
+            tree_node *search_root = read_file(file_name);
+            //balance_tree(&search_root);
+            //print_tree(search_root);
+
+            //tree_node **tree_search_rez = NULL;
+            int comp_counter = 0;
+            int tree_avg_search_ticks = 0;
+            for (int i = 0; i < iterations_number; i++)
+            {
+                time = tick();
+                //tree_search_rez = search_word_in_tree(&search_root, word, &comp_counter);
+                search_word_in_tree(&search_root, word, &comp_counter);
+                time = tick() - time;
+                tree_avg_search_ticks += time;
+                //printf("%d time: %d\n", i, time);
+            }
+            comp_counter /= iterations_number;
+            tree_avg_search_ticks /= iterations_number;
+            printf("Search avg time for tree: %d ticks; Last time: %llu\n", tree_avg_search_ticks, time);
+            cout << "Compare number for tree: " << comp_counter << endl;
+
+
+            balance_tree(&search_root);
+            //delete_tree(&search_root);
+            //search_root = read_file(file_name);
+            //print_tree(search_root);
+
+            //tree_node **balance_tree_search_rez = NULL;
+            comp_counter = 0;
+            int balance_tree_avg_search_ticks = 0;
+            for (int i = 0; i < iterations_number; i++)
+            {
+                time = tick();
+                //balance_tree_search_rez = search_word_in_tree(&search_root, word, &comp_counter);
+                search_word_in_tree(&search_root, word, &comp_counter);
+                time = tick() - time;
+                balance_tree_avg_search_ticks += time;
+                //printf("%d time: %d\n", i, time);
+            }
+            comp_counter /= iterations_number;
+            balance_tree_avg_search_ticks /= iterations_number;
+            printf("Search avg time for balanced tree: %d ticks; Last time: %llu\n", balance_tree_avg_search_ticks, time);
+            cout << "Compare number for balanced tree: " << comp_counter << endl;
+
+            int mas_size = count_nodes(root);
+            mas_size = make_simple(mas_size);
+            list_t *hash_table[mas_size];
+            fill_hash_table(hash_table, mas_size, root, my_hash2);
+
+            //int  hash_table_search_rez = -2;
+            int hash_table_avg_search_ticks = 0;
+            for (int i = 0; i < iterations_number; i++)
+            {
+                time = tick();
+                //hash_table_search_rez = search_word_in_hash_table(hash_table, mas_size, word, my_hash2);
+                search_word_in_hash_table(hash_table, mas_size, word, my_hash2);
+                time = tick() - time;
+                hash_table_avg_search_ticks += time;
+            }
+            hash_table_avg_search_ticks /= iterations_number;
+            printf("Search avg time for hash table: %d ticks; Last time: %llu\n", hash_table_avg_search_ticks, time);
+
+            free_hash_table(hash_table, mas_size);
+            delete_tree(&search_root);
+
+            break;
+        }
+        case 10:
+        {
+            _flushall();
+            cout << "Enter the file name: ";
+            string file_name;
+            getline(cin, file_name);
+            int file_size = get_file_size(file_name);
+            if (file_size != -1)
+            {
+                cout << "File size: " << file_size << " bytes." << endl;
+                tree_node *size_root = read_file(file_name);
+                int nodes_number = count_nodes(size_root);
+                int tree_size = nodes_number * sizeof (tree_node);
+                //cout << "sizeif string: " << sizeof(string) << "; sizeof  tree_node*: " << sizeof(tree_node*) << endl;
+                cout << "Tree size: " << tree_size << " bytes." << endl;
+                int hash_table_size = nodes_number * sizeof (list_t) + sizeof(list_t**);
+                cout << "Hash table size: " << hash_table_size << " bytes." << endl;
+            }
+            else
+            {
+                cout << "No such file" << endl;
+            }
             break;
         }
         case 0:
