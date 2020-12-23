@@ -1,6 +1,8 @@
 #include "sort_funcs.h"
 #include "defines.h"
 
+#include <stdlib.h>
+
 void swap(void *a, void *b, size_t size_of_type)
 {
     char *tmp_a = a;
@@ -72,3 +74,50 @@ int mysort(void *mas, size_t size_of_mas, size_t size_of_type, int(*comparator)(
         }
     return 0;
 }
+
+int key(const int *pb_src, const int *pe_src, int **pb_dst, int **pe_dst)
+{
+    if (pb_src >= pe_src)
+        return FILTR_ERROR;
+    int *mas_f = NULL;
+    float sr = 0;
+    int n = 0;
+    int m = 0;
+
+    const int *pa = pb_src; //?
+    for (pa = pb_src; pa < pe_src; pa++)
+    {
+        sr += *pa;
+        n++;
+    }
+    sr /= n;
+
+    for (pa = pb_src; pa < pe_src; pa++)
+    {
+        if (*pa > sr)
+            m++;
+    }
+
+    if (m == 0)
+        return FILTR_ERROR;
+
+    mas_f = calloc(m, sizeof (int));
+    if (!mas_f)
+        return MEMORY_ERROR;
+
+    int j = 0;
+    for (pa = pb_src; pa < pe_src; pa++)
+    {
+        if (*pa > sr)
+        {
+            mas_f[j] = *pa;
+            j++;
+        }
+    }
+
+    *pb_dst = mas_f;
+    *pe_dst = &mas_f[m];
+
+    return 0;
+}
+

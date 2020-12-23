@@ -9,7 +9,8 @@
 
 #define ARR_DECL __cdecl
 
-#include "defines.h"
+#define FILE_READ_ERROR -2
+#define FILE_OUTPUT_ERROR -4
 
 ARR_DLL int ARR_DECL read_file_n(char *file_name, int *n);
 

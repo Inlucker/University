@@ -1,4 +1,5 @@
-#include "io_funcs.h"
+#include "io_dun_lib.h"
+#include <stdio.h>
 
 ARR_DLL int ARR_DECL read_file_n(char *file_name, int *n)
 {
