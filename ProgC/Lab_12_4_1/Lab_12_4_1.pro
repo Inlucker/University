@@ -4,4 +4,9 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        main.c
+        main.c \
+        read_args.c
+
+HEADERS += \
+    defines.h \
+    read_args.h
