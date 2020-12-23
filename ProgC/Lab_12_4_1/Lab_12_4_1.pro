@@ -5,8 +5,10 @@ CONFIG -= qt
 
 SOURCES += \
         main.c \
-        read_args.c
+        read_args.c \
+        sort_funcs.c
 
 HEADERS += \
     defines.h \
-    read_args.h
+    read_args.h \
+    sort_funcs.h
