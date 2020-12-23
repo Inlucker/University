@@ -1,4 +1,5 @@
 #include "io_functions.h"
+#include "mtrx_functions.h"
 
 int read_args(int argc, char **argv, int *action, char *file_name1, char *file_name2, char *rez_file_name)
 {
@@ -59,15 +60,58 @@ int read_args(int argc, char **argv, int *action, char *file_name1, char *file_n
     return 0;
 }
 
-int output_rez(char *rez_file_name, double **mtrx_ptrs, int rows, int columns)
+double **read_mtrx_from_file(char *file_name, int *r, int *c)
 {
     FILE *f = NULL;
-    f = fopen(rez_file_name, "w");
+    f = fopen(file_name, "r");
 
-    fprintf(f, "%d %d\n", rows, columns);
+    double **mtrx_ptrs = NULL;
 
     if (f != NULL)
     {
+        int i_max = 0, j_max = 0;
+        fscanf(f, "%d %d", &i_max, &j_max);
+
+        if (i_max > 0 && j_max > 0)
+        {
+            *r = i_max;
+            *c = j_max;
+
+            mtrx_ptrs = matrix_malloc2(i_max, j_max);
+
+            if (mtrx_ptrs != NULL)
+                for (int i = 0; i < i_max; i++)
+                    for (int j = 0; j < j_max; j++)
+                        if (fscanf(f, "%lf", &mtrx_ptrs[i][j]) != 1)
+                        {
+                            free_mtrx(mtrx_ptrs);
+                            mtrx_ptrs = NULL;
+                            i = i_max;
+                            break;
+                        }
+            fscanf(f, "\n");
+            //printf("%d\n", feof(f));
+            if (!feof(f))
+            {
+                free_mtrx(mtrx_ptrs);
+                mtrx_ptrs = NULL;
+            }
+        }
+        fclose(f);
+    }
+
+    return mtrx_ptrs;
+}
+
+int output_rez(char *rez_file_name, double **mtrx_ptrs, int rows, int columns)
+{
+    FILE *f = NULL;
+
+    f = fopen(rez_file_name, "w");
+
+    if (f != NULL)
+    {
+        fprintf(f, "%d %d\n", rows, columns);
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < columns; j++)

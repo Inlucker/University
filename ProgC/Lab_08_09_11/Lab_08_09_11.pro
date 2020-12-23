@@ -4,6 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        check_unit_tests.c \
         defines.c \
         io_functions.c \
         main.c \

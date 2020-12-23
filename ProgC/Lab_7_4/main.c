@@ -1,11 +1,6 @@
+#include "defines.h"
 #include "functions.h"
-
-void print_mas(int n, int *mas)
-{
-    for (int i = 0; i < n; i++)
-        printf("%d ", mas[i]);
-    printf("\n");
-}
+#include "io_funcs.h"
 
 int main(int argc, char **argv)
 {
@@ -48,7 +43,16 @@ int main(int argc, char **argv)
         int m = (mas_f_end - mas_f);
 
         //print_mas(m, mas_f);
+
+        //clock_t start = clock();
+        //printf("%ld\n", start);
+
         mysort(mas_f, m, sizeof(int), (int(*)(const void *, const void *)) comp_int);
+
+        //clock_t end = clock();
+        //printf("%ld\n", end);
+        //printf("Sorttime: %.4lf\n",(double)(1000*(end - start) / (CLOCKS_PER_SEC)));
+
         //print_mas(m, mas_f);
 
         if (output(output_file_name, mas_f, m) != 0)
@@ -66,7 +70,16 @@ int main(int argc, char **argv)
     else
     {
         //print_mas(n, mas);
+
+        //clock_t begin = clock();
+
         mysort(mas, n, sizeof(int), (int(*)(const void *, const void *)) comp_int);
+        //qsort(mas, n, sizeof(int), (int(*)(const void *, const void *)) comp_int);
+
+        //clock_t end = clock();
+        //double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+        //printf("Sort time for %d elements: %lf", n, time_spent);
+
         //print_mas(n, mas);
 
         if (output(output_file_name, mas, n) != 0)

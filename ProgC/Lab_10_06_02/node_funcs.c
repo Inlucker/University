@@ -62,21 +62,24 @@ void add(list_t **list, int r, int c, int v)
 
 void free_list(list_t **list)
 {
-    if ((*list)->head && *list)
+    if (*list)
     {
-        node_t *tmp = (*list)->head;
-        node_t *ptr_to_free = tmp;
-        while (tmp->next != NULL)
+        if ((*list)->head)
         {
-            tmp = tmp->next;
-            free(ptr_to_free->data);
-            free(ptr_to_free);
-            ptr_to_free = tmp;
+            node_t *tmp = (*list)->head;
+            node_t *ptr_to_free = tmp;
+            while (tmp->next != NULL)
+            {
+                tmp = tmp->next;
+                free(ptr_to_free->data);
+                free(ptr_to_free);
+                ptr_to_free = tmp;
+            }
+            free(tmp->data);
+            free(tmp);
+            (*list)->head = NULL;
+            (*list)->tail = NULL;
         }
-        free(tmp->data);
-        free(tmp);
-        (*list)->head = NULL;
-        (*list)->tail = NULL;
         free(*list);
         *list = NULL;
     }
@@ -140,18 +143,21 @@ list_t *addition(list_t *list1, list_t *list2)
         {
             if ((it1 && it1->data->column == j && it1->data->row == i) && (it2 && it2->data->column == j && it2->data->row == i))
             {
-                add(&rez, i, j, it1->data->value + it2->data->value);
+                if (it1->data->value + it2->data->value != 0)
+                    add(&rez, i, j, it1->data->value + it2->data->value);
                 it1 = it1->next;
                 it2 = it2->next;
             }
             else if (it1 && it1->data->column == j && it1->data->row == i)
             {
-                add(&rez, i, j, it1->data->value);
+                if (it1->data->value)
+                    add(&rez, i, j, it1->data->value);
                 it1 = it1->next;
             }
             else if (it2 && it2->data->column == j && it2->data->row == i)
             {
-                add(&rez, i, j, it2->data->value);
+                if (it2->data->value != 0)
+                    add(&rez, i, j, it2->data->value);
                 it2 = it2->next;
             }
             j++;
@@ -160,6 +166,12 @@ list_t *addition(list_t *list1, list_t *list2)
                 i++;
                 j = 0;
             }
+        }
+
+        if (rez->head == NULL && rez->tail == NULL)
+        {
+            free(rez);
+            rez = NULL;
         }
     }
     return rez;
@@ -331,6 +343,7 @@ void *delete_max_line(list_t *list)
             list->head = tmp_end;
             free(tmp->data);
             free(tmp);
+            tmp = NULL;
         }
 
         if (tmp_end == NULL)

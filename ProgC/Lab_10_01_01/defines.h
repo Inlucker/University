@@ -15,7 +15,7 @@ typedef struct info info_t;
 
 struct info
 {
-    char name;
+    char name[N];
     int years;
     double intelect;
 };

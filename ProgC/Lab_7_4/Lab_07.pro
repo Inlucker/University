@@ -4,9 +4,12 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        check_unit_tests.c \
         functions.c \
-        main.c \
-        unit_tests.c
+        io_funcs.c \
+        main.c
 
 HEADERS += \
-    functions.h
+    defines.h \
+    functions.h \
+    io_funcs.h

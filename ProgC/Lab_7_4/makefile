@@ -2,10 +2,10 @@
 CC := gcc
 
 # Опции компиляции
-CFLAGS := -std=c99 -Wall -pedantic
+CFLAGS := -std=c99 -Wall -pedantic -ggdb
 
 # Общие объектные файлы
-OBJS := functions.o
+OBJS := functions.o io_funcs.o
 
 debug : CFLAGS += -g3
 debug : app.exe
@@ -19,7 +19,7 @@ unit : unit_tests.exe
 app.exe : $(OBJS) main.o
 	$(CC) $^ -o $@
 
-unit_tests.exe : $(OBJS) unit_tests.o
+unit_tests.exe : $(OBJS) check_unit_tests.o
 	$(CC) $^ -o $@ -lcheck
 
 %.o : %.c *.h

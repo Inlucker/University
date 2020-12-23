@@ -1,0 +1,15 @@
+Ivanov
+1
+2.0
+Andreev
+2
+1.4
+Bobrov
+3
+3.4
+Grigoriev
+4
+4.4
+Sokolov
+5
+5.4

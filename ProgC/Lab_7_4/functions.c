@@ -4,6 +4,27 @@
   */
 #include "functions.h"
 
+void print_mas(int n, int *mas)
+{
+    for (int i = 0; i < n; i++)
+        printf("%d ", mas[i]);
+    printf("\n");
+}
+
+void print_mas_char(int n, char *mas)
+{
+    for (int i = 0; i < n; i++)
+        printf("%c ", mas[i]);
+    printf("\n");
+}
+
+void print_mas_double(int n, double *mas)
+{
+    for (int i = 0; i < n; i++)
+        printf("%.2f ", mas[i]);
+    printf("\n");
+}
+
 void swap(void *a, void *b, size_t size_of_type)
 {
     char *tmp_a = a;
@@ -20,6 +41,36 @@ void swap(void *a, void *b, size_t size_of_type)
 int comp_int(const int *i, const int *j)
 {
     return *i - *j;
+}
+
+int comp_double(const double *i, const double *j)
+{
+    int rez = 0;
+    if (*i - *j > EPS)
+        rez = 1;
+    else if (*j - *i > EPS)
+        rez = -1;
+    return rez;
+}
+
+int comp_char(const char *i, const char *j)
+{
+    int rez = 0;
+    char tmp1 = *i;
+    char tmp2 = *j;
+    if (tmp1 < 'a')
+        tmp1 += 'a' - 'A';
+
+    if (tmp2 < 'a')
+        tmp2 += 'a' - 'A';
+
+    if (tmp1 < tmp2)
+        rez = -1;
+    else if (tmp1 > tmp2)
+        rez = 1;
+    else
+        rez = 0;
+    return rez;
 }
 
 int mysort(void *mas, size_t size_of_mas, size_t size_of_type, int(*comparator)(const void *, const void *))
@@ -99,106 +150,3 @@ int key(const int *pb_src, const int *pe_src, int **pb_dst, int **pe_dst)
     return 0;
 }
 
-int read_file_n(char *file_name, int *n)
-{
-    FILE *f = NULL;
-    f = fopen(file_name, "r");
-
-    if (f != NULL)
-    {
-        int i = 0;
-        int input_rez = 0;
-
-        int input = 0;
-
-        while (feof(f) == 0)
-        {
-            input_rez = fscanf(f, "%d\n", &input);
-
-            if (input_rez != 1)
-                return FILE_READ_ERROR;
-            i++;
-        }
-        *n = i;
-    }
-    else
-        return FILE_READ_ERROR;
-    fclose(f);
-
-    return 0;
-}
-
-int read_file(char *file_name, int *mas)
-{
-    FILE *f = NULL;
-    f = fopen(file_name, "r");
-
-    if (f != NULL)
-    {
-        int i = 0;
-        int input_rez = 0;
-
-        int input = 0;
-
-        while (feof(f) == 0)
-        {
-            input_rez = fscanf(f, "%d\n", &input);
-
-            if (input_rez != 1)
-                return FILE_READ_ERROR;
-
-            //printf("%d", mas[i]);
-            mas[i] = input;
-
-            i++;
-        }
-    }
-    else
-        return FILE_READ_ERROR;
-    fclose(f);
-
-    return 0;
-}
-
-int read_args(int argc, char **argv, int *filtr, char *input_file_name, char *output_file_name)
-{
-    switch (argc)
-    {
-        case 3:
-            if (strlen(argv[1]) > M || strlen(argv[2]) > M)
-                return CONSOLE_ARGS_ERROR;
-            strcpy(input_file_name, argv[1]);
-            strcpy(output_file_name, argv[2]);
-            *filtr = 0;
-            break;
-        case 4:
-            if (strlen(argv[1]) > M || strlen(argv[2]) > M)
-                return CONSOLE_ARGS_ERROR;
-            strcpy(input_file_name, argv[1]);
-            strcpy(output_file_name, argv[2]);
-            if (strcmp(argv[3], "f") == 0)
-                *filtr = 1;
-            else
-                return CONSOLE_ARGS_ERROR;
-            break;
-        default:
-            return CONSOLE_ARGS_ERROR;
-            break;
-    }
-    return 0;
-}
-
-int output(char *file_name, int *mas, int n)
-{
-    FILE *f = NULL;
-    f = fopen(file_name, "w");
-
-    if (f != NULL)
-        for (int i = 0; i < n; i++)
-            fprintf(f, "%d ", mas[i]);
-    else
-        return FILE_OUTPUT_ERROR;
-
-    fclose(f);
-    return 0;
-}

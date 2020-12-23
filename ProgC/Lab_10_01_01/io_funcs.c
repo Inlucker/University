@@ -2,6 +2,7 @@
 #include "node_funcs.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 node_t *read_file(char *file_name)
 {
@@ -18,9 +19,10 @@ node_t *read_file(char *file_name)
         while (!feof(f))
         {
             //fscanf(f, "%*[^\n]%*c");
-            char tmp_name = '\0';
-            input = fscanf(f, "%c\n", &tmp_name);
-            if (input != 1)
+            char tmp_name[N] = "";
+            input = fscanf(f, "%s\n", tmp_name);
+            //printf("%d\n", strlen(tmp_name));
+            if (input != 1 || strlen(tmp_name) > N)
             {
                 i_max = 0;
                 break;
@@ -59,7 +61,7 @@ node_t *read_file(char *file_name)
 
                 info_t *tmp_data = malloc(sizeof(info_t));
 
-                input = fscanf(f, "%c\n", &tmp_data->name);
+                input = fscanf(f, "%s\n", tmp_data->name);
                 if (input != 1)
                     break;
 
@@ -91,7 +93,7 @@ void print_infos(node_t *head)
         do
         {
             info_t *tmp_data = tmp->data;
-            printf("Data: %c %d %lf\n", tmp_data->name, tmp_data->years, tmp_data->intelect);
+            printf("Data: %s %d %lf\n", tmp_data->name, tmp_data->years, tmp_data->intelect);
             //printf("Next_ptr: %p\n", tmp->next);
             tmp = tmp->next;
         } while (tmp != NULL);

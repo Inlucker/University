@@ -27,7 +27,10 @@ int main()
             return INPUT_ERROR;
         list_t *list2 = read_mtrx();
         if (!list2)
+        {
+            free_list(&list1);
             return INPUT_ERROR;
+        }
         list_t *rez = addition(list1, list2);
 
         print_list(rez);
@@ -43,7 +46,10 @@ int main()
             return INPUT_ERROR;
         list_t *list2 = read_mtrx();
         if (!list2)
+        {
+            free_list(&list1);
             return INPUT_ERROR;
+        }
         list_t *rez = compostion(list1, list2);
 
         print_list(rez);
