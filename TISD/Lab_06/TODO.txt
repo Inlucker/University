@@ -1,2 +1,1 @@
-hash funcs ot4et with test3.txt file
-hash-table compare number - DONE
+hash funcs ot4et with test3.txt file - 75% DONE

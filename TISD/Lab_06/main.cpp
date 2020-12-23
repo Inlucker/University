@@ -345,10 +345,29 @@ int main()
             printf("Search avg time for balanced tree: %d ticks; Last time: %llu\n", balance_tree_avg_search_ticks, time);
             cout << "Compare number for balanced tree: " << comp_counter << endl;
 
-            int mas_size = count_nodes(root);
-            mas_size = make_simple(mas_size);
+
+            int table_size = count_nodes(search_root);
+            int comp_number = 100;
+            int max_comp = 3;
+            while (comp_number > max_comp && table_size <= MAX_SIZE_OF_HASH_TABLE)
+            {
+                table_size = make_simple(table_size);
+                list_t *hash_table_tmp[table_size];
+                fill_hash_table(hash_table_tmp, table_size, search_root, my_hash2);
+                comp_number = count_max_comp(hash_table_tmp, table_size);
+                free_hash_table(hash_table_tmp, table_size);
+            }
+
+            if (table_size > MAX_SIZE_OF_HASH_TABLE)
+            {
+                cout << "Cannot make hash table with max compare number: " << max_comp << " and with size <= " << MAX_SIZE_OF_HASH_TABLE << endl;
+                break;
+            }
+
+            int mas_size = table_size;;
             list_t *hash_table[mas_size];
-            fill_hash_table(hash_table, mas_size, root, my_hash2);
+            fill_hash_table(hash_table, mas_size, search_root, my_hash2);
+            //print_hash_table(hash_table, mas_size, my_hash2);
 
             //int  hash_table_search_rez = -2;
             comp_counter = 0;
