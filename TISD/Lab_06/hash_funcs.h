@@ -39,6 +39,6 @@ int print_hash_table(list_t *table[], int size, int hash_func(string, int));
 
 void free_hash_table(list_t *table[], int size);
 
-int search_word_in_hash_table(list_t *table[], int size, string word, int hash_func(string, int));
+int search_word_in_hash_table(list_t *table[], int size, string word, int *compare_number, int hash_func(string, int));
 
 #endif // HASH_FUNCS_H

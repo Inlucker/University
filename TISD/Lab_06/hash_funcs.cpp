@@ -269,10 +269,11 @@ void free_hash_table(list_t *table[], int size)
     }
 }
 
-int search_word_in_hash_table(list_t *table[], int size, string word, int hash_func(string, int))
+int search_word_in_hash_table(list_t *table[], int size, string word, int *compare_number, int hash_func(string, int))
 {
     int rez = -1;
 
+    *compare_number = 0;
     int hash_rez = hash_func(word, size);
     if (size > hash_rez && table[hash_rez])
     {
@@ -280,6 +281,7 @@ int search_word_in_hash_table(list_t *table[], int size, string word, int hash_f
         list_t *tmp_line = table[hash_rez];
         while (tmp_line)
         {
+            *compare_number += 1;
             if (tmp_line->value == word)
             {
                 flag = true;

@@ -68,10 +68,11 @@ uint64_t get_avg_search_time(tree_node *root, tree_node *cur_node, int *comp_cou
     {
         if (cur_node->left)
         {
-            if (rez != 0)
+            /*if (rez != 0)
                 rez = (rez + get_avg_search_time(root, cur_node->left, comp_counter)) / 2;
             else
-                rez = get_avg_search_time(root, cur_node->left, comp_counter);
+                rez = get_avg_search_time(root, cur_node->left, comp_counter);*/
+            rez += get_avg_search_time(root, cur_node->left, comp_counter);
             //*comp_counter /= 2;
         }
 
@@ -80,19 +81,23 @@ uint64_t get_avg_search_time(tree_node *root, tree_node *cur_node, int *comp_cou
         if (*comp_counter != 0)
             *comp_counter /= 2;
         time = tick() - time;
-        if (rez != 0)
+        rez += time;
+        /*if (rez != 0)
             rez = (rez + time) / 2;
         else
-            rez = time;
+            rez = time;*/
 
         if (cur_node->right)
         {
-            if (rez != 0)
+            /*if (rez != 0)
                 rez = (rez + get_avg_search_time(root, cur_node->right, comp_counter)) / 2;
             else
-                rez = get_avg_search_time(root, cur_node->right, comp_counter);
+                rez = get_avg_search_time(root, cur_node->right, comp_counter);*/
+            rez += get_avg_search_time(root, cur_node->right, comp_counter);
             //*comp_counter /= 2;
         }
+
+        //cout << "Time for word '" << cur_node->value << "' is: " << time << endl;
     }
     return rez;
 }

@@ -230,9 +230,10 @@ int main()
                 fill_hash_table(hash_table, mas_size, root, my_hash2);
                 print_hash_table(hash_table, mas_size, my_hash2);
 
-                int rez_hash = search_word_in_hash_table(hash_table, mas_size, word, my_hash2);
+                int cur_compare_number = 0;
+                int rez_hash = search_word_in_hash_table(hash_table, mas_size, word, &cur_compare_number, my_hash2);
                 if (rez_hash != -1)
-                    cout << "\nHash for word '" << word << "' = " << rez_hash << endl;
+                    cout << "\nHash for word '" << word << "' = " << rez_hash << " was found after " << cur_compare_number << " compares." << endl;
                 else
                     cout << "\nNo word '" << word << "' in hash table" << endl;
 
@@ -350,17 +351,20 @@ int main()
             fill_hash_table(hash_table, mas_size, root, my_hash2);
 
             //int  hash_table_search_rez = -2;
+            comp_counter = 0;
             int hash_table_avg_search_ticks = 0;
             for (int i = 0; i < iterations_number; i++)
             {
                 time = tick();
                 //hash_table_search_rez = search_word_in_hash_table(hash_table, mas_size, word, my_hash2);
-                search_word_in_hash_table(hash_table, mas_size, word, my_hash2);
+                search_word_in_hash_table(hash_table, mas_size, word, &comp_counter, my_hash2);
                 time = tick() - time;
                 hash_table_avg_search_ticks += time;
             }
             hash_table_avg_search_ticks /= iterations_number;
             printf("Search avg time for hash table: %d ticks; Last time: %llu\n", hash_table_avg_search_ticks, time);
+            if (file_search_rez != 0)
+                cout << "Compare number for hash table: " << comp_counter << endl;
 
             free_hash_table(hash_table, mas_size);
             delete_tree(&search_root);
@@ -412,7 +416,7 @@ int main()
             }
             break;
         }
-        /*case 11:
+        case 11:
         {
             _flushall();
             cout << "Enter the file name: ";
@@ -427,7 +431,9 @@ int main()
                 uint64_t time = 0;
 
                 int comp_counter = 0;
-                uint64_t tree_avg_search_ticks = get_avg_search_time(time_root, time_root, &comp_counter);
+                uint64_t tree_avg_search_ticks = 0;
+                tree_avg_search_ticks = get_avg_search_time(time_root, time_root, &comp_counter);
+                tree_avg_search_ticks /= count_nodes(time_root);
                 printf("Search avg time for tree: %llu ticks\n", tree_avg_search_ticks, time);
                 //cout << "Compare number for tree: " << comp_counter << endl;
 
@@ -436,6 +442,7 @@ int main()
                 //tree_node **balance_tree_search_rez = NULL;
                 comp_counter = 0;
                 uint64_t balance_tree_avg_search_ticks = get_avg_search_time(time_root, time_root, &comp_counter);
+                balance_tree_avg_search_ticks /= count_nodes(time_root);
                 printf("Search avg time for balanced tree: %llu ticks\n", balance_tree_avg_search_ticks, time);
                 //cout << "Compare number for balanced tree: " << comp_counter << endl;
             }
@@ -445,7 +452,7 @@ int main()
             }
 
             break;
-        }*/
+        }
         case 0:
         {
             cout << "Good buy!" << endl;
