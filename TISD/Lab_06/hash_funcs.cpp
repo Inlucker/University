@@ -1,7 +1,7 @@
 #include "hash_funcs.h"
 #include "tree_funcs.h"
 
-int my_hash2(string key, int m)
+/*int my_hash2(string key, int m)
 {
     char *s = (char*)key.c_str();
     unsigned long hash = 0;
@@ -13,6 +13,18 @@ int my_hash2(string key, int m)
     }
 
     return hash % m;
+}*/
+
+int my_hash2(string key, int m)
+{
+    unsigned long rez = 0;
+
+    for (int i = 0; i < key.length(); i ++)
+    {
+        rez = ((rez << 5) + rez) + (int)key[i];
+    }
+
+    return rez % m;
 }
 
 int my_hash(string key, int m)
