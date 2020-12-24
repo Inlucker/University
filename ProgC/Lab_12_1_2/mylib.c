@@ -54,7 +54,7 @@ ARR_DLL void ARR_DECL sdvig(int* mas, int n, int k)
     }
 }
 
-ARR_DLL int ARR_DECL add(int a, int b)
+/*ARR_DLL int ARR_DECL add(int a, int b)
 {
     return a + b;
 }
@@ -114,4 +114,4 @@ ARR_DLL int ARR_DECL filter(double *src, int src_len, double *dst, int *dst_len)
     *dst_len = n;
 
     return 0;
-}
+}*/
