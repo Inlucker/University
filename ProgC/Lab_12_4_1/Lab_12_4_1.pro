@@ -8,7 +8,9 @@ SOURCES += \
         io_stat_lib.c \
         key_dyn_lib.c \
         key_stat_lib.c \
-        main.c \
+        main1.c \
+        main2.c \
+        main3.c \
         read_args.c \
         sort_funcs.c
 

@@ -6,6 +6,7 @@
 #define MEMORY_ERROR -3
 #define FILE_OUTPUT_ERROR -4
 #define FILTR_ERROR -5
+#define LIB_ERROR -6
 
 #define M 100
 #define EPS 1e-7
