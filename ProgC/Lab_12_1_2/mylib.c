@@ -8,7 +8,7 @@ int isSquare(long long int x)
     return !x;
 }
 
-ARR_DLL int ARR_DECL get_new_mas(double *src, int src_len, double *dst, int *dst_len)
+ARR_DLL int ARR_DECL get_new_mas(int *src, int src_len, int *dst, int *dst_len)
 {
     int m;
 

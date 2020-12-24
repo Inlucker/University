@@ -4,7 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        main.c \
+        check_unit_tests.c \
         mylib.c
 
 HEADERS += \
