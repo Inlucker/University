@@ -24,10 +24,37 @@ def get_new_mas(nums):
   else:
     return rc, list()
 
-print(get_new_mas((1, 2, 4, 9, 16)))
+def get_new_mas2(nums):
+  n = len(nums)
+  arr = (ctypes.c_int * n)(*nums)
+
+  m = n + 1
+  n_res = ctypes.c_int(m)
+
+  res = (ctypes.c_int * m)()
+
+  rc = _get_new_mas(arr, n, res, n_res)
+  #print(n_res.value)
+  real_res = list()
+  for i in range(n_res.value):
+      real_res.append(res[i])
+  print(real_res)
+  return rc, list(real_res)
+
+print("Tests for first type")
+
+print(get_new_mas((0, 1, 2, 4, 9, 16)))
 
 print(get_new_mas((1, 2, 3, 4)))
 
 print(get_new_mas((1, -2, 3, -4, 5)))
+
+print("Same tests for second type")
+
+print(get_new_mas2((0, 1, 2, 4, 9, 16)))
+
+print(get_new_mas2((1, 2, 3, 4)))
+
+print(get_new_mas2((1, -2, 3, -4, 5)))
 
 

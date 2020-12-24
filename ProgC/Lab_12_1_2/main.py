@@ -23,6 +23,21 @@ def get_new_mas(nums):
   else:
     return rc, list()
 
+def get_new_mas2(nums):
+  n = len(nums)
+  arr = (ctypes.c_int * n)(*nums)
+
+  m = n + 1
+  n_res = ctypes.c_int(m)
+
+  res = (ctypes.c_int * m)()
+
+  rc = _get_new_mas(arr, n, res, n_res)
+  real_res = list()
+  for i in range(n_res.value):
+      real_res.append(res[i])
+  return rc, list(real_res)
+
 # void sdvig(int* mas, int n, int k);
 _sdvig = lib.sdvig
 _sdvig.argtypes = (ctypes.POINTER(ctypes.c_int), ctypes.c_int, ctypes.c_int)
@@ -41,11 +56,11 @@ def print_new_mas(event):
   try:
     nums = list(map(int,ent1.get().split()))
     print(nums)
-    if (type(nums) == list):
-      x, y = get_new_mas(nums)
-      if (x == 0 ):
-        print(y)
-        B_label.config(text = y)
+    #ЗДЕСЬ МЕНЯТЬ СПОСБО ВЫДЕЛЕНИЯ ПАМЯТИ:
+    x, y = get_new_mas2(nums)
+    if (x == 0):
+      print(y)
+      B_label.config(text = y)
   except:
     B_label.config(text = "Ошибка ввода")
     
