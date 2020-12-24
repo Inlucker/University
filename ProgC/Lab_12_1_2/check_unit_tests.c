@@ -122,7 +122,7 @@ START_TEST(test_get_new_mas_allocate_max_possible_size1)
 
     get_new_mas(mas, n, mas2, &m);
 
-    print_mas(mas2, m);
+    //print_mas(mas2, m);
 
     ck_assert_int_eq(m, 4);
     ck_assert_int_eq(mas2[0], 1);
@@ -151,7 +151,7 @@ START_TEST(test_get_new_mas_allocate_max_possible_size2)
 
     get_new_mas(mas, n, mas2, &m);
 
-    print_mas(mas2, m);
+    //print_mas(mas2, m);
 
     ck_assert_int_eq(m, 2);
     ck_assert_int_eq(mas2[0], 1);
