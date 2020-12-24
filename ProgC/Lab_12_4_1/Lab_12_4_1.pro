@@ -4,6 +4,7 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        check_unit_tests.c \
         io_dyn_lib.c \
         io_stat_lib.c \
         key_dyn_lib.c \

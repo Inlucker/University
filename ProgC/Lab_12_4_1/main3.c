@@ -124,16 +124,16 @@ int main(int argc, char **argv)
         //int *mas_f_end = NULL;
 
         float sr = 0;
-        int n = 0;
+        int n2 = 0;
         int m = 0;
 
         int *pa = mas;
         for (pa = mas; pa < mas_end; pa++)
         {
             sr += *pa;
-            n++;
+            n2++;
         }
-        sr /= n;
+        sr /= n2;
 
         pa = mas;
         for (pa = mas; pa < mas_end; pa++)

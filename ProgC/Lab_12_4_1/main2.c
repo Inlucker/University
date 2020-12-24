@@ -5,7 +5,6 @@
 #include "key_dyn_lib.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <windows.h>
 
 void print_mas(int n, int *mas)
 {
