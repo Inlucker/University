@@ -75,33 +75,17 @@ int mysort(void *mas, size_t size_of_mas, size_t size_of_type, int(*comparator)(
     return 0;
 }
 
-int key(const int *pb_src, const int *pe_src, int **pb_dst, int **pe_dst)
+/*int key(const int *pb_src, const int *pe_src, int **pb_dst, float sr, int m)
 {
     if (pb_src >= pe_src)
         return FILTR_ERROR;
-    int *mas_f = NULL;
-    float sr = 0;
-    int n = 0;
-    int m = 0;
+    int *mas_f = *pb_dst;
 
-    const int *pa = pb_src; //?
-    for (pa = pb_src; pa < pe_src; pa++)
-    {
-        sr += *pa;
-        n++;
-    }
-    sr /= n;
-
-    for (pa = pb_src; pa < pe_src; pa++)
-    {
-        if (*pa > sr)
-            m++;
-    }
+    const int *pa = pb_src;
 
     if (m == 0)
         return FILTR_ERROR;
 
-    mas_f = calloc(m, sizeof (int));
     if (!mas_f)
         return MEMORY_ERROR;
 
@@ -112,12 +96,13 @@ int key(const int *pb_src, const int *pe_src, int **pb_dst, int **pe_dst)
         {
             mas_f[j] = *pa;
             j++;
+            if (j > m)
+                return FILTR_ERROR;
         }
     }
 
     *pb_dst = mas_f;
-    *pe_dst = &mas_f[m];
 
     return 0;
-}
+}*/
 

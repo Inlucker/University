@@ -2,6 +2,7 @@
 #include "read_args.h"
 #include "sort_funcs.h"
 #include "io_stat_lib.h"
+#include "key_stat_lib.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -55,16 +56,42 @@ int main(int argc, char **argv)
     {
         int *mas_end = &mas[n];
         int *mas_f = NULL;
-        int *mas_f_end = NULL;
+        //int *mas_f_end = NULL;
 
-        if (key(mas, mas_end, &mas_f, &mas_f_end) != 0)
+        float sr = 0;
+        int n = 0;
+        int m = 0;
+
+        int *pa = mas;
+        for (pa = mas; pa < mas_end; pa++)
         {
-            if (mas)
-                free(mas);
+            sr += *pa;
+            n++;
+        }
+        sr /= n;
+
+        pa = mas;
+        for (pa = mas; pa < mas_end; pa++)
+        {
+            if (*pa > sr)
+                m++;
+        }
+
+        if (m == 0)
+            return FILTR_ERROR;
+
+        mas_f = calloc(m, sizeof (int));
+        if (!mas_f)
+            return MEMORY_ERROR;
+
+        if (key(mas, mas_end, mas_f, sr, m) != 0)
+        {
+            free(mas);
+            free(mas_f);
             return FILTR_ERROR;
         }
 
-        int m = (mas_f_end - mas_f);
+        //int m = (mas_f_end - mas_f);
 
         print_mas(m, mas_f);
 

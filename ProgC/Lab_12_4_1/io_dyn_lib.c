@@ -1,5 +1,7 @@
-#include "io_dun_lib.h"
+#include "io_dyn_lib.h"
 #include <stdio.h>
+
+#define ARR_EXPORT
 
 ARR_DLL int ARR_DECL read_file_n(char *file_name, int *n)
 {
