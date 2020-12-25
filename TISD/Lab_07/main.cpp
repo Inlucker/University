@@ -10,19 +10,32 @@ int main()
 
     int n = 0;
     int m = 0;
-    rebro_t *mas = read_rebro_mas("test2.txt", &n, &m);
+
+    cout << "Input file_name: ";
+
+    string file_name = "test1.txt";
+    cin >> file_name;
+
+    rebro_t *mas = read_rebro_mas(file_name, &n, &m);
     if (mas == NULL)
+    {
+        cout << "Read error" << endl;
         return READ_ERROR;
+    }
 
     graph_t *graph = create_graph(n, m, mas);
 
     node_t begin = 0;
     int a = 2;
 
+    cout << "Input first node and A (max_len): ";
+
+    cin >> begin >> a;
+
     node_t rez[n];
     get_nodes_mas(*graph, begin, a, rez);
 
-    cout << "Nodes: ";
+    cout << "Reachable nodes: ";
     for (int i = 0; i < n; i++)
     {
         if (rez[i])

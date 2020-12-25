@@ -46,10 +46,6 @@ rebro_t *read_rebro_mas(string file_name, int *node_n, int *rebro_n)
                 *node_n = -1;
             }
         }
-        else
-        {
-            cout << "Read error" << endl;
-        }
     }
     return rez;
 }
