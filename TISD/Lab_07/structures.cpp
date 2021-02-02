@@ -95,7 +95,7 @@ void get_nodes_mas(graph_t graph, node_t begin, int a, node_t rez[])
             {
                 for (int i = 0; i < m; i++)
                 {
-                    if (mas[i].a == node)
+                    if (mas[i].a == node && cur_len + 1 <= a)
                     {
                         elem_t next;
                         next.node = mas[i].b;

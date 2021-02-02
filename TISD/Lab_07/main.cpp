@@ -30,7 +30,21 @@ int main()
 
     cout << "Input first node and A (max_len): ";
 
-    cin >> begin >> a;
+    cin >> begin;
+
+    if (begin < 0 || begin >= n)
+    {
+        cout << "Wrong node input" << endl;
+        return INPUT_ERROR;
+    }
+
+    cin >> a;
+
+    if (a < 0)
+    {
+        cout << "Wrong A (max len) input" << endl;
+        return INPUT_ERROR;
+    }
 
     node_t rez[n];
     get_nodes_mas(*graph, begin, a, rez);
